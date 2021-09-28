@@ -1,11 +1,11 @@
 module.exports = {
-    publicPath: '/tas/',
+    publicPath: '/',
     outputDir: 'tas',
     assetsDir: './',
     devServer: {
         proxy: {
             '/api': {
-                target: 'http:localhost:1218',
+                target: 'http://localhost',
                 ws: true,
                 changeOrigin: true,
                 pathRewrite: {

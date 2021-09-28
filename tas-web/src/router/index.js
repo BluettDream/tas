@@ -13,7 +13,7 @@ const routes = [
     component: Index,
     children: [
       {
-      path: 'leavingMessage',
+      path: 'leavingmessage',
       component: LeavingMessage,
       children: [
         {
@@ -35,10 +35,25 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory('/tas/'),
+  // history: createWebHistory(process.env.BASE_URL),
+  history:createWebHashHistory(process.env.BASE_URL),
   routes
 })
 
-
+let token = localStorage.getItem("token");
+let id = sessionStorage.getItem("id");
+const whiteList = ['/login','/error'];
+router.beforeEach((to, from, next) => {
+  if(token == id){  //校验通过
+    next()
+  }else{
+    //校验不通过
+    if(whiteList.indexOf(to.path) != -1){
+      next()     //路径在白名单中
+    }else{
+      next("/login")      //路径不在白名单中
+    }
+  }
+})
 
 export default router

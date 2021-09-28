@@ -8,10 +8,10 @@
       label-width="100px"
       class="demo-ruleForm"
     >
-      <el-form-item label="学号" prop="id">
+      <el-form-item label="身份标识号" prop="roleNum">
         <el-input
-          v-model.number="registerForm.id"
-          placeholder="请输入准确学号"
+          v-model.number="registerForm.roleNum"
+          placeholder="请输入学号或工号"
         ></el-input>
       </el-form-item>
       <el-form-item label="用户名" prop="name">
@@ -19,6 +19,12 @@
           v-model.number="registerForm.name"
           placeholder="请输入用户名"
         ></el-input>
+      </el-form-item>
+      <el-form-item label="角色" prop="role">
+        <el-select v-model="registerForm.role" placeholder="请选择个人身份">
+          <el-option label="学生" value="student"></el-option>
+          <el-option label="教师" value="teacher"></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input
@@ -29,17 +35,10 @@
           show-password
         ></el-input>
       </el-form-item>
-      <el-form-item label="确认密码" prop="checkPass">
-        <el-input
-          type="password"
-          v-model="registerForm.checkPass"
-          autocomplete="off"
-          placeholder="请再次输入密码"
-          show-password
-        ></el-input>
-      </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('registerForm')">注册</el-button>
+        <el-button type="primary" @click="submitForm('registerForm')"
+          >注册</el-button
+        >
         <el-button @click="resetForm('registerForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -47,56 +46,45 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
   name: "TRegister",
   data() {
     var checkNumber = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error("学号不能为空"));
+        return callback(new Error("标识号不能为空"));
       }
       setTimeout(() => {
         if (!Number.isInteger(value)) {
-          callback(new Error("请输入数字值"));
+          callback(new Error("请输入数值"));
         } else {
-          if (value.toString().length != 10) {
-            callback(new Error("学号输入长度不正确"));
-          } else {
-            callback();
-          }
+          callback();
         }
-      }, 1000);
+      }, 300);
     };
     var validatePass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入密码"));
       } else {
-        if (this.registerForm.checkPass !== "") {
-          this.$refs.registerForm.validateField("checkPass");
+        if (value.length < 3) {
+          callback(new Error("密码最少3位"));
         }
-        callback();
-      }
-    };
-    var validatePass2 = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请再次输入密码"));
-      } else if (value !== this.registerForm.password) {
-        callback(new Error("两次输入密码不一致!"));
-      } else {
         callback();
       }
     };
     return {
       registerForm: {
         name: "",
-        id: "",
-        role: "student",
+        roleNum: "",
+        role: "",
         password: "",
-        checkPass: "",
       },
       rules: {
-        password: [{ validator: validatePass, trigger: "blur" }],
-        checkPass: [{ validator: validatePass2, trigger: "blur" }],
-        id: [{ validator: checkNumber, trigger: "blur" }],
+        roleNum: [{ required: true, validator: checkNumber, trigger: "blur" }],
+        name: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+        password: [
+          { required: true, validator: validatePass, trigger: "blur" },
+        ],
       },
     };
   },
@@ -104,7 +92,26 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          
+          axios.post("/api/register", this.registerForm).then((res) => {
+            if (res.data == "success") {
+              let user = JSON.stringify(this.registerForm)
+              localStorage.setItem("token",res.headers.token)
+              sessionStorage.setItem("id",res.headers.token);
+              localStorage.setItem("user",user)
+              this.$alert(
+                "这是您的ID：" +
+                  res.headers.token +
+                  "。它为您登录系统的凭证,请复制保存下来",
+                "注册成功",
+                {
+                  confirmButtonText: "确定",
+                  callback: () => {
+                    this.$router.go("/login")
+                  },
+                }
+              );
+            }
+          });
         } else {
           return false;
         }
@@ -113,14 +120,14 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    goLogin(){
+    goLogin() {
       this.$router.go("/login");
-    }
+    },
   },
 };
 </script>
 <style scoped>
-.register a{
+.register a {
   text-decoration: none;
   color: #796aee;
   position: relative;
@@ -129,5 +136,6 @@ export default {
 }
 .register a:hover {
   color: red;
+  cursor: pointer;
 }
 </style>

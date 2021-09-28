@@ -2,7 +2,7 @@
   <router-view/>
 </template>
 
-<style scoped>
+<style>
 html,
 body,
 #app {

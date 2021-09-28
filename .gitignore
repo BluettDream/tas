@@ -4,6 +4,8 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+/logs/
+/tas-web/tas/
 
 ### STS ###
 .apt_generated
@@ -32,4 +34,4 @@ build/
 
 ### VS Code ###
 .vscode/
-!**/node_modules/
+*/node_modules/

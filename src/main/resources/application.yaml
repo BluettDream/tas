@@ -1,7 +1,5 @@
 server:
-  port: 1218
-  servlet:
-    context-path: /tas
+  port: 80
   max-http-header-size: 102400
   tomcat:
     remoteip:

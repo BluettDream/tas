@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <img src="..\assets\img\login-bg.jpg" />
+    <img src="..\assets\img\login-bg.jpg" alt="背景"/>
     <div class="main">
       <el-row align="middle">
         <div class="info">
@@ -16,14 +16,15 @@
               ref="userForm"
               label-width="100px"
               class="demo-ruleForm"
+              style="width: 380px"
             >
-              <el-form-item label="用户名" prop="name">
+              <el-form-item label="ID" prop="id">
                 <el-input
-                  v-model="userForm.name"
-                  placeholder="请输入用户名"
+                  v-model="userForm.id"
+                  placeholder="请输入用户id"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="密码" prop="password">
+              <el-form-item label="密码" prop="password" style="width: 280px">
                 <el-input
                   v-model="userForm.password"
                   type="password"
@@ -31,21 +32,12 @@
                   show-password
                 ></el-input>
               </el-form-item>
-              <el-form-item label="身份" prop="role">
-                <el-select v-model="userForm.role" placeholder="请选择个人身份">
+              <el-form-item label="角色" prop="role" style="width: 200px">
+                <el-select v-model="userForm.role" placeholder="身份">
                   <el-option label="学生" value="student"></el-option>
                   <el-option label="教师" value="teacher"></el-option>
+                  <el-option label="管理员" value="admin"></el-option>
                 </el-select>
-              </el-form-item>
-              <el-form-item
-                label="学号"
-                prop="id"
-                v-show="userForm.role == 'student' ? true : false"
-              >
-                <el-input
-                  v-model="userForm.id"
-                  placeholder="请输入学号"
-                ></el-input>
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="submitForm('userForm')"
@@ -60,31 +52,31 @@
         </div>
       </el-row>
     </div>
-    <p>Design by <a href="#">191互联2田梦豪</a></p>
+    <p>Design by <a href="mailto:tmh.1@qq.com">191互联2田梦豪</a></p>
   </div>
 </template>
 <script>
 import TRegister from "../components/TRegister";
+import axios from "axios";
 export default {
-  name: "login",
+  name: "Login",
   components: { TRegister },
   data() {
     return {
       userForm: {
-        id: "",
-        name: "",
+        id: localStorage.getItem("token") || "",
         password: "",
         role: "",
       },
       registered: true,
       rules: {
-        name: [{ required: true, message: "请输入用户名", trigger: "blur" }],
-        password: [ 
+        id: [{ required: true, message: "请输入id", trigger: "blur" }],
+        password: [
           { required: true, message: "请输入密码", trigger: "blur" },
-          {min: 3,message: "长度最少3个字符",trigger: "blur",},
+          { min: 3, message: "长度最少3个字符", trigger: "blur" },
         ],
         role: [
-          { required: true, message: "请选择个人身份", trigger: "change" },
+          { required: true, message: "请选择个人身份", trigger: "blur" },
         ],
       },
     };
@@ -93,7 +85,22 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log("验证通过")
+          axios.post("/api/login", this.userForm).then((res) => {
+            if (res.data == "success") {
+              localStorage.setItem("token", this.userForm.id);
+              sessionStorage.setItem("id",this.userForm.id);
+              this.userForm.name = res.headers.user.split(",")[0];
+              this.userForm.roleNum = res.headers.user.split(",")[1];
+              delete this.userForm.id;
+              localStorage.setItem("user", JSON.stringify(this.userForm));
+              this.$router.push("/index");
+            } else {
+              this.$notify.error({
+                title: "登录失败",
+                message: "请检查ID,密码,角色是否正确!",
+              });
+            }
+          });
         } else {
           return false;
         }
@@ -105,11 +112,18 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-  }
+  },
+  created: function () {
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (user != null) {
+      this.userForm.password = user.password;
+      this.userForm.role = user.role;
+    }
+  },
 };
 </script>
 
-<style>
+<style scoped>
 .login {
   display: flex;
   justify-content: center;
@@ -168,17 +182,12 @@ h1 {
 .biaodan {
   background-color: white;
   height: 350px;
-  width: 450px;
+  width: 410px;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
   border-radius: 0 15px 15px 0;
-}
-.foreget {
-  color: #85b4f2;
-  font-size: 0.9em;
-  text-decoration: none;
-  cursor: pointer;
+  padding: 0;
 }
 </style>
