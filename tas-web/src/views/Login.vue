@@ -87,8 +87,8 @@ export default {
         if (valid) {
           axios.post("/api/login", this.userForm).then((res) => {
             if (res.data == "success") {
-              localStorage.setItem("token", this.userForm.id);
               sessionStorage.setItem("id",this.userForm.id);
+              localStorage.setItem("token", this.userForm.id);
               this.userForm.name = res.headers.user.split(",")[0];
               this.userForm.roleNum = res.headers.user.split(",")[1];
               delete this.userForm.id;

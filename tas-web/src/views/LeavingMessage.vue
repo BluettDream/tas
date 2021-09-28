@@ -1,14 +1,14 @@
 <template>
-  <div>我是留言主板</div>
-  <router-view/>
+  <div class="leavingMessage">
+    <router-view/>
+  </div>
 </template>
 
 <script>
 export default {
-    name:'LeavingMessage'
+  name: 'LeavingMessage',
 }
 </script>
 
-<style>
-
+<style scoped>
 </style>
