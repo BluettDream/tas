@@ -93,7 +93,7 @@ export default {
               this.userForm.roleNum = res.headers.user.split(",")[1];
               delete this.userForm.id;
               localStorage.setItem("user", JSON.stringify(this.userForm));
-              this.$router.push("/index");
+              this.$router.push("/home");
             } else {
               this.$notify.error({
                 title: "登录失败",

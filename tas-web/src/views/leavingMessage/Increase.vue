@@ -1,10 +1,10 @@
 <template>
-  <div>这是我自己的留言</div>
+  <div>我是增加留言</div>
 </template>
 
 <script>
 export default {
-
+  name: 'Increase'
 }
 </script>
 

@@ -5,7 +5,7 @@ import {
 } from 'vue-router'
 import Index from '../views/Index'
 import Login from '../views/Login'
-import LeavingMessage from '../views/LeavingMessage'
+import LeavingMessage from '../views/leavingMessage/LeavingMessage'
 
 const routes = [
   {
@@ -26,15 +26,15 @@ const routes = [
       component: LeavingMessage,
       children: [{
           path: 'all',
-          component: () => import('../components/LeavingMessage/AllLeavingMessage'),
+          component: () => import('../views/leavingMessage/All'),
         },
         {
           path: 'increase',
-          component: () => import('../components/LeavingMessage/IncreaseLeavingMessage'),
+          component: () => import('../views/leavingMessage/Increase'),
         },
         {
           path: 'mine',
-          component: () => import('../components/LeavingMessage/MyLeavingMessage'),
+          component: () => import('../views/leavingMessage/Mine'),
         },
       ]
     }],

@@ -37,7 +37,16 @@ export default {
   position: fixed;
 }
 .right {
-  margin-top: 5px;
   margin-left: 210px;
+}
+.el-header{
+  position: fixed;
+  padding-top: 5px;
+  width: 84%;
+  background-color: #fff;
+  z-index: 9999;
+}
+.el-main{
+  margin-top: 45px;
 }
 </style>
