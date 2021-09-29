@@ -23,9 +23,9 @@ public class LeavingMessage implements Serializable {
     private Integer id;
 
     /**
-     * 留言人用户名
+     * 留言发送者id
      */
-    private String sender;
+    private String senderId;
 
     /**
      * 留言时间
@@ -43,9 +43,9 @@ public class LeavingMessage implements Serializable {
     private String lmContent;
 
     /**
-     * 留言信息接收者
+     * 留言接收者id
      */
-    private String receiver;
+    private String receiverId;
 
     /**
      * 数据是否已删除(0未删除,1已删除)

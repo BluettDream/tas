@@ -44,7 +44,7 @@ export default {
   padding-top: 5px;
   width: 84%;
   background-color: #fff;
-  z-index: 9999;
+  z-index: 999;
 }
 .el-main{
   margin-top: 45px;

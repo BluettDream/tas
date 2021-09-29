@@ -3,5 +3,43 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tian.tas.mapper.LeavingMessageMapper">
-
+    <select id="selectPageVo" resultType="org.tian.tas.entity.vo.LM">
+        select
+        id,
+        sender_id sender,
+        receiver_id receiver,
+        lm_date date,
+        lm_title title,
+        lm_content content
+        from tas.leaving_message
+        <where>
+            is_deleted = '未删除'
+            <if test="sender != null">
+                and ( sender_id = #{sender}
+                <if test="receiver != null">
+                    or receiver_id = #{receiver}
+                </if>
+                )
+            </if>
+            <if test="title != null">
+                and lm_title = #{title}
+            </if>
+            <if test="startTime != null">
+                and lm_date BETWEEN #{startTime} and #{endTime}
+            </if>
+        </where>
+    </select>
+    <select id="selectDistinctTitle" resultType="string">
+        select distinct lm_title allTitle
+        from tas.leaving_message
+        <where>
+            is_deleted = '未删除'
+            <if test="sender != null">
+                and sender_id = #{sender}
+            </if>
+            <if test="receiver != null">
+                or receiver_id = #{receiver}
+            </if>
+        </where>
+    </select>
 </mapper>
