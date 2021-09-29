@@ -7,18 +7,21 @@ import Index from '../views/Index'
 import Login from '../views/Login'
 import LeavingMessage from '../views/LeavingMessage'
 
-const routes = [{
-    path: '/',
-    redirect: '/index'
-  },
+const routes = [
   {
     path: '/login',
     component: Login
   },
   {
-    path: '/index',
+    path: '/',
     component: Index,
-    children: [{
+    redirect: '/home',
+    children: [
+      {
+        path: 'home',
+        component: () => import('../views/Home'),
+      },
+      {
       path: 'leavingmessage',
       component: LeavingMessage,
       children: [{

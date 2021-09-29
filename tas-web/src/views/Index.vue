@@ -13,7 +13,6 @@
         <el-main>
           <!-- 主要内容 -->
           <router-view />
-          <div v-show="isIndex">欢迎来到教学辅助系统</div>
         </el-main>
       </el-container>
     </el-container>
@@ -28,13 +27,7 @@ export default {
   components: { TAside, THeader },
   data() {
     return {
-      isIndex: true,
     };
-  },
-  created: function () {
-    if (this.$route.path != "/index") {
-      console.log(this.$route);
-    }
   },
 };
 </script>

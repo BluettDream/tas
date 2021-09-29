@@ -16,20 +16,20 @@
       :unique-opened="true"
       :router="true"
     >
-      <el-menu-item index="/index">首页</el-menu-item>
+      <el-menu-item index="/home">首页</el-menu-item>
       <el-sub-menu index="1">
         <template #title>
           <i class="el-icon-menu"></i>
           <span>留言管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="/index/leavingMessage/mine"
+          <el-menu-item index="/leavingMessage/mine"
             >我的留言</el-menu-item
           >
-          <el-menu-item index="/index/leavingMessage/increase"
+          <el-menu-item index="/leavingMessage/increase"
             >添加留言</el-menu-item
           >
-          <el-menu-item index="/index/leavingMessage/all"
+          <el-menu-item index="/leavingMessage/all"
             >所有留言</el-menu-item
           >
         </el-menu-item-group>
