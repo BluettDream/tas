@@ -52,41 +52,49 @@ export const lmCommon = {
         },
         toFirst() { //第一页
             this.searchCondition.isAll = this.currentURLPath == 'mine' ? false : true;
-            this.loading = true;
-            this.searchCondition.currentPage = 1;
-            getPage(JSON.stringify(this.searchCondition)).then(res => {
-                this.updateData(res.data)
-            })
+            if (this.searchCondition.currentPage != 1) {
+                this.loading = true;
+                this.searchCondition.currentPage = 1;
+                getPage(JSON.stringify(this.searchCondition)).then(res => {
+                    this.updateData(res.data)
+                })
+            }
         },
         toEnd() { //最后一页
             this.searchCondition.isAll = this.currentURLPath == 'mine' ? false : true;
-            this.loading = true;
-            this.searchCondition.currentPage = this.totalPages;
-            getPage(JSON.stringify(this.searchCondition)).then(res => {
-                this.updateData(res.data)
-            })
+            if (this.searchCondition.currentPage != this.totalPages) {
+                this.loading = true;
+                this.searchCondition.currentPage = this.totalPages;
+                getPage(JSON.stringify(this.searchCondition)).then(res => {
+                    this.updateData(res.data)
+                })
+            }
         },
         toBefore() { //上一页
             this.searchCondition.isAll = this.currentURLPath == 'mine' ? false : true;
-            this.loading = true;
-            this.searchCondition.currentPage = this.searchCondition.currentPage - 1 >= 1 ? this.searchCondition.currentPage - 1 : this.searchCondition.currentPage;
-            getPage(JSON.stringify(this.searchCondition)).then(res => {
-                this.updateData(res.data)
-            })
+            if (this.searchCondition.currentPage != 1) {
+                this.loading = true;
+                --this.searchCondition.currentPage;
+                getPage(JSON.stringify(this.searchCondition)).then(res => {
+                    this.updateData(res.data)
+                })
+            }
         },
         toAfter() { //下一页
             this.searchCondition.isAll = this.currentURLPath == 'mine' ? false : true;
-            this.loading = true;
-            this.searchCondition.currentPage = this.searchCondition.currentPage + 1 <= this.totalPages ? this.searchCondition.currentPage + 1 : this.searchCondition.currentPage;
-            getPage(JSON.stringify(this.searchCondition)).then(res => {
-                this.updateData(res.data)
-            })
+            if (this.searchCondition.currentPage != this.totalPages) {
+                this.loading = true;
+                ++this.searchCondition.currentPage;
+                getPage(JSON.stringify(this.searchCondition)).then(res => {
+                    this.updateData(res.data)
+                })
+            }
         },
         updateData(data) {
             this.totalMessages = data.total; //全部留言数
             this.totalPages = data.pages; //全部页数
             this.records = data.records; //数据导入到页面表格中
-            this.records.forEach((element) => {
+            this.records.forEach(element => {
                 element.date = dayjs(element.date).format("YYYY-MM-DD");
             });
             this.loading = false; //关闭加载
@@ -95,6 +103,7 @@ export const lmCommon = {
     created: function () {
         this.currentURLPath = this.$route.path.split("/")[2];
         this.searchCondition.isAll = this.currentURLPath == 'mine' ? false : true; //判断当前是在我的留言还是全部留言
+        if (this.searchCondition.isAll) this.searchCondition.pageSize = 7;
         this.loading = true; //开始加载
         getPage(JSON.stringify(this.searchCondition)).then(res => {
             this.updateData(res.data)

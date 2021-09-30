@@ -57,7 +57,9 @@
       ref="multipleTable"
       :data="records"
       tooltip-effect="dark"
-      style="width: 100%"
+      max-height="370px"
+      size="medium"
+      style="width: 100%;margin-top:5px;"
       @selection-change="handleSelectionChange"
       :border="true"
       v-loading="loading"
@@ -186,7 +188,7 @@ export default {
       this.rawDialogData.title = row.title;
       this.rawDialogData.content = row.content;
     },
-    handleDelete(index, row) {
+    handleDelete(index, row) {  //删除一行数据
       this.loading = true;
       deleteData(row.id).then((res) => {
         if (res.data == "success") {
@@ -199,7 +201,7 @@ export default {
         }
       });
     },
-    dialogSubmit() {
+    dialogSubmit() {         //提交修改表单数据
       let diffData = this.compareForm(this.rawDialogData, this.dialogForm);
       if (diffData !== "") {
         diffData.id = this.dialogForm.id;
@@ -215,10 +217,10 @@ export default {
         this.$message.warning({ message: "暂无修改" });
       }
     },
-    handleSelectionChange(val) {
+    handleSelectionChange(val) {   //记录所选行
       this.multipleSelection = val;
     },
-    deleteSelectAll() {
+    deleteSelectAll() {   //多选删除
       let messageId = [];
       for (let i = 0; i < this.multipleSelection.length; ++i) {
         messageId[i] = this.multipleSelection[i].id;
@@ -249,7 +251,7 @@ export default {
           this.$message.error({ message: "系统异常" });
         });
     },
-    compareForm(rawData, newData) {
+    compareForm(rawData, newData) {    //比较表单不同数据
       let diffData = "";
       for (let i in newData) {
         if (newData[i] !== rawData[i]) {
