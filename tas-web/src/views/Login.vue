@@ -85,7 +85,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          axios.post("/api/login", this.userForm).then((res) => {
+          axios.post("/tas/login", this.userForm).then((res) => {
             if (res.data == "success") {
               localStorage.setItem("token", res.headers.token);
               this.userForm.roleNum = res.headers.rolenum;

@@ -4,6 +4,8 @@ server:
   tomcat:
     remoteip:
       port-header: PUT,DELETE,OPTIONS,TRACE,PROPFIND,COPY,SEARCH
+  servlet:
+    context-path: /tas
 
 spring:
   datasource:
@@ -11,7 +13,7 @@ spring:
     url: jdbc:mysql://localhost:3306/tas?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: root
+    password: Tmh010625
     druid:
       default-auto-commit: true
       aop-patterns: org.blue.*

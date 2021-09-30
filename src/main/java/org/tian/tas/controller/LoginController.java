@@ -25,7 +25,7 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
+    @GetMapping("/tas")
     public void enter(HttpServletResponse response) throws IOException {
         response.sendRedirect("index.html");
     }

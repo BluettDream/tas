@@ -4,7 +4,7 @@ import axios from "axios"
 export function getPage(searchCondition){
     let userName = JSON.parse(localStorage.getItem("user")).name;
     return axios({
-        url: "/api/leavingMessage/page/"+userName,
+        url: "/tas/leavingMessage/page/"+userName,
         method:"POST",
         data: searchCondition,
         headers: {
@@ -16,7 +16,7 @@ export function getPage(searchCondition){
 //修改数据
 export function changeData(datas) {
     return axios({
-        url: "/api/leavingMessage/",
+        url: "/tas/leavingMessage/",
         method: "PATCH",
         data: datas,
         headers: {
@@ -29,7 +29,7 @@ export function changeData(datas) {
 export function getTitle(datas){
     let userName = JSON.parse(localStorage.getItem("user")).name;
     return axios({
-        url: "/api/leavingMessage/title/"+userName,
+        url: "/tas/leavingMessage/title/"+userName,
         method:"POST",
         data: datas,
         headers: {
@@ -41,7 +41,7 @@ export function getTitle(datas){
 //删除留言
 export function deleteData(ids) {
     return axios({
-        url: "/api/leavingMessage/?ids="+ids,
+        url: "/tas/leavingMessage/?ids="+ids,
         method: "DELETE"
     })
 }

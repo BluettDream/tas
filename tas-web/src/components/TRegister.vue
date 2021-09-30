@@ -92,7 +92,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          axios.post("/api/register", this.registerForm).then((res) => {
+          axios.post("/tas/register", this.registerForm).then((res) => {
             if (res.data == "success") {
               localStorage.setItem("token",res.headers.token);
               localStorage.setItem("user",JSON.stringify(this.registerForm));
