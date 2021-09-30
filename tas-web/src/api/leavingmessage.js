@@ -1,9 +1,8 @@
 import axios from "axios"
 
-let userName = JSON.parse(localStorage.getItem("user")).name;
-
 //获取对应页面数据
 export function getPage(searchCondition){
+    let userName = JSON.parse(localStorage.getItem("user")).name;
     return axios({
         url: "/api/leavingMessage/page/"+userName,
         method:"POST",
@@ -14,18 +13,20 @@ export function getPage(searchCondition){
     })
 }
 
-export function updateData(datas){
+//修改数据
+export function changeData(datas) {
     return axios({
-        url: "/api/leavingMessage/title/"+userName,
-        method:"POST",
+        url: "/api/leavingMessage/",
+        method: "PATCH",
         data: datas,
         headers: {
-            'Content-Type':'application/json;charset=UTF-8'
-        }
+            'Content-Type': 'application/json'
+        },
     })
 }
 
 export function getTitle(datas){
+    let userName = JSON.parse(localStorage.getItem("user")).name;
     return axios({
         url: "/api/leavingMessage/title/"+userName,
         method:"POST",

@@ -11,13 +11,9 @@
           @change="getDataByTitle"
           size="small"
           clearable
-          style="width: 150px;"
+          style="width: 150px"
         >
-          <el-option
-            v-for="title in distinctTitle"
-            :key="title"
-            :value="title"
-          >
+          <el-option v-for="title in distinctTitle" :key="title" :value="title">
           </el-option>
         </el-select>
         <!-- 日期搜索 -->
@@ -28,7 +24,7 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期"
           size="small"
-          style="width: 250px;"
+          style="width: 250px"
           @change="getPageByDate"
         />
       </div>
@@ -67,9 +63,9 @@
       v-loading="loading"
     >
       <el-table-column type="selection" width="45" />
-      <el-table-column prop="id" v-if="false"/>
-      <el-table-column prop="receiver" label="留言接收人" width="120" />
-      <el-table-column prop="date" label="留言日期" width="170" sortable />
+      <el-table-column prop="id" v-if="false" />
+      <el-table-column prop="receiver" label="留言接收人" width="100" />
+      <el-table-column prop="date" label="留言日期" width="120" sortable />
       <el-table-column prop="title" label="留言标题" width="150" />
       <el-table-column prop="content" label="留言内容" min-width="250" />
       <el-table-column label="操作" width="150" fixed="right">
@@ -89,7 +85,7 @@
     <!-- 数据修改 -->
     <el-dialog title="留言信息修改" v-model="dialogFormVisible" center>
       <el-form :model="dialogForm">
-        <el-form-item label="id" v-model="dialogForm.id" v-if="false"/>
+        <el-form-item label="id" v-model="dialogForm.id" v-if="false" />
         <el-form-item label="留言接收人" :label-width="formLabelWidth">
           <el-input v-model="dialogForm.receiver" autocomplete="off" />
         </el-form-item>
@@ -108,7 +104,7 @@
       </el-form>
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="dialogFormVisible = false;pageChange(searchCondition.currentPage)">取 消</el-button>
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
           <el-button
             type="primary"
             @click="
@@ -136,7 +132,7 @@
           size="mini"
           :min="1"
           :max="totalPages"
-          style="width: 53px;"
+          style="width: 53px"
         />页&nbsp;&nbsp;&nbsp;共{{ totalPages }}页
       </div>
       <!-- 翻页 -->
@@ -152,13 +148,15 @@
 
 <script>
 import { lmCommon } from "../../commonJs/lm";
+import { changeData } from "../../api/leavingmessage";
 export default {
   name: "Mine",
-  mixins:[lmCommon],
+  mixins: [lmCommon],
   data() {
     return {
       dialogFormVisible: false,
       dialogForm: {},
+      rawDialogData: {},
       formLabelWidth: "120px",
       date: "",
       inputSearch: "",
@@ -169,21 +167,57 @@ export default {
       multipleSelection: [],
     };
   },
+  watch: {
+    dialogFormVisible(newVal) {
+      //监听是否修改，如果点击修改无论取消还是确定都刷新数据
+      newVal ? "" : this.pageChange(this.searchCondition.currentPage);
+    },
+  },
   methods: {
     handleEdit(index, row) {
+      //将选中行的数据传递给dialogForm表单
       this.dialogFormVisible = true;
-      this.dialogForm = row;
-      console.log(this.dialogForm)
+      this.dialogForm.id = row.id;
+      this.dialogForm.receiver = row.receiver;
+      this.dialogForm.title = row.title;
+      this.dialogForm.content = row.content;
+      this.rawDialogData.id = row.id;
+      this.rawDialogData.receiver = row.receiver;
+      this.rawDialogData.title = row.title;
+      this.rawDialogData.content = row.content;
     },
     handleDelete(index, row) {
       this.loading = true;
       //获取页面
     },
     dialogSubmit() {
-      this.pageChange(this.searchCondition.currentPage)
-      //获取页面
+      let diffData = this.compareForm(this.rawDialogData, this.dialogForm);
+      if (diffData !== "") {
+        diffData.id = this.dialogForm.id;
+        changeData(JSON.stringify(diffData)).then((res) => {
+          if (res.data == "success") {
+            this.pageChange(this.searchCondition.currentPage);
+            this.$message.success({
+              message: "修改成功",
+              showClose: true,
+              center: true,
+            });
+          } else {
+            this.$message.error({
+              message: "修改失败",
+              showClose: true,
+              center: true,
+            });
+          }
+        });
+      } else {
+        this.$message.warning({
+          message: "无修改",
+          showClose: true,
+          center: true,
+        });
+      }
     },
-    
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
@@ -210,8 +244,17 @@ export default {
           //获取页面
         });
     },
-    
-  }
+    compareForm(rawData, newData) {
+      let diffData = "";
+      for (let i in newData) {
+        if (newData[i] !== rawData[i]) {
+          if (diffData == "") diffData = {};
+          diffData[i] = newData[i];
+        }
+      }
+      return diffData;
+    },
+  },
 };
 </script>
 
@@ -227,7 +270,7 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
-.pageControl{
+.pageControl {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;

@@ -13,6 +13,7 @@ import java.util.List;
  */
 @Mapper
 public interface LeavingMessageMapper extends BaseMapper<LeavingMessage> {
+
     //分页查询
     IPage<LeavingMessage> selectPageVo(Page<?> page, String sender, String receiver, String title, String startTime, String endTime);
 

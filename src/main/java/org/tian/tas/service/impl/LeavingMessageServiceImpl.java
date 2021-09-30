@@ -22,53 +22,31 @@ public class LeavingMessageServiceImpl extends ServiceImpl<LeavingMessageMapper,
     private LeavingMessageMapper leavingMessageMapper;
 
     @Override
-    public IPage<LeavingMessage> selectMine(Page<?> page, String sender) {
-        return leavingMessageMapper.selectPageVo(page,sender,null,null,null,null);
+    public IPage<LeavingMessage> selectPage(Page<?> page, String sender, String receiver, String title, String startTime, String endTime) {
+        if(!title.equals("") && startTime.equals("")){   //根据标题查询
+            //查询所有留言
+            if(!receiver.equals("")) return leavingMessageMapper.selectPageVo(page,sender,receiver,title,null,null);
+            //查询个人留言
+            return leavingMessageMapper.selectPageVo(page,sender,null,title,null,null);
+        }else if(title.equals("") && !startTime.equals("")){  //根据日期查询
+            if(!receiver.equals("")) return leavingMessageMapper.selectPageVo(page,sender,receiver,null,startTime,endTime);
+            return leavingMessageMapper.selectPageVo(page,sender,null,null,startTime,endTime);
+        }else if(!title.equals("") && !startTime.equals("")){  //根据标题和日期查询
+            if(!receiver.equals("")) return leavingMessageMapper.selectPageVo(page,sender,receiver,title,startTime,endTime);
+            return leavingMessageMapper.selectPageVo(page,sender,null,title,startTime,endTime);
+        }else{         //查询全部
+            if(!receiver.equals("")) return leavingMessageMapper.selectPageVo(page,sender,receiver,null,null,null);
+            return leavingMessageMapper.selectPageVo(page,sender,null,null,null,null);
+        }
     }
 
     @Override
-    public IPage<LeavingMessage> selectMineByTitle(Page<?> page, String sender, String title) {
-        return leavingMessageMapper.selectPageVo(page,sender,null,title,null,null);
-    }
-
-    @Override
-    public IPage<LeavingMessage> selectMineByDate(Page<?> page, String sender, String startTime, String endTime) {
-        return leavingMessageMapper.selectPageVo(page,sender,null,null,startTime,endTime);
-    }
-
-    @Override
-    public IPage<LeavingMessage> selectMineByTitleAndDate(Page<?> page, String sender, String title, String startTime, String endTime) {
-        return leavingMessageMapper.selectPageVo(page,sender,null,title,startTime,endTime);
-    }
-
-    @Override
-    public IPage<LeavingMessage> selectAll(Page<?> page, String sender, String receiver) {
-        return leavingMessageMapper.selectPageVo(page,sender,receiver,null,null,null);
-    }
-
-    @Override
-    public IPage<LeavingMessage> selectAllByTitle(Page<?> page, String sender, String receiver, String title) {
-        return leavingMessageMapper.selectPageVo(page,sender,receiver,title,null,null);
-    }
-
-    @Override
-    public IPage<LeavingMessage> selectAllByDate(Page<?> page, String sender, String receiver, String startTime, String endTime) {
-        return leavingMessageMapper.selectPageVo(page,sender,receiver,null,startTime,endTime);
-    }
-
-    @Override
-    public IPage<LeavingMessage> selectAllByTitleAndDate(Page<?> page, String sender, String receiver, String title, String startTime, String endTime) {
-        return leavingMessageMapper.selectPageVo(page,sender,receiver,title,startTime,endTime);
-    }
-
-    @Override
-    public List<String> selectMyTitle(String sender) {
+    public List<String> selectDistinctTitle(String sender, String receiver) {
+        if(!receiver.equals("")){   //查询全部留言
+            return leavingMessageMapper.selectDistinctTitle(sender,receiver);
+        }
+        //查询个人留言
         return leavingMessageMapper.selectDistinctTitle(sender,null);
-    }
-
-    @Override
-    public List<String> selectAllTitle(String sender, String receiver) {
-        return leavingMessageMapper.selectDistinctTitle(sender,receiver);
     }
 
 }

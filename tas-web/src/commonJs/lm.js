@@ -1,5 +1,7 @@
+import dayjs from "dayjs";
 import {
-    getPage,getTitle
+    getPage,
+    getTitle
 } from "../api/leavingmessage"
 
 export const lmCommon = {
@@ -16,11 +18,11 @@ export const lmCommon = {
             totalMessages: 0,
             totalPages: 0,
             records: [],
-            currentPath:""
+            currentPath: ""
         }
     },
     methods: {
-        getDataByTitle(){    //根据标题获取数据
+        getDataByTitle() { //根据标题获取数据
             this.searchCondition.isAll = this.currentPath == 'mine' ? false : true;
             this.searchCondition.title = this.currentTitle
             console.log(this.searchCondition.title)
@@ -28,23 +30,22 @@ export const lmCommon = {
                 this.updateData(res.data)
             })
         },
-        getTitleList() {    //获取标题列表
+        getTitleList() { //获取标题列表
             this.searchCondition.isAll = this.currentPath == 'mine' ? false : true;
             getTitle(JSON.stringify(this.searchCondition)).then(res => {
-                console.log(this.$route.path.split("/")[2])
                 this.distinctTitle = res.data
             })
         },
-        getPageByDate() {   //根据日期获取页
+        getPageByDate() { //根据日期获取页
             this.searchCondition.isAll = this.currentPath == 'mine' ? false : true;
             this.searchCondition.startTime = this.date[0];
             this.searchCondition.endTime = this.date[1];
             console.log(this.searchCondition.startTime)
         },
-        pageChange(page) { //任意页
+        pageChange(currentPage) { //更新任意页
             this.searchCondition.isAll = this.currentPath == 'mine' ? false : true;
             this.loading = true;
-            this.searchCondition.currentPage = page;
+            this.searchCondition.currentPage = currentPage;
             getPage(JSON.stringify(this.searchCondition)).then(res => {
                 this.updateData(res.data)
             })
@@ -82,18 +83,20 @@ export const lmCommon = {
             })
         },
         updateData(data) {
-            this.totalMessages = data.total;  //全部留言数
-            this.totalPages = data.pages;   //全部页数
-            this.records = data.records;   //数据导入到页面表格中
-            this.loading = false;   //关闭加载
+            this.totalMessages = data.total; //全部留言数
+            this.totalPages = data.pages; //全部页数
+            this.records = data.records; //数据导入到页面表格中
+            this.records.forEach((element) => {
+                element.date = dayjs(element.date).format("YYYY-MM-DD");
+            });
+            this.loading = false; //关闭加载
         }
     },
     created: function () {
         this.currentPath = this.$route.path.split("/")[2];
-        this.searchCondition.isAll = this.currentPath == 'mine' ? false : true;  //判断当前是在我的留言还是全部留言
-        this.loading = true;    //开始加载
+        this.searchCondition.isAll = this.currentPath == 'mine' ? false : true; //判断当前是在我的留言还是全部留言
+        this.loading = true; //开始加载
         getPage(JSON.stringify(this.searchCondition)).then(res => {
-            console.log(res)
             this.updateData(res.data)
         })
     },
