@@ -49,6 +49,11 @@ public class LeavingMessageServiceImpl extends ServiceImpl<LeavingMessageMapper,
         return leavingMessageMapper.selectDistinctTitle(sender,null);
     }
 
+    @Override
+    public Boolean deleteByIds(List<String> ids) {
+        return leavingMessageMapper.updateByIds(ids);
+    }
+
 }
 
 

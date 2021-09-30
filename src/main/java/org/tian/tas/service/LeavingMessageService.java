@@ -17,4 +17,7 @@ public interface LeavingMessageService extends IService<LeavingMessage> {
 
     //标题查询
     List<String> selectDistinctTitle(String sender, String receiver);
+
+    //删除留言
+    Boolean deleteByIds(List<String> ids);
 }

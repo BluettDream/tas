@@ -25,6 +25,7 @@ export function changeData(datas) {
     })
 }
 
+//获取标题
 export function getTitle(datas){
     let userName = JSON.parse(localStorage.getItem("user")).name;
     return axios({
@@ -34,5 +35,13 @@ export function getTitle(datas){
         headers: {
             'Content-Type':'application/json;charset=UTF-8'
         }
+    })
+}
+
+//删除留言
+export function deleteData(ids) {
+    return axios({
+        url: "/api/leavingMessage/?ids="+ids,
+        method: "DELETE"
     })
 }

@@ -11,6 +11,7 @@ import org.tian.tas.entity.bo.SearchCondition;
 import org.tian.tas.service.LeavingMessageService;
 import org.tian.tas.service.UserService;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -27,6 +28,22 @@ public class LeavingMessageController {
     @Autowired
     private UserService userService;
 
+    @DeleteMapping("/")
+    public String deleteData(@RequestParam("ids") String ids){
+        String[] split = new String[ids.length()];
+        if(ids.contains(",")){
+            split = ids.split(",");
+            if(messageService.deleteByIds(Arrays.asList(split))){
+                return "success";
+            }
+        }
+        split[0] = ids;
+        if(messageService.deleteByIds(Arrays.asList(split))){
+            return "success";
+        }
+        return "error";
+    }
+
     @PatchMapping("/")
     public String changeData(@RequestBody LeavingMessage message){
         User user = userService.getByName(message.getReceiver());
@@ -40,7 +57,6 @@ public class LeavingMessageController {
     public IPage<LeavingMessage> getPage(@PathVariable("userName") String userName,
                                          @RequestBody SearchCondition condition){
         Page<Object> page = new Page<>(condition.getCurrentPage(), condition.getPageSize());
-        log.info("{}",condition);
         //判断是全部留言还是个人留言
         if(condition.getIsAll()){
             return messageService.selectPage(page,userName,userName, condition.getTitle(), condition.getStartTime(),condition.getEndTime());

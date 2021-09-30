@@ -148,7 +148,7 @@
 
 <script>
 import { lmCommon } from "../../commonJs/lm";
-import { changeData } from "../../api/leavingmessage";
+import { changeData, deleteData } from "../../api/leavingmessage";
 export default {
   name: "Mine",
   mixins: [lmCommon],
@@ -188,7 +188,16 @@ export default {
     },
     handleDelete(index, row) {
       this.loading = true;
-      //获取页面
+      deleteData(row.id).then((res) => {
+        if (res.data == "success") {
+          this.records.length != 1
+            ? this.pageChange(this.searchCondition.currentPage)
+            : this.pageChange(this.searchCondition.currentPage - 1);
+          this.$message.success({ message: "删除成功" });
+        } else {
+          this.$message.error({ message: "删除失败" });
+        }
+      });
     },
     dialogSubmit() {
       let diffData = this.compareForm(this.rawDialogData, this.dialogForm);
@@ -197,32 +206,19 @@ export default {
         changeData(JSON.stringify(diffData)).then((res) => {
           if (res.data == "success") {
             this.pageChange(this.searchCondition.currentPage);
-            this.$message.success({
-              message: "修改成功",
-              showClose: true,
-              center: true,
-            });
+            this.$message.success({ message: "修改成功" });
           } else {
-            this.$message.error({
-              message: "修改失败",
-              showClose: true,
-              center: true,
-            });
+            this.$message.error({ message: "修改失败" });
           }
         });
       } else {
-        this.$message.warning({
-          message: "无修改",
-          showClose: true,
-          center: true,
-        });
+        this.$message.warning({ message: "暂无修改" });
       }
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
     deleteSelectAll() {
-      this.loading = true;
       let messageId = [];
       for (let i = 0; i < this.multipleSelection.length; ++i) {
         messageId[i] = this.multipleSelection[i].id;
@@ -238,10 +234,19 @@ export default {
         }
       )
         .then(() => {
-          //获取页面
+          deleteData(
+            JSON.stringify(messageId).replace("[", "").replace("]", "")
+          ).then((res) => {
+            if (res.data == "success") {
+              this.pageChange(this.searchCondition.currentPage - 1);
+              this.$message.success({ message: "删除成功" });
+            } else {
+              this.$message.error({ message: "删除失败" });
+            }
+          });
         })
         .catch(() => {
-          //获取页面
+          this.$message.error({ message: "系统异常" });
         });
     },
     compareForm(rawData, newData) {

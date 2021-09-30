@@ -19,6 +19,9 @@ public interface LeavingMessageMapper extends BaseMapper<LeavingMessage> {
 
     //标题查询
     List<String> selectDistinctTitle(String sender, String receiver);
+
+    //删除留言
+    Boolean updateByIds(List<String> ids);
 }
 
 
