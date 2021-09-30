@@ -114,8 +114,6 @@ export default {
       multipleSelection: [],
     };
   },
-  methods: {
-  },
 }
 </script>
 

@@ -25,7 +25,6 @@ export const lmCommon = {
         getDataByTitle() { //根据标题获取数据
             this.searchCondition.isAll = this.currentURLPath == 'mine' ? false : true;
             this.searchCondition.title = this.currentTitle
-            console.log(this.searchCondition.title)
             getPage(JSON.stringify(this.searchCondition)).then(res => {
                 this.updateData(res.data)
             })
