@@ -47,10 +47,10 @@ const router = createRouter({
   routes
 })
 
-let token = localStorage.getItem("token");
 // 白名单
 const whiteList = ['/login', '/error'];
 router.beforeEach((to, from, next) => {
+  let token = localStorage.getItem("token");
   if (token != null) { //校验通过
     next()
   } else {

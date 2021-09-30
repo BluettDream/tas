@@ -23,26 +23,23 @@ export const lmCommon = {
     },
     methods: {
         getDataByTitle() { //根据标题获取数据
-            this.searchCondition.isAll = this.currentURLPath == 'mine' ? false : true;
             this.searchCondition.title = this.currentTitle
+            this.searchCondition.currentPage = 1
             getPage(JSON.stringify(this.searchCondition)).then(res => {
                 this.updateData(res.data)
             })
         },
         getTitleList() { //获取标题列表
-            this.searchCondition.isAll = this.currentURLPath == 'mine' ? false : true;
             getTitle(JSON.stringify(this.searchCondition)).then(res => {
                 this.distinctTitle = res.data
             })
         },
         getPageByDate() { //根据日期获取页
-            this.searchCondition.isAll = this.currentURLPath == 'mine' ? false : true;
             this.searchCondition.startTime = this.date[0];
             this.searchCondition.endTime = this.date[1];
             console.log(this.searchCondition.startTime)
         },
         pageChange(currentPage) { //更新任意页
-            this.searchCondition.isAll = this.currentURLPath == 'mine' ? false : true;
             this.loading = true;
             this.searchCondition.currentPage = currentPage;
             getPage(JSON.stringify(this.searchCondition)).then(res => {
@@ -50,7 +47,6 @@ export const lmCommon = {
             })
         },
         toFirst() { //第一页
-            this.searchCondition.isAll = this.currentURLPath == 'mine' ? false : true;
             if (this.searchCondition.currentPage != 1) {
                 this.loading = true;
                 this.searchCondition.currentPage = 1;
@@ -60,7 +56,6 @@ export const lmCommon = {
             }
         },
         toEnd() { //最后一页
-            this.searchCondition.isAll = this.currentURLPath == 'mine' ? false : true;
             if (this.searchCondition.currentPage != this.totalPages) {
                 this.loading = true;
                 this.searchCondition.currentPage = this.totalPages;
@@ -70,7 +65,6 @@ export const lmCommon = {
             }
         },
         toBefore() { //上一页
-            this.searchCondition.isAll = this.currentURLPath == 'mine' ? false : true;
             if (this.searchCondition.currentPage != 1) {
                 this.loading = true;
                 --this.searchCondition.currentPage;
@@ -80,7 +74,6 @@ export const lmCommon = {
             }
         },
         toAfter() { //下一页
-            this.searchCondition.isAll = this.currentURLPath == 'mine' ? false : true;
             if (this.searchCondition.currentPage != this.totalPages) {
                 this.loading = true;
                 ++this.searchCondition.currentPage;
