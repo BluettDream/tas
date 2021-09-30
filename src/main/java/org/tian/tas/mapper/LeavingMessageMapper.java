@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.tian.tas.entity.LeavingMessage;
-import org.tian.tas.entity.vo.LM;
 
 import java.util.List;
 
@@ -14,12 +13,11 @@ import java.util.List;
  */
 @Mapper
 public interface LeavingMessageMapper extends BaseMapper<LeavingMessage> {
-
     //分页查询
-    IPage<LM> selectPageVo(Page<?> page, String sender, String receiver, String title, String startTime,String endTime);
+    IPage<LeavingMessage> selectPageVo(Page<?> page, String sender, String receiver, String title, String startTime, String endTime);
 
     //标题查询
-    List<String> selectDistinctTitle(String sender,String receiver);
+    List<String> selectDistinctTitle(String sender, String receiver);
 }
 
 

@@ -18,10 +18,10 @@
               class="demo-ruleForm"
               style="width: 380px"
             >
-              <el-form-item label="ID" prop="id">
+              <el-form-item label="用户名" prop="name">
                 <el-input
-                  v-model="userForm.id"
-                  placeholder="请输入用户id"
+                  v-model="userForm.name"
+                  placeholder="请输入用户名"
                 ></el-input>
               </el-form-item>
               <el-form-item label="密码" prop="password" style="width: 280px">
@@ -64,13 +64,13 @@ export default {
   data() {
     return {
       userForm: {
-        id: localStorage.getItem("token") || "",
+        name: "",
         password: "",
         role: "",
       },
       registered: true,
       rules: {
-        id: [{ required: true, message: "请输入id", trigger: "blur" }],
+        name: [{ required: true, message: "请输入用户名", trigger: "blur" }],
         password: [
           { required: true, message: "请输入密码", trigger: "blur" },
           { min: 3, message: "长度最少3个字符", trigger: "blur" },
@@ -87,11 +87,8 @@ export default {
         if (valid) {
           axios.post("/api/login", this.userForm).then((res) => {
             if (res.data == "success") {
-              sessionStorage.setItem("id",this.userForm.id);
-              localStorage.setItem("token", this.userForm.id);
-              this.userForm.name = res.headers.user.split(",")[0];
-              this.userForm.roleNum = res.headers.user.split(",")[1];
-              delete this.userForm.id;
+              localStorage.setItem("token", res.headers.token);
+              this.userForm.roleNum = res.headers.rolenum;
               localStorage.setItem("user", JSON.stringify(this.userForm));
               this.$router.push("/home");
             } else {
@@ -116,6 +113,7 @@ export default {
   created: function () {
     let user = JSON.parse(localStorage.getItem("user"));
     if (user != null) {
+      this.userForm.name = user.name;
       this.userForm.password = user.password;
       this.userForm.role = user.role;
     }

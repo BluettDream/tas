@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     logOut() {
-      sessionStorage.removeItem("id");
+      localStorage.removeItem("token");
       this.$router.push("/login")
     },
   },

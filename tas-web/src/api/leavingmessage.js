@@ -1,11 +1,11 @@
 import axios from "axios"
 
-let userId = sessionStorage.getItem("id")
+let userName = JSON.parse(localStorage.getItem("user")).name;
 
 //获取对应页面数据
 export function getPage(searchCondition){
     return axios({
-        url: "/api/leavingMessage/page/"+userId,
+        url: "/api/leavingMessage/page/"+userName,
         method:"POST",
         data: searchCondition,
         headers: {
@@ -16,7 +16,7 @@ export function getPage(searchCondition){
 
 export function updateData(datas){
     return axios({
-        url: "/api/leavingMessage/title/"+userId,
+        url: "/api/leavingMessage/title/"+userName,
         method:"POST",
         data: datas,
         headers: {
@@ -27,7 +27,7 @@ export function updateData(datas){
 
 export function getTitle(datas){
     return axios({
-        url: "/api/leavingMessage/title/"+userId,
+        url: "/api/leavingMessage/title/"+userName,
         method:"POST",
         data: datas,
         headers: {

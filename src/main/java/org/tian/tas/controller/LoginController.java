@@ -33,11 +33,12 @@ public class LoginController {
     @PostMapping("/login")
     @ResponseBody
     public String login(@RequestBody User user,HttpServletResponse response){
-        User user1 = userService.getById(user.getId());
-        if(user1 != null){
+        User user1 = userService.getByName(user.getName());
+        if(null != user1){
             if(user1.getIsRegistered() && user.getPassword().equals(user1.getPassword())
             && user.getRole().equals(user1.getRole())){
-                response.setHeader("user",user1.getName()+","+user1.getRoleNum());
+                response.setHeader("token",user1.getId());
+                response.setHeader("roleNum", String.valueOf(user1.getRoleNum()));
                 return "success";
             }
         }

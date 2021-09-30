@@ -21,7 +21,7 @@ public class User implements Serializable {
     private String id;
 
     /**
-     * 用户姓名
+     * 用户名(唯一索引)
      */
     private String name;
 

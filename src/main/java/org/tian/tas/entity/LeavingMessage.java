@@ -23,29 +23,29 @@ public class LeavingMessage implements Serializable {
     private Integer id;
 
     /**
-     * 留言发送者id
+     * 留言发送者
      */
-    private String senderId;
+    private String sender;
 
     /**
      * 留言时间
      */
-    private Date lmDate;
+    private Date date;
 
     /**
      * 留言标题
      */
-    private String lmTitle;
+    private String title;
 
     /**
      * 留言内容
      */
-    private String lmContent;
+    private String content;
 
     /**
-     * 留言接收者id
+     * 留言接收者
      */
-    private String receiverId;
+    private String receiver;
 
     /**
      * 数据是否已删除(0未删除,1已删除)

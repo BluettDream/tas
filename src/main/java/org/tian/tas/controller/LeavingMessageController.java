@@ -5,11 +5,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.tian.tas.entity.User;
+import org.tian.tas.entity.LeavingMessage;
 import org.tian.tas.entity.bo.SearchCondition;
-import org.tian.tas.entity.vo.LM;
 import org.tian.tas.service.LeavingMessageService;
-import org.tian.tas.service.UserService;
 
 import java.util.List;
 
@@ -23,65 +21,46 @@ import java.util.List;
 public class LeavingMessageController {
 
     @Autowired
-    private UserService userService;
-    @Autowired
     private LeavingMessageService messageService;
 
-    @PostMapping("/page/{userId}")
-    public IPage<LM> getPage(@PathVariable("userId") String userId,
-                             @RequestBody SearchCondition condition){
-        List<User> userList = userService.list();
-        IPage<LM> iPage = null;
+    @PostMapping("/page/{userName}")
+    public IPage<LeavingMessage> getPage(@PathVariable("userName") String userName,
+                                         @RequestBody SearchCondition condition){
+        IPage<LeavingMessage> iPage;
         Page<Object> page = new Page<>(condition.getCurrentPage(), condition.getPageSize());
         //判断是全部留言还是自己留言
         log.info("{}",condition);
         if(condition.getIsAll()){
             if(condition.getTitle() != "" && condition.getStartTime() == ""){   //根据标题查询
-                iPage = messageService.selectAllByTitle(page,userId,userId,condition.getTitle());
+                iPage = messageService.selectAllByTitle(page,userName,userName,condition.getTitle());
             }else if(condition.getTitle() == "" && condition.getStartTime() != ""){  //根据日期查询
-                iPage = messageService.selectAllByDate(page,userId,userId, condition.getStartTime(), condition.getEndTime());
+                iPage = messageService.selectAllByDate(page,userName,userName, condition.getStartTime(), condition.getEndTime());
             }else if(condition.getTitle() != "" && condition.getStartTime() != ""){  //根据标题和日期查询
-                messageService.selectAllByTitleAndDate(page,userId,userId, condition.getTitle(), condition.getStartTime(), condition.getEndTime());
+                iPage = messageService.selectAllByTitleAndDate(page,userName,userName, condition.getTitle(), condition.getStartTime(), condition.getEndTime());
             }else{   //直接查询
-                iPage = messageService.selectAll(page,userId,userId);
+                iPage = messageService.selectAll(page,userName,userName);
             }
         }else{
             if(condition.getTitle() != "" && condition.getStartTime() == ""){   //根据标题查询
-                iPage = messageService.selectMineByTitle(page,userId,condition.getTitle());
+                iPage = messageService.selectMineByTitle(page,userName,condition.getTitle());
             }else if(condition.getTitle() == "" && condition.getStartTime() != ""){  //根据日期查询
-                iPage = messageService.selectMineByDate(page,userId, condition.getStartTime(), condition.getEndTime());
+                iPage = messageService.selectMineByDate(page,userName, condition.getStartTime(), condition.getEndTime());
             }else if(condition.getTitle() != "" && condition.getStartTime() != ""){  //根据标题和日期查询
-                messageService.selectMineByTitleAndDate(page,userId, condition.getTitle(), condition.getStartTime(), condition.getEndTime());
+                iPage = messageService.selectMineByTitleAndDate(page,userName, condition.getTitle(), condition.getStartTime(), condition.getEndTime());
             }else{   //直接查询
-                iPage = messageService.selectMine(page,userId);
+                iPage = messageService.selectMine(page,userName);
             }
         }
-        if(iPage == null) return new Page<>();
-        List<LM> lmList = iPage.getRecords();
-        //遍历用户表
-        for (User user : userList) {
-            //遍历查询结果
-            for (LM lm : lmList) {
-                //如果发送者ID与当前用户相等，设置发送者为该用户名
-                if(lm.getSender().equals(user.getId())){
-                    lm.setSender(user.getName());
-                }
-                //如果接收者ID与当前用户相等，设置发送者为该用户名
-                if(lm.getReceiver().equals(user.getId())){
-                    lm.setReceiver(user.getName());
-                }
-            }
-        }
-        return iPage.setRecords(lmList);
+        return iPage;
     }
 
-    @PostMapping("/title/{userId}")
-    public List<String> getTitle(@PathVariable("userId") String userId,
+    @PostMapping("/title/{userName}")
+    public List<String> getTitle(@PathVariable("userName") String userName,
                                  @RequestBody SearchCondition condition){
         if(condition.getIsAll()){
-            return messageService.selectAllTitle(userId,userId);
+            return messageService.selectAllTitle(userName,userName);
         }
-        return messageService.selectMyTitle(userId);
+        return messageService.selectMyTitle(userName);
     }
 
 }

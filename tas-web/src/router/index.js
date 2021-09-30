@@ -48,11 +48,10 @@ const router = createRouter({
 })
 
 let token = localStorage.getItem("token");
-let id = sessionStorage.getItem("id");
 // 白名单
 const whiteList = ['/login', '/error'];
 router.beforeEach((to, from, next) => {
-  if (token != null && id != null && token == id) { //校验通过
+  if (token != null) { //校验通过
     next()
   } else {
     //校验不通过

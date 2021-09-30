@@ -94,22 +94,9 @@ export default {
         if (valid) {
           axios.post("/api/register", this.registerForm).then((res) => {
             if (res.data == "success") {
-              let user = JSON.stringify(this.registerForm)
-              localStorage.setItem("token",res.headers.token)
-              sessionStorage.setItem("id",res.headers.token);
-              localStorage.setItem("user",user)
-              this.$alert(
-                "这是您的ID：" +
-                  res.headers.token +
-                  "。它为您登录系统的凭证,请复制保存下来",
-                "注册成功",
-                {
-                  confirmButtonText: "确定",
-                  callback: () => {
-                    this.$router.go("/login")
-                  },
-                }
-              );
+              localStorage.setItem("token",res.headers.token);
+              localStorage.setItem("user",JSON.stringify(this.registerForm));
+              this.$router.go("/login");
             }
           });
         } else {
