@@ -34,10 +34,17 @@ export const lmCommon = {
                 this.distinctTitle = res.data
             })
         },
-        getPageByDate() { //根据日期获取页
-            this.searchCondition.startTime = this.date[0];
-            this.searchCondition.endTime = this.date[1];
-            console.log(this.searchCondition.startTime)
+        getPageByDate() { //根据日期获取数据
+            if (this.date != null) {
+                this.searchCondition.startTime = this.date[0];
+                this.searchCondition.endTime = this.date[1];
+            }else{
+                this.searchCondition.startTime = "";
+                this.searchCondition.endTime = "";
+            }
+            getPage(JSON.stringify(this.searchCondition)).then(res => {
+                this.updateData(res.data)
+            })
         },
         pageChange(currentPage) { //更新任意页
             this.loading = true;
