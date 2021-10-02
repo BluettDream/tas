@@ -12,6 +12,7 @@ import dayjs from 'dayjs'
 
 const app = createApp(App)
 app.config.globalProperties.axios = axios
+
 app.use(store).use(router).use(ElementPlus, {
     locale: zhCn,
     zIndex: 1000

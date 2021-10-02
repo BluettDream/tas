@@ -53,6 +53,16 @@ public class LeavingMessageController {
         return "error";
     }
 
+    @PostMapping("/")
+    public String addData(@RequestBody LeavingMessage message){
+        User user = userService.getByName(message.getReceiver());
+        if(user == null) return "fail";
+        if(messageService.save(message)){
+            return "success";
+        }
+        return "error";
+    }
+
     @PostMapping("/page/{userName}")
     public IPage<LeavingMessage> getPage(@PathVariable("userName") String userName,
                                          @RequestBody SearchCondition condition){

@@ -38,6 +38,18 @@ export function getTitle(datas){
     })
 }
 
+//添加留言
+export function addData(datas){
+    return axios({
+        url: "/tas/leavingMessage/",
+        method:"POST",
+        data: datas,
+        headers: {
+            'Content-Type':'application/json;charset=UTF-8'
+        }
+    })
+}
+
 //删除留言
 export function deleteData(ids) {
     return axios({
