@@ -47,5 +47,24 @@
             </if>
         </where>
     </select>
+    <select id="selectByQueryString" resultType="string">
+        select distinct
+        <if test="query == 'title'">
+            title
+        </if>
+        <if test="query == 'receiver'">
+            receiver
+        </if>
+        from tas.leaving_message
+        <where>
+            sender = #{receiver}
+            <if test="query == 'title'">
+                and title like CONCAT(#{queryString},"%")
+            </if>
+            <if test="query == 'receiver'">
+                and receiver like CONCAT(#{queryString},"%")
+            </if>
+        </where>
+    </select>
 
 </mapper>

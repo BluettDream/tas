@@ -83,4 +83,12 @@ public class LeavingMessageController {
         return messageService.selectDistinctTitle(userName,"");
     }
 
+    @GetMapping("/{userName}/{query}")
+    public List<String> getQueryData(@PathVariable("userName") String userName,
+                                     @PathVariable("query") String query,
+                                     @RequestParam("querystring") String queryString){
+        log.info("userName:{},query:{},queryString:{}",userName,query,queryString);
+        return messageService.selectByQueryString(userName,query,queryString);
+    }
+
 }

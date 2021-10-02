@@ -22,6 +22,9 @@ public interface LeavingMessageMapper extends BaseMapper<LeavingMessage> {
 
     //删除留言
     Boolean updateByIds(List<String> ids);
+
+    //根据搜索条件查询
+    List<String> selectByQueryString(String receiver,String query,String queryString);
 }
 
 

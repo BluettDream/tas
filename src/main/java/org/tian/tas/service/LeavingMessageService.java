@@ -20,4 +20,7 @@ public interface LeavingMessageService extends IService<LeavingMessage> {
 
     //删除留言
     Boolean deleteByIds(List<String> ids);
+
+    //根据搜索条件查询
+    List<String> selectByQueryString(String receiver,String query,String queryString);
 }

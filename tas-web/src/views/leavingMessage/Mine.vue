@@ -30,11 +30,12 @@
       </div>
       <div class="right">
         <!-- 选择搜索 -->
-        <el-input
-          placeholder="请输入内容"
+        <el-autocomplete
           v-model="inputSearch"
-          class="input-with-select"
+          :fetch-suggestions="querySearchAsync"
+          placeholder="请输入内容"
           size="small"
+          :debounce="100"
         >
           <template #prepend>
             <el-select
@@ -47,9 +48,16 @@
             </el-select>
           </template>
           <template #append>
-            <el-button icon="el-icon-search"></el-button>
+            <el-tooltip
+              effect="dark"
+              content="清空搜索后也要记得点我哦"
+              placement="bottom-end"
+              :disabled="disabled"
+            >
+              <el-button icon="el-icon-search" @click="disabled = true;dynamicSearch()" />
+            </el-tooltip>
           </template>
-        </el-input>
+        </el-autocomplete>
       </div>
     </div>
     <!-- 数据内容 -->
@@ -59,7 +67,7 @@
       tooltip-effect="dark"
       max-height="370px"
       size="medium"
-      style="width: 100%;margin-top:5px;"
+      style="width: 100%; margin-top: 5px"
       @selection-change="handleSelectionChange"
       :border="true"
       v-loading="loading"
@@ -162,7 +170,6 @@ export default {
       formLabelWidth: "120px",
       date: "",
       inputSearch: "",
-      choose: "",
       loading: false,
       distinctTitle: [],
       currentTitle: "",
@@ -188,7 +195,8 @@ export default {
       this.rawDialogData.title = row.title;
       this.rawDialogData.content = row.content;
     },
-    handleDelete(index, row) {  //删除一行数据
+    handleDelete(index, row) {
+      //删除一行数据
       this.loading = true;
       deleteData(row.id).then((res) => {
         if (res.data == "success") {
@@ -201,7 +209,8 @@ export default {
         }
       });
     },
-    dialogSubmit() {         //提交修改表单数据
+    dialogSubmit() {
+      //提交修改表单数据
       let diffData = this.compareForm(this.rawDialogData, this.dialogForm);
       if (diffData !== "") {
         diffData.id = this.dialogForm.id;
@@ -217,10 +226,12 @@ export default {
         this.$message.warning({ message: "暂无修改" });
       }
     },
-    handleSelectionChange(val) {   //记录所选行
+    handleSelectionChange(val) {
+      //记录所选行
       this.multipleSelection = val;
     },
-    deleteSelectAll() {   //多选删除
+    deleteSelectAll() {
+      //多选删除
       let messageId = [];
       for (let i = 0; i < this.multipleSelection.length; ++i) {
         messageId[i] = this.multipleSelection[i].id;
@@ -251,7 +262,8 @@ export default {
           this.$message.error({ message: "系统异常" });
         });
     },
-    compareForm(rawData, newData) {    //比较表单不同数据
+    compareForm(rawData, newData) {
+      //比较表单不同数据
       let diffData = "";
       for (let i in newData) {
         if (newData[i] !== rawData[i]) {

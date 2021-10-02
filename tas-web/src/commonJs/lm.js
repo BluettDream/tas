@@ -1,7 +1,8 @@
 import dayjs from "dayjs";
 import {
     getPage,
-    getTitle
+    getTitle,
+    getQueryData
 } from "../api/leavingmessage"
 
 export const lmCommon = {
@@ -13,15 +14,54 @@ export const lmCommon = {
                 title: "",
                 startTime: "",
                 endTime: "",
-                isAll: false
+                isAll: false,
             },
+            choose: "",
             totalMessages: 0,
             totalPages: 0,
             records: [],
-            currentURLPath: ""
+            currentURLPath: "",
+            restaurants: [],
+            timeout:"",
+            disabled: false
         }
     },
     methods: {
+        querySearchAsync(queryString, callback) { //根据选择动态搜索内容
+            if (queryString === '') {} else if (this.choose == "") {
+                this.$message.warning({
+                    message: "请先选择输入框左边的搜索条件"
+                })
+            } else {
+                getQueryData(this.choose, queryString).then(res => {
+                    this.restaurants = []
+                    res.data.forEach(item => {
+                        this.restaurants.push({
+                            value: item
+                        })
+                    })
+                })
+                clearTimeout(this.timeout)
+                this.timeout = setTimeout(() => {
+                    callback(this.restaurants)
+                }, 1000 * Math.random())
+            }
+        },
+        dynamicSearch() { //根据输入内容更新数据
+            if (this.choose == 'title') {
+                this.searchCondition.title = this.inputSearch
+            } else if (this.choose == 'receiver') {
+                this.searchCondition.receiver = this.inputSearch
+            } else {
+                this.$message.error({
+                    message: "系统出错"
+                })
+            }
+            this.searchCondition.currentPage = 1
+            getPage(JSON.stringify(this.searchCondition)).then(res => {
+                this.updateData(res.data)
+            })
+        },
         getDataByTitle() { //根据标题获取数据
             this.searchCondition.title = this.currentTitle
             this.searchCondition.currentPage = 1
@@ -38,7 +78,7 @@ export const lmCommon = {
             if (this.date != null) {
                 this.searchCondition.startTime = this.date[0];
                 this.searchCondition.endTime = this.date[1];
-            }else{
+            } else {
                 this.searchCondition.startTime = "";
                 this.searchCondition.endTime = "";
             }
