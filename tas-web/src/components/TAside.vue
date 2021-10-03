@@ -37,33 +37,11 @@
       <el-sub-menu index="2">
         <template #title>
           <i class="el-icon-setting"></i>
-          <span>学生信息管理</span>
+          <span>成绩管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="2-1">学生信息录入</el-menu-item>
-          <el-menu-item index="2-2">学生信息查询</el-menu-item>
-        </el-menu-item-group>
-      </el-sub-menu>
-      <el-sub-menu index="3">
-        <template #title>
-          <i class="el-icon-menu"></i>
-          <span>专业课程管理</span>
-        </template>
-        <el-menu-item-group>
-          <el-menu-item index="3-1">添加专业</el-menu-item>
-          <el-menu-item index="3-2">查询专业</el-menu-item>
-          <el-menu-item index="3-3">添加课程</el-menu-item>
-          <el-menu-item index="3-4">查询课程</el-menu-item>
-        </el-menu-item-group>
-      </el-sub-menu>
-      <el-sub-menu index="4">
-        <template #title>
-          <i class="el-icon-setting"></i>
-          <span>成绩信息管理</span>
-        </template>
-        <el-menu-item-group>
-          <el-menu-item index="4-1">成绩信息录入</el-menu-item>
-          <el-menu-item index="4-2">成绩信息查询</el-menu-item>
+          <el-menu-item index="/achievement/add" v-if="role != 'student' ? true : false">成绩录入</el-menu-item>
+          <el-menu-item index="/achievement/query">成绩查询</el-menu-item>
         </el-menu-item-group>
       </el-sub-menu>
     </el-menu>
@@ -75,9 +53,15 @@ export default {
   data() {
     return {
       isCollapse: true,
+      role: ""
     };
   },
-  methods: {},
+  created:function(){
+    let user = JSON.parse(localStorage.getItem("user"));
+    if(user != null){
+      this.role = user.role;
+    }
+  }
 };
 </script>
 <style scoped>

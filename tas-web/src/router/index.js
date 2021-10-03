@@ -6,6 +6,7 @@ import {
 import Index from '../views/Index'
 import Login from '../views/Login'
 import LeavingMessage from '../views/leavingMessage/LeavingMessage'
+import Achievement from '../views/achievement/Achievement'
 
 const routes = [
   {
@@ -36,6 +37,20 @@ const routes = [
           path: 'mine',
           component: () => import('../views/leavingMessage/Mine'),
         },
+      ]
+    },
+    {
+      path: 'achievement',
+      component: Achievement,
+      children: [
+        {
+          path: 'add',
+          component: () => import('../views/achievement/Add')
+        },
+        {
+          path: 'query',
+          component: () => import('../views/achievement/Query')
+        }
       ]
     }],
   },
