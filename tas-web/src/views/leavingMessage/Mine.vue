@@ -43,8 +43,8 @@
               placeholder="请选择"
               style="width: 95px"
             >
-              <el-option label="用户" value="receiver"></el-option>
               <el-option label="标题" value="title"></el-option>
+              <el-option label="内容" value="content"></el-option>
             </el-select>
           </template>
           <template #append>

@@ -9,9 +9,12 @@ export const lmCommon = {
     data() {
         return {
             searchCondition: {
+                sender:"",
+                receiver:"",
                 currentPage: 1,
                 pageSize: 5,
                 title: "",
+                content:"",
                 startTime: "",
                 endTime: "",
                 isAll: false,
@@ -50,8 +53,8 @@ export const lmCommon = {
         dynamicSearch() { //根据输入内容更新数据
             if (this.choose == 'title') {
                 this.searchCondition.title = this.inputSearch
-            } else if (this.choose == 'receiver') {
-                this.searchCondition.receiver = this.inputSearch
+            } else if (this.choose == 'content') {
+                this.searchCondition.content = this.inputSearch
             } else {
                 this.$message.error({
                     message: "系统出错"
@@ -140,9 +143,14 @@ export const lmCommon = {
         }
     },
     created: function () {
+        let user = JSON.parse(localStorage.getItem("user"));
+        if(user != null) this.searchCondition.sender = user.name;
         this.currentURLPath = this.$route.path.split("/")[2];
         this.searchCondition.isAll = this.currentURLPath == 'mine' ? false : true; //判断当前是在我的留言还是全部留言
-        if (this.searchCondition.isAll) this.searchCondition.pageSize = 7;
+        if(this.searchCondition.isAll){
+            this.searchCondition.receiver = user.name;
+            this.searchCondition.pageSize = 7;
+        }
         this.loading = true; //开始加载
         getPage(JSON.stringify(this.searchCondition)).then(res => {
             this.updateData(res.data)

@@ -15,7 +15,7 @@ import java.util.List;
 public interface LeavingMessageMapper extends BaseMapper<LeavingMessage> {
 
     //分页查询
-    IPage<LeavingMessage> selectPageVo(Page<?> page, String sender, String receiver, String title, String startTime, String endTime);
+    IPage<LeavingMessage> selectPageVo(Page<?> page, String sender, String receiver, String title, String content,String startTime, String endTime);
 
     //标题查询
     List<String> selectDistinctTitle(String sender, String receiver);
@@ -24,7 +24,7 @@ public interface LeavingMessageMapper extends BaseMapper<LeavingMessage> {
     Boolean updateByIds(List<String> ids);
 
     //根据搜索条件查询
-    List<String> selectByQueryString(String receiver,String query,String queryString);
+    List<String> selectByQueryString(String sender,String query,String queryString);
 }
 
 

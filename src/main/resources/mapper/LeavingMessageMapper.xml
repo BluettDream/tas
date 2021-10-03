@@ -19,21 +19,25 @@
         from tas.leaving_message
         <where>
             is_deleted = '未删除'
-            <if test="sender != null">
+            <if test="sender != ''">
                 and ( sender = #{sender}
-                <if test="receiver != null">
+                <if test="receiver != ''">
                     or receiver = #{receiver}
                 </if>
                 )
             </if>
-            <if test="title != null">
+            <if test="title != ''">
                 and title = #{title}
             </if>
-            <if test="startTime != null">
+            <if test="content != ''">
+                and content = #{content}
+            </if>
+            <if test="startTime != ''">
                 and date BETWEEN #{startTime} and #{endTime}
             </if>
         </where>
     </select>
+
     <select id="selectDistinctTitle" resultType="string">
         select distinct title allTitle
         from tas.leaving_message
@@ -52,17 +56,17 @@
         <if test="query == 'title'">
             title
         </if>
-        <if test="query == 'receiver'">
-            receiver
+        <if test="query == 'content'">
+            content
         </if>
         from tas.leaving_message
         <where>
-            sender = #{receiver}
+            is_deleted = '未删除' and sender = #{sender}
             <if test="query == 'title'">
                 and title like CONCAT(#{queryString},"%")
             </if>
-            <if test="query == 'receiver'">
-                and receiver like CONCAT(#{queryString},"%")
+            <if test="query == 'content'">
+                and content like CONCAT(#{queryString},"%")
             </if>
         </where>
     </select>

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tian.tas.entity.LeavingMessage;
+import org.tian.tas.entity.bo.SearchCondition;
 import org.tian.tas.mapper.LeavingMessageMapper;
 import org.tian.tas.service.LeavingMessageService;
 
@@ -22,22 +23,12 @@ public class LeavingMessageServiceImpl extends ServiceImpl<LeavingMessageMapper,
     private LeavingMessageMapper leavingMessageMapper;
 
     @Override
-    public IPage<LeavingMessage> selectPage(Page<?> page, String sender, String receiver, String title, String startTime, String endTime) {
-        if(!title.equals("") && startTime.equals("")){   //根据标题查询
-            //查询所有留言
-            if(!receiver.equals("")) return leavingMessageMapper.selectPageVo(page,sender,receiver,title,null,null);
-            //查询个人留言
-            return leavingMessageMapper.selectPageVo(page,sender,null,title,null,null);
-        }else if(title.equals("") && !startTime.equals("")){  //根据日期查询
-            if(!receiver.equals("")) return leavingMessageMapper.selectPageVo(page,sender,receiver,null,startTime,endTime);
-            return leavingMessageMapper.selectPageVo(page,sender,null,null,startTime,endTime);
-        }else if(!title.equals("") && !startTime.equals("")){  //根据标题和日期查询
-            if(!receiver.equals("")) return leavingMessageMapper.selectPageVo(page,sender,receiver,title,startTime,endTime);
-            return leavingMessageMapper.selectPageVo(page,sender,null,title,startTime,endTime);
-        }else{         //查询全部
-            if(!receiver.equals("")) return leavingMessageMapper.selectPageVo(page,sender,receiver,null,null,null);
-            return leavingMessageMapper.selectPageVo(page,sender,null,null,null,null);
+    public IPage<LeavingMessage> selectPage(Page<?> page, SearchCondition condition) {
+        if(condition.getIsAll()){  //查询全部留言
+            return leavingMessageMapper.selectPageVo(page, condition.getSender(), condition.getReceiver(), condition.getTitle(), condition.getContent(), condition.getStartTime(), condition.getEndTime());
         }
+        //查询个人留言
+        return leavingMessageMapper.selectPageVo(page, condition.getSender(), "", condition.getTitle(), condition.getContent(), condition.getStartTime(), condition.getEndTime());
     }
 
     @Override
@@ -55,8 +46,8 @@ public class LeavingMessageServiceImpl extends ServiceImpl<LeavingMessageMapper,
     }
 
     @Override
-    public List<String> selectByQueryString(String receiver, String query, String queryString) {
-        return leavingMessageMapper.selectByQueryString(receiver,query,queryString);
+    public List<String> selectByQueryString(String sender, String query, String queryString) {
+        return leavingMessageMapper.selectByQueryString(sender,query,queryString);
     }
 
 }

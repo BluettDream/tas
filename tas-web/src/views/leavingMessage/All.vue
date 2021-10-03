@@ -30,11 +30,12 @@
       </div>
       <div class="right">
         <!-- 选择搜索 -->
-        <el-input
-          placeholder="请输入内容"
+        <el-autocomplete
           v-model="inputSearch"
-          class="input-with-select"
+          :fetch-suggestions="querySearchAsync"
+          placeholder="请输入内容"
           size="small"
+          :debounce="100"
         >
           <template #prepend>
             <el-select
@@ -42,14 +43,21 @@
               placeholder="请选择"
               style="width: 95px"
             >
-              <el-option label="用户" value="receiver"></el-option>
               <el-option label="标题" value="title"></el-option>
+              <el-option label="内容" value="content"></el-option>
             </el-select>
           </template>
           <template #append>
-            <el-button icon="el-icon-search"></el-button>
+            <el-tooltip
+              effect="dark"
+              content="清空搜索后也要记得点我哦"
+              placement="bottom-end"
+              :disabled="disabled"
+            >
+              <el-button icon="el-icon-search" @click="disabled = true;dynamicSearch()" />
+            </el-tooltip>
           </template>
-        </el-input>
+        </el-autocomplete>
       </div>
     </div>
     <!-- 数据内容 -->

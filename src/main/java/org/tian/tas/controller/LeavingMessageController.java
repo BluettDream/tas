@@ -66,12 +66,8 @@ public class LeavingMessageController {
     @PostMapping("/page/{userName}")
     public IPage<LeavingMessage> getPage(@PathVariable("userName") String userName,
                                          @RequestBody SearchCondition condition){
-        Page<Object> page = new Page<>(condition.getCurrentPage(), condition.getPageSize());
         //判断是全部留言还是个人留言
-        if(condition.getIsAll()){
-            return messageService.selectPage(page,userName,userName, condition.getTitle(), condition.getStartTime(),condition.getEndTime());
-        }
-        return messageService.selectPage(page,userName,"", condition.getTitle(), condition.getStartTime(), condition.getEndTime());
+        return messageService.selectPage(new Page<LeavingMessage>(condition.getCurrentPage(), condition.getPageSize()),condition);
     }
 
     @PostMapping("/title/{userName}")
