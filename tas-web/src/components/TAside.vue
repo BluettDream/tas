@@ -19,7 +19,7 @@
       <el-menu-item index="/home">首页</el-menu-item>
       <el-sub-menu index="1">
         <template #title>
-          <i class="el-icon-menu"></i>
+          <i class="el-icon-s-promotion"></i>
           <span>留言管理</span>
         </template>
         <el-menu-item-group>

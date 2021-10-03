@@ -6,14 +6,26 @@
     <div class="content">
       <el-popover
         placement="bottom-start"
-        :title="`用户名：${userInfo.name}`"
         :width="150"
         trigger="hover"
-        :content="`角色：${userInfo.role}`"
       >
         <template #reference>
-          <el-button type="success" plain>个人信息<i class="el-icon-user-solid"/></el-button>
+          <el-button type="success" plain
+            >个人信息<i class="el-icon-user-solid"
+          /></el-button>
         </template>
+        <el-card class="box-card">
+          <template #header>
+            <div class="card-header">
+              <span>{{userInfo.name}}</span>
+              <el-button type="primary" icon="el-icon-edit" circle size="mini"/>
+            </div>
+          </template>
+          <div>
+            <div>角色:{{userInfo.role}}</div>
+            <div v-show="userInfo.roleNum == '' ? false:true">{{userInfo.content}}:{{userInfo.roleNum}}</div>
+          </div>
+        </el-card>
       </el-popover>
       <div>
         <el-button type="primary" plain @click="logOut">退出登录</el-button>
@@ -29,28 +41,34 @@ export default {
       userInfo: {
         name: "",
         role: "",
+        roleNum: "",
+        content:""
       },
     };
   },
   methods: {
     logOut() {
       localStorage.removeItem("token");
-      this.$router.push("/login")
+      this.$router.push("/login");
     },
   },
   created: function () {
     let user = JSON.parse(localStorage.getItem("user"));
     if (user != null) {
       this.userInfo.name = user.name;
-      switch(user.role){
-        case 'student':
-          this.userInfo.role = '学生'
+      switch (user.role) {
+        case "student":
+          this.userInfo.role = "学生";
+          this.userInfo.content = "学号";
+          this.userInfo.roleNum = user.roleNum;
           break;
-        case 'teacher':
-          this.userInfo.role = '教师'
+        case "teacher":
+          this.userInfo.role = "教师";
+          this.userInfo.content = "工号";
+          this.userInfo.roleNum = user.roleNum;
           break;
-        case 'admin':
-          this.userInfo.role = '管理员'
+        case "admin":
+          this.userInfo.role = "管理员";
           break;
       }
     }
@@ -70,8 +88,15 @@ export default {
   font-size: 22px;
   width: 145px;
 }
-.content{
+.content {
   display: flex;
   flex-flow: row nowrap;
+}
+.card-header{
+  font-size: 20px;
+}
+.card-header>.el-button{
+  position: absolute;
+  left: 125px;
 }
 </style>
