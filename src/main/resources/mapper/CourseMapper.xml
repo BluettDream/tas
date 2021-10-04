@@ -4,13 +4,4 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tian.tas.mapper.CourseMapper">
 
-    <resultMap id="BaseResultMap" type="org.tian.tas.entity.Course">
-            <id property="num" column="num" jdbcType="VARCHAR"/>
-            <result property="name" column="name" jdbcType="VARCHAR"/>
-            <result property="teacherNum" column="teacher_num" jdbcType="INTEGER"/>
-    </resultMap>
-
-    <sql id="Base_Column_List">
-        num,name,teacher_num
-    </sql>
 </mapper>
