@@ -55,7 +55,7 @@ export default {
       scoreForm: {
         name: "",
         roleNum: "",
-        password: "",
+        password: "123456",
         items: [
           {
             course: "",
