@@ -37,7 +37,6 @@ export const lmCommon = {
                 })
             } else {
                 if(this.searchCondition.isAll && !this.choose.match(/\d/g)) this.choose += 1;
-                console.log(this.choose)
                 getQueryData(this.choose, queryString).then(res => {
                     this.restaurants = []
                     res.data.forEach(item => {
@@ -53,6 +52,7 @@ export const lmCommon = {
             }
         },
         dynamicSearch() { //根据输入内容更新数据
+            if(this.choose.match(/\d/g)) this.choose = this.choose.replace("1","");
             if (this.choose == 'title') {
                 this.searchCondition.title = this.inputSearch
             } else if (this.choose == 'content') {
