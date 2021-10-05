@@ -92,7 +92,7 @@ export default {
     if (user != null) {
       getCourse(user.roleNum).then((res) => {
         this.courseList = res.data;
-      });
+      })
     }
   },
 };

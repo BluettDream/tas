@@ -14,6 +14,25 @@ import java.io.Serializable;
 @TableName(value ="user")
 @Data
 public class User implements Serializable {
+
+    /**
+     * 真实姓名,不存于user表,存储于学生或教师中
+     */
+    @TableField(exist = false)
+    private String realName;
+
+    /**
+     * 教师部门,不存于user表
+     */
+    @TableField(exist = false)
+    private String department;
+
+    /**
+     * 学生班级,不存于user表
+     */
+    @TableField(exist = false)
+    private String stuClass;
+
     /**
      * 用户id，唯一标识
      */

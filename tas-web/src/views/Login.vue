@@ -43,11 +43,11 @@
                 <el-button type="primary" @click="submitForm('userForm')"
                   >登录</el-button
                 >
-                <el-button type="success" @click="register">注册</el-button>
+                <el-button type="success" @click="registered = false">注册</el-button>
                 <el-button @click="resetForm('userForm')">重置</el-button>
               </el-form-item>
             </el-form>
-            <t-register v-show="!registered" />
+            <t-register v-show="!registered" @isView="isView"/>
           </div>
         </div>
       </el-row>
@@ -103,8 +103,8 @@ export default {
         }
       });
     },
-    register() {
-      this.registered = false;
+    isView(childValue){
+      this.registered = childValue;
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();

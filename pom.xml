@@ -10,7 +10,7 @@
     </parent>
     <groupId>org.tian</groupId>
     <artifactId>tas</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.2</version>
     <name>tas</name>
     <description>tas</description>
 
@@ -18,11 +18,15 @@
         <java.version>1.8</java.version>
         <mybatisplus.version>3.4.3.4</mybatisplus.version>
         <druid.version>1.2.7</druid.version>
+        <hutool.version>5.7.13</hutool.version>
+        <maven.plugin.version>2.5.4</maven.plugin.version>
     </properties>
+
     <dependencies>
+        <!--切面管理-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
         <!--日志管理-->
         <dependency>
@@ -47,9 +51,13 @@
         </dependency>
         <!--通用配置-->
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.7.13</version>
+            <version>${hutool.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -77,10 +85,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--maven打包插件-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-maven-plugin</artifactId>
-            <version>2.5.4</version>
+            <version>${maven.plugin.version}</version>
         </dependency>
     </dependencies>
 
