@@ -65,26 +65,26 @@
       ref="multipleTable"
       :data="records"
       tooltip-effect="dark"
-      max-height="370px"
       size="medium"
       style="width: 100%; margin-top: 5px"
       @selection-change="handleSelectionChange"
       :border="true"
+      height="380px"
       v-loading="loading"
     >
       <el-table-column type="selection" width="45" />
       <el-table-column prop="id" v-if="false" />
-      <el-table-column prop="receiver" label="留言接收人" width="100" />
-      <el-table-column prop="date" label="留言日期" width="120" sortable />
-      <el-table-column prop="title" label="留言标题" width="150" />
-      <el-table-column prop="content" label="留言内容" min-width="250" />
-      <el-table-column label="操作" width="150" fixed="right">
+      <el-table-column prop="receiver" label="留言接收人" min-width="100" />
+      <el-table-column prop="date" label="留言日期" min-width="150" sortable />
+      <el-table-column prop="title" label="留言标题" min-width="150" />
+      <el-table-column prop="content" label="留言内容" min-width="642"/>
+      <el-table-column label="操作" min-width="200" fixed="right">
         <template #default="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
+          <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
             >编辑</el-button
           >
           <el-button
-            size="mini"
+            size="small"
             type="danger"
             @click="handleDelete(scope.$index, scope.row)"
             >删除</el-button

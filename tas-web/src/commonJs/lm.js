@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import {
     getPage,
     getTitle,
@@ -138,9 +137,6 @@ export const lmCommon = {
             this.totalMessages = data.total; //全部留言数
             this.totalPages = data.pages; //全部页数
             this.records = data.records; //数据导入到页面表格中
-            this.records.forEach(element => {
-                element.date = dayjs(element.date).format("YYYY-MM-DD");
-            });
             this.loading = false; //关闭加载
         }
     },

@@ -12,7 +12,6 @@ import org.tian.tas.entity.Teacher;
 import org.tian.tas.entity.User;
 import org.tian.tas.service.StudentService;
 import org.tian.tas.service.TeacherService;
-import org.tian.tas.service.UserService;
 
 /**
  * @author TianMH
@@ -23,8 +22,6 @@ import org.tian.tas.service.UserService;
 @Log4j2
 public class AchievementAOP {
 
-    @Autowired
-    private UserService userService;
     @Autowired
     private TeacherService teacherService;
     @Autowired

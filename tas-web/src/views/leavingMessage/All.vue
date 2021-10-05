@@ -73,10 +73,10 @@
       :stripe="true"
     >
       <el-table-column prop="id" v-if="false" />
-      <el-table-column prop="sender" label="留言发送人" width="100" />
-      <el-table-column prop="receiver" label="留言接收人" width="100" />
-      <el-table-column prop="date" label="留言日期" width="120" sortable />
-      <el-table-column prop="title" label="留言标题" width="150" />
+      <el-table-column prop="sender" label="留言发送人" min-width="100" />
+      <el-table-column prop="receiver" label="留言接收人" min-width="100" />
+      <el-table-column prop="date" label="留言日期" min-width="150" sortable />
+      <el-table-column prop="title" label="留言标题" min-width="150" />
       <el-table-column prop="content" label="留言内容" min-width="250" />
     </el-table>
     <!-- 分页控制 -->

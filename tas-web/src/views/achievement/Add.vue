@@ -6,18 +6,35 @@
       label-width="25%"
       :inline="true"
     >
-      <el-form-item label="学生姓名">
-        <el-input v-model="scoreForm.name" clearable />
-      </el-form-item>
-      <el-form-item label="学号">
-        <el-input v-model="scoreForm.roleNum" clearable />
-      </el-form-item>
-      <el-form-item label="登录密码">
-        <el-input v-model="scoreForm.password" clearable />
-      </el-form-item>
-      <div v-for="(item, index) in scoreForm.items" :key="item.key">
-        <el-form-item label="课程" :prop="'items.' + index + '.course'" style="width:23%">
-          <el-select v-model="item.course" placeholder="请选择课程">
+      <div
+        v-for="(scoreInfo, index) in scoreForm.scoreInfomation"
+        :key="scoreInfo"
+      >
+        <el-form-item label="学生姓名" style="width: 17%" label-width="70px">
+          <el-input
+            v-model="scoreInfo.realName"
+            clearable
+            placeholder="请输入学生姓名"
+          />
+        </el-form-item>
+        <el-form-item label="学号" style="width: 16%" label-width="50px">
+          <el-input
+            v-model="scoreInfo.studentNumber"
+            clearable
+            placeholder="请输入学生学号"
+          />
+        </el-form-item>
+        <el-form-item
+          label="课程"
+          :prop="'scoreInfomation.' + index + '.course'"
+          style="width: 25%"
+          label-width="50px"
+        >
+          <el-select
+            v-model="scoreInfo.course"
+            placeholder="请选择课程"
+            style="width: 100%"
+          >
             <el-option
               v-for="course in courseList"
               :key="course"
@@ -26,13 +43,20 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="成绩" :prop="'items.' + index + '.score'">
-          <el-input v-model="item.score" />
+        <el-form-item
+          label="成绩"
+          :prop="'scoreInfomation.' + index + '.score'"
+        >
+          <el-input
+            v-model="scoreInfo.score"
+            clearable
+            placeholder="请输入学生成绩"
+          />
         </el-form-item>
-        <el-button @click="addItem" class="el-icon-plus" />
+        <el-button @click="addScoreInfo(index)" class="el-icon-plus" />
         <el-button
-          @click.prevent="removeItem(item)"
-          v-if="scoreForm.items.length !== 1"
+          @click.prevent="removeScoreInfo(scoreInfo)"
+          v-if="scoreForm.scoreInfomation.length !== 1"
           type="danger"
           >删除</el-button
         >
@@ -40,8 +64,23 @@
       </div>
       <br />
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">录入成绩</el-button>
-        <el-button @click="resetForm('scoreForm')">重置</el-button>
+        <div class="btn">
+          <div>
+            <el-button type="primary" @click="onSubmit">录入成绩</el-button>
+            <el-button @click="resetForm('scoreForm')">重置</el-button>
+          </div>
+          <div class="right">
+            记住:&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-checkbox-group v-model="checkboxGroup" size="medium">
+              <el-checkbox-button
+                v-for="information in informations"
+                :label="information"
+                :key="information"
+                >{{ information }}</el-checkbox-button
+              >
+            </el-checkbox-group>
+          </div>
+        </div>
       </el-form-item>
     </el-form>
   </div>
@@ -54,33 +93,51 @@ export default {
   data() {
     return {
       scoreForm: {
-        name: "",
-        roleNum: "",
-        password: "123456",
-        items: [
+        scoreInfomation: [
           {
+            realName: "",
+            studentNumber: "",
             course: "",
             score: "",
           },
         ],
       },
       courseList: [],
+      checkboxGroup: ["课程"],
+      informations: ["学生姓名", "学号", "课程", "成绩"],
     };
   },
   methods: {
     onSubmit() {
       console.log(this.scoreForm);
     },
-    removeItem(item) {
-      var index = this.scoreForm.items.indexOf(item);
+    updateRemeber() {
+      console.log(value);
+    },
+    removeScoreInfo(scoreInfo) {
+      var index = this.scoreForm.scoreInfomation.indexOf(scoreInfo);
       if (index !== -1) {
-        this.scoreForm.items.splice(index, 1);
+        this.scoreForm.scoreInfomation.splice(index, 1);
       }
     },
-    addItem() {
-      this.scoreForm.items.push({
-        course: "",
-        score: "",
+    addScoreInfo(index) {
+      this.scoreForm.scoreInfomation.push({
+        realName:
+          this.checkboxGroup.indexOf("学生姓名") !== -1
+            ? this.scoreForm.scoreInfomation[index].realName
+            : "",
+        studentNumber:
+          this.checkboxGroup.indexOf("学号") !== -1
+            ? this.scoreForm.scoreInfomation[index].studentNumber
+            : "",
+        course:
+          this.checkboxGroup.indexOf("课程") !== -1
+            ? this.scoreForm.scoreInfomation[index].course
+            : "",
+        score:
+          this.checkboxGroup.indexOf("成绩") !== -1
+            ? this.scoreForm.scoreInfomation[index].score
+            : "",
       });
     },
     resetForm(formName) {
@@ -92,11 +149,24 @@ export default {
     if (user != null) {
       getCourse(user.roleNum).then((res) => {
         this.courseList = res.data;
-      })
+      });
     }
   },
 };
 </script>
 
-<style>
+<style scoped>
+.el-form-item:last-child {
+  margin-left: 6%;
+  width: 80%;
+}
+.btn {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+}
+.right {
+  display: flex;
+  flex-flow: row nowrap;
+}
 </style>
