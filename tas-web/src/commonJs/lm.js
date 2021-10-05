@@ -30,12 +30,14 @@ export const lmCommon = {
         }
     },
     methods: {
-        querySearchAsync(queryString, callback) { //根据选择动态搜索内容
+        querySearchAsync(queryString, callback) { //动态搜索内容
             if (queryString === '') {} else if (this.choose == "") {
                 this.$message.warning({
                     message: "请先选择输入框左边的搜索条件"
                 })
             } else {
+                if(this.searchCondition.isAll && !this.choose.match(/\d/g)) this.choose += 1;
+                console.log(this.choose)
                 getQueryData(this.choose, queryString).then(res => {
                     this.restaurants = []
                     res.data.forEach(item => {

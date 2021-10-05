@@ -24,7 +24,7 @@ public interface LeavingMessageMapper extends BaseMapper<LeavingMessage> {
     Boolean updateByIds(List<String> ids);
 
     //根据搜索条件查询
-    List<String> selectByQueryString(String sender,String query,String queryString);
+    List<String> selectByQueryString(String sender,String receiver,String query,String queryString);
 }
 
 

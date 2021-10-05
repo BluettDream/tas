@@ -83,8 +83,12 @@ public class LeavingMessageController {
     public List<String> getQueryData(@PathVariable("userName") String userName,
                                      @PathVariable("query") String query,
                                      @RequestParam("querystring") String queryString){
-        log.info("userName:{},query:{},queryString:{}",userName,query,queryString);
-        return messageService.selectByQueryString(userName,query,queryString);
+        //判断是否为全部留言,搜索条件有1则为全部留言
+        if(Character.isDigit(query.charAt(query.length()-1)) && query.charAt(query.length()-1) == '1'){
+            query = query.replace("1","");
+            return messageService.selectByQueryString(userName,userName,query,queryString);
+        }
+        return messageService.selectByQueryString(userName,null,query,queryString);
     }
 
 }

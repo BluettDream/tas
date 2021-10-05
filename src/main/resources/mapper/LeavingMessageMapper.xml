@@ -61,7 +61,14 @@
         </if>
         from tas.leaving_message
         <where>
-            is_deleted = '未删除' and sender = #{sender}
+            is_deleted = '未删除'
+            <if test="sender != null">
+                and (sender = #{sender}
+            </if>
+            <if test="receiver != null">
+                or receiver = #{receiver}
+            </if>
+            )
             <if test="query == 'title'">
                 and title like CONCAT(#{queryString},"%")
             </if>

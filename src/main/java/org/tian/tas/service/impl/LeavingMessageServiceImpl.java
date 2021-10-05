@@ -46,8 +46,9 @@ public class LeavingMessageServiceImpl extends ServiceImpl<LeavingMessageMapper,
     }
 
     @Override
-    public List<String> selectByQueryString(String sender, String query, String queryString) {
-        return leavingMessageMapper.selectByQueryString(sender,query,queryString);
+    public List<String> selectByQueryString(String sender, String receiver,String query, String queryString) {
+        if(receiver != null) return leavingMessageMapper.selectByQueryString(sender,receiver,query,queryString);
+        return leavingMessageMapper.selectByQueryString(sender,null,query,queryString);
     }
 
 }
