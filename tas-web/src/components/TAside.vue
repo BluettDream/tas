@@ -36,7 +36,7 @@
       </el-sub-menu>
       <el-sub-menu index="2">
         <template #title>
-          <i class="el-icon-setting"></i>
+          <i class="el-icon-s-data"></i>
           <span>成绩管理</span>
         </template>
         <el-menu-item-group>

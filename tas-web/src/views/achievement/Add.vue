@@ -16,11 +16,11 @@
         <el-input v-model="scoreForm.password" clearable />
       </el-form-item>
       <div v-for="(item, index) in scoreForm.items" :key="item.key">
-        <el-form-item label="课程" :prop="'items.' + index + '.course'">
+        <el-form-item label="课程" :prop="'items.' + index + '.course'" style="width:23%">
           <el-select v-model="item.course" placeholder="请选择课程">
             <el-option
               v-for="course in courseList"
-              :key="course" 
+              :key="course"
               :value="course"
               :label="course"
             />
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import { getCourse } from "../../api/achievement";
 export default {
   name: "Add",
   data() {
@@ -63,7 +64,7 @@ export default {
           },
         ],
       },
-      courseList:["语文","高数"]
+      courseList: [],
     };
   },
   methods: {
@@ -86,8 +87,14 @@ export default {
       this.$refs[formName].resetFields();
     },
   },
-  created:function(){
-  }
+  created: function () {
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (user != null) {
+      getCourse(user.roleNum).then((res) => {
+        this.courseList = res.data;
+      });
+    }
+  },
 };
 </script>
 
