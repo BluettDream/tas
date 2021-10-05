@@ -10,14 +10,24 @@
         v-for="(scoreInfo, index) in scoreForm.scoreInfomation"
         :key="scoreInfo"
       >
-        <el-form-item label="学生姓名" :prop="'scoreInfomation.' + index + '.realName'" style="width: 17%" label-width="70px">
+        <el-form-item
+          label="学生姓名"
+          :prop="'scoreInfomation.' + index + '.realName'"
+          style="width: 17%"
+          label-width="70px"
+        >
           <el-input
             v-model="scoreInfo.realName"
             clearable
             placeholder="请输入学生姓名"
           />
         </el-form-item>
-        <el-form-item label="学号" :prop="'scoreInfomation.' + index + '.studentNumber'" style="width: 16%" label-width="50px">
+        <el-form-item
+          label="学号"
+          :prop="'scoreInfomation.' + index + '.studentNumber'"
+          style="width: 16%"
+          label-width="50px"
+        >
           <el-input
             v-model="scoreInfo.studentNumber"
             clearable
@@ -53,14 +63,50 @@
             placeholder="请输入学生成绩"
           />
         </el-form-item>
-        <el-button @click="addScoreInfo(index)" class="el-icon-plus" />
-        <el-button @click="resetScoreInfo(index)" class="el-icon-delete" />
-        <el-button
-          @click.prevent="removeScoreInfo(scoreInfo)"
-          v-if="scoreForm.scoreInfomation.length !== 1"
-          type="danger"
-          >删除</el-button
+        <el-tooltip
+          effect="light"
+          content="根据记住选项添加新数据"
+          placement="bottom"
+          :disabled="disabledAdd"
         >
+          <el-button
+            @click="
+              addScoreInfo(index);
+              disabledAdd = true;
+            "
+            class="el-icon-plus"
+          />
+        </el-tooltip>
+        <el-tooltip
+          effect="light"
+          content="清空当前行所有数据"
+          placement="bottom"
+          :disabled="disabledDelete"
+        >
+          <el-button
+            @click="
+              resetScoreInfo(index);
+              disabledDelete = true;
+            "
+            class="el-icon-delete"
+          />
+        </el-tooltip>
+        <el-tooltip
+          effect="light"
+          content="移除当前行"
+          placement="bottom"
+          :disabled="disabledRemove"
+          v-if="scoreForm.scoreInfomation.length !== 1"
+        >
+          <el-button
+            @click.prevent="
+              removeScoreInfo(scoreInfo);
+              disabledRemove = true;
+            "
+            type="danger"
+            >删除</el-button
+          >
+        </el-tooltip>
         <br />
       </div>
       <br />
@@ -68,7 +114,20 @@
         <div class="btn">
           <div>
             <el-button type="primary" @click="onSubmit">录入成绩</el-button>
-            <el-button @click="resetForm">重置</el-button>
+            <el-tooltip
+              effect="light"
+              content="清空当前页所有数据"
+              placement="bottom"
+              :disabled="disabledRemoveAll"
+            >
+              <el-button
+                @click="
+                  resetForm;
+                  disabledRemoveAll = true;
+                "
+                >重置</el-button
+              >
+            </el-tooltip>
           </div>
           <div class="right">
             记住:&nbsp;&nbsp;&nbsp;&nbsp;
@@ -106,6 +165,10 @@ export default {
       courseList: [],
       checkboxGroup: ["课程"],
       informations: ["学生姓名", "学号", "课程", "成绩"],
+      disabledAdd: false,
+      disabledDelete: false,
+      disabledRemove: false,
+      disabledRemoveAll: false,
     };
   },
   methods: {
@@ -141,7 +204,7 @@ export default {
             : "",
       });
     },
-    resetScoreInfo(index){
+    resetScoreInfo(index) {
       let item = this.scoreForm.scoreInfomation[index];
       item.realName = "";
       item.studentNumber = "";
@@ -149,12 +212,12 @@ export default {
       item.score = "";
     },
     resetForm() {
-      this.scoreForm.scoreInfomation.forEach(ele => {
+      this.scoreForm.scoreInfomation.forEach((ele) => {
         ele.realName = "";
-        ele.studentNumber  = "";
+        ele.studentNumber = "";
         ele.course = "";
         ele.score = "";
-      })
+      });
     },
   },
   created: function () {
