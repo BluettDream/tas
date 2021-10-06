@@ -13,7 +13,8 @@ import java.util.List;
 public interface CourseMapper extends BaseMapper<Course> {
 
     //根据教师编号获取教师对应教学课程
-    List<String> selectCNByTeacherNum(Integer teacherNum);
+    List<Course> selectCNByTeacherNum(Integer teacherNum);
+
 }
 
 

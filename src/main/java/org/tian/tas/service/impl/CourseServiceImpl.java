@@ -19,7 +19,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     @Autowired
     private CourseMapper courseMapper;
     @Override
-    public List<String> selectCNByTeacherNum(Integer teacherNum) {
+    public List<Course> selectCNByTeacherNum(Integer teacherNum) {
         return courseMapper.selectCNByTeacherNum(teacherNum);
     }
 }

@@ -20,7 +20,7 @@ export function changeData(datas) {
         method: "PATCH",
         data: datas,
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json;charset=UTF-8'
         },
     })
 }

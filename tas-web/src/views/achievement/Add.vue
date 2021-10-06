@@ -24,41 +24,41 @@
         </el-form-item>
         <el-form-item
           label="学号"
-          :prop="'scoreInfomation.' + index + '.studentNumber'"
+          :prop="'scoreInfomation.' + index + '.studentNum'"
           style="width: 16%"
           label-width="50px"
         >
           <el-input
-            v-model="scoreInfo.studentNumber"
+            v-model="scoreInfo.studentNum"
             clearable
             placeholder="请输入学生学号"
           />
         </el-form-item>
         <el-form-item
           label="课程"
-          :prop="'scoreInfomation.' + index + '.course'"
+          :prop="'scoreInfomation.' + index + '.courseNum'"
           style="width: 25%"
           label-width="50px"
         >
           <el-select
-            v-model="scoreInfo.course"
+            v-model="scoreInfo.courseNum"
             placeholder="请选择课程"
             style="width: 100%"
           >
             <el-option
               v-for="course in courseList"
-              :key="course"
-              :value="course"
-              :label="course"
+              :key="course.num"
+              :value="course.num"
+              :label="course.name"
             />
           </el-select>
         </el-form-item>
         <el-form-item
           label="成绩"
-          :prop="'scoreInfomation.' + index + '.score'"
+          :prop="'scoreInfomation.' + index + '.num'"
         >
           <el-input
-            v-model="scoreInfo.score"
+            v-model="scoreInfo.num"
             clearable
             placeholder="请输入学生成绩"
           />
@@ -147,7 +147,7 @@
 </template>
 
 <script>
-import { getCourse } from "../../api/achievement";
+import { getCourse,postAchievement } from "../../api/achievement";
 export default {
   name: "Add",
   data() {
@@ -156,9 +156,9 @@ export default {
         scoreInfomation: [
           {
             realName: "",
-            studentNumber: "",
-            course: "",
-            score: "",
+            studentNum: "",
+            courseNum: "",
+            num: "",
           },
         ],
       },
@@ -173,10 +173,18 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log(this.scoreForm);
-    },
-    updateRemeber() {
-      console.log(value);
+      postAchievement(JSON.stringify(this.scoreForm.scoreInfomation)).then(res => {
+        if(res.data == "success"){
+          this.$message.success({message:"成绩录入成功"});
+          this.resetForm();
+        }else if(res.data == "fail"){
+          this.$message.warning({message:"已有成绩录入,请检查录入数据是否重复"});
+        }else{
+          this.$message.warning({message:"非法操作,成绩录入异常"});
+        }
+      }).catch(error => {
+        this.$message.error({message:"系统异常,成绩录入失败"});
+      })
     },
     removeScoreInfo(scoreInfo) {
       var index = this.scoreForm.scoreInfomation.indexOf(scoreInfo);
@@ -190,33 +198,33 @@ export default {
           this.checkboxGroup.indexOf("学生姓名") !== -1
             ? this.scoreForm.scoreInfomation[index].realName
             : "",
-        studentNumber:
+        studentNum:
           this.checkboxGroup.indexOf("学号") !== -1
-            ? this.scoreForm.scoreInfomation[index].studentNumber
+            ? this.scoreForm.scoreInfomation[index].studentNum
             : "",
-        course:
+        courseNum:
           this.checkboxGroup.indexOf("课程") !== -1
-            ? this.scoreForm.scoreInfomation[index].course
+            ? this.scoreForm.scoreInfomation[index].courseNum
             : "",
-        score:
+        num:
           this.checkboxGroup.indexOf("成绩") !== -1
-            ? this.scoreForm.scoreInfomation[index].score
+            ? this.scoreForm.scoreInfomation[index].num
             : "",
       });
     },
     resetScoreInfo(index) {
       let item = this.scoreForm.scoreInfomation[index];
       item.realName = "";
-      item.studentNumber = "";
-      item.course = "";
-      item.score = "";
+      item.studentNum = "";
+      item.courseNum = "";
+      item.num = "";
     },
     resetForm() {
       this.scoreForm.scoreInfomation.forEach((ele) => {
         ele.realName = "";
-        ele.studentNumber = "";
-        ele.course = "";
-        ele.score = "";
+        ele.studentNum = "";
+        ele.courseNum = "";
+        ele.num = "";
       });
     },
   },

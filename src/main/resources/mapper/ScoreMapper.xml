@@ -4,4 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tian.tas.mapper.ScoreMapper">
 
+    <select id="selectByCNumAndSName" resultType="score">
+        select course_num,student_num from tas.score
+        <where>
+            <if test="courseNum != null">
+                course_num = #{courseNum}
+            </if>
+            <if test="studentNum != null">
+                and student_num = #{studentNum}
+            </if>
+        </where>
+    </select>
 </mapper>

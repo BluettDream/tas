@@ -21,7 +21,7 @@
             <PatternLayout pattern="${PATTERN_FORMAT}" />
             <Policies>
                 <TimeBasedTriggeringPolicy />
-                <SizeBasedTriggeringPolicy size="15 MB" />
+                <SizeBasedTriggeringPolicy size="150 MB" />
             </Policies>
             <DefaultRolloverStrategy max="20" >
                 <Delete basePath="${LOG_HOME}/" maxDepth="5">
@@ -40,7 +40,7 @@
             <PatternLayout pattern="${PATTERN_FORMAT}" />
             <Policies>
                 <TimeBasedTriggeringPolicy />
-                <SizeBasedTriggeringPolicy size="10 MB" />
+                <SizeBasedTriggeringPolicy size="100 MB" />
             </Policies>
             <DefaultRolloverStrategy max="15" >
                 <Delete basePath="${LOG_HOME}/" maxDepth="5">
@@ -58,7 +58,7 @@
             <PatternLayout pattern="${PATTERN_FORMAT}" />
             <Policies>
                 <TimeBasedTriggeringPolicy />
-                <SizeBasedTriggeringPolicy size="5 MB" />
+                <SizeBasedTriggeringPolicy size="50 MB" />
             </Policies>
             <DefaultRolloverStrategy max="5" >
                 <Delete basePath="${LOG_HOME}/" maxDepth="5">
@@ -69,8 +69,20 @@
     </Appenders>
 
     <Loggers>
+        <!--log4j2 过滤日志-->
+        <Logger name="org.apache.catalina.startup.DigesterFactory" level="error" />
+        <Logger name="org.apache.catalina.util.LifecycleBase" level="error" />
+        <Logger name="org.apache.coyote.http11.Http11NioProtocol" level="warn" />
+        <logger name="org.apache.sshd.common.util.SecurityUtils" level="warn"/>
+        <Logger name="org.apache.tomcat.util.net.NioSelectorPool" level="warn" />
+        <Logger name="org.crsh.plugin" level="warn" />
+        <logger name="org.crsh.ssh" level="warn"/>
+        <Logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="error" />
+        <Logger name="org.hibernate.validator.internal.util.Version" level="warn" />
+        <logger name="org.springframework.boot.actuate.autoconfigure.CrshAutoConfiguration" level="warn"/>
+        <logger name="org.springframework.boot.actuate.endpoint.jmx" level="warn"/>
+        <logger name="org.thymeleaf" level="warn"/>
         <Logger name="org.springframework" level="INFO"/>
-        <Logger name="org.apache" level="ERROR"/>
         <Logger name="org.thymeleaf" level="WARN"/>
         <Logger name="com.gargoylesoftware.htmlunit" level="WARN"/>
         <Root level="DEBUG">

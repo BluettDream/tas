@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -14,6 +15,7 @@ import java.io.Serializable;
  */
 @TableName(value ="score")
 @Data
+@NoArgsConstructor
 public class Score implements Serializable {
     /**
      * id
@@ -38,4 +40,10 @@ public class Score implements Serializable {
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+    public Score(String courseNum, Integer studentNum, Double num) {
+        this.courseNum = courseNum;
+        this.studentNum = studentNum;
+        this.num = num;
+    }
 }
