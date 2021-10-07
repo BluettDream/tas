@@ -3,6 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tian.tas.mapper.ScoreMapper">
+    <update id="updateById">
+        update tas.score
+        set num = #{score}
+        where id = #{id}
+    </update>
 
     <select id="selectByCNumAndSName" resultType="score">
         select course_num,student_num from tas.score
@@ -16,18 +21,19 @@
         </where>
     </select>
     <select id="selectScoreReport" resultType="scoreReport">
-        select s.name real_name,
+        select sc.id,
+               s.name real_name,
                sc.student_num,
                c.name course_name,
-               sc.num score
+               sc.num score,
                s.student_class
         from tas.student s,tas.course c,tas.score sc
         <where>
             s.student_num = sc.student_num and c.num = sc.course_num
-            <if test="studentNum != ''">
+            <if test="studentNum != null">
                 and sc.student_num = #{studentNum}
             </if>
-            <if test="teacherNum != ''">
+            <if test="teacherNum != null">
                 and c.teacher_num = #{teacherNum}
             </if>
         </where>

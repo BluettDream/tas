@@ -27,3 +27,12 @@ export function getScoreReport(studentNumber,teacherNum){
         method: "GET"
     })
 }
+
+//修改分数
+export function changeScore(datas){
+    return axios({
+        url: "/tas/achievement/score",
+        method: "PATCH",
+        data: datas,
+    })
+}

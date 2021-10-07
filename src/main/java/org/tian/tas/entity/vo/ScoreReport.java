@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ScoreReport {
+    private Integer id;
     private String realName;
     private String courseName;
     private Double score;

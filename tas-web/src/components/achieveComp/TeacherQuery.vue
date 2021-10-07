@@ -1,21 +1,29 @@
 <template>
   <div class="tacherQuery">
-    <div class="top">
+    <div class="top" v-if="false">
       <v-chart class="chart" :option="option" />
     </div>
     <div class="bottom">
       <div class="teacherTable">
         <el-table :data="tableData" border style="width: 100%" :stripe="true">
-          <el-table-column prop="id" label="ID" v-if="false"/>
+          <el-table-column prop="id" label="ID" v-if="false" />
           <el-table-column
             prop="courseName"
             label="课程名称"
             min-width="200px"
           />
-          <el-table-column prop="realName" label="学生姓名"/>
-          <el-table-column prop="score" label="分数" :sortable="true"/>
+          <el-table-column prop="realName" label="学生姓名" />
+          <el-table-column prop="score" label="分数" :sortable="true" />
           <el-table-column label="操作">
-              <el-button type="primary">修改</el-button>
+            <template #default="scope">
+              <el-button
+                size="small"
+                @click="handleEdit(scope.$index, scope.row)"
+                type="primary"
+                icon="el-icon-edit"
+                >修改</el-button
+              ></template
+            >
           </el-table-column>
         </el-table>
       </div>
@@ -24,25 +32,16 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { getScoreReport } from "../../api/achievement";
 import { use } from "echarts/core";
+import { TooltipComponent } from "echarts/components";
+import { GaugeChart } from "echarts/charts";
 import { CanvasRenderer } from "echarts/renderers";
-import { PieChart } from "echarts/charts";
-import {
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent,
-} from "echarts/components";
 import VChart, { THEME_KEY } from "vue-echarts";
 
-use([
-  CanvasRenderer,
-  PieChart,
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent,
-]);
+import { mapState } from "vuex";
+import { getScoreReport, changeScore } from "../../api/achievement";
+
+use([TooltipComponent, GaugeChart, CanvasRenderer]);
 export default {
   name: "TeacherQuery",
   components: { VChart },
@@ -51,74 +50,109 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        {
-          id: "",
-          courseName: "",
-          score: "",
-        },
-      ],
+      tableData: [],
       option: {
         title: {
-          text: "分数占比图",
-          left: "center",
+          text: "班级平均分仪表盘",
         },
         tooltip: {
-          trigger: "item",
-          formatter: "{b} : {c}分 ({d}%)",
-        },
-        legend: {
-          orient: "vertical",
-          left: "left",
-          data: [],
+          formatter: "{a} <br/>{b} : {c}%",
         },
         series: [
           {
-            name: "分数占比图",
-            type: "pie",
-            radius: "50%",
-            center: ["50%", "60%"],
-            data: [],
-            emphasis: {
-              itemStyle: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: "rgba(0, 0, 0, 0.5)",
-              },
+            name: "Pressure",
+            type: "gauge",
+            progress: {
+              show: true,
             },
+            detail: {
+              valueAnimation: true,
+              formatter: "{value}",
+            },
+            data: [
+              {
+                value: 50,
+                name: "SCORE",
+              },
+            ],
           },
         ],
       },
     };
   },
+  methods: {
+    handleEdit(index, row) {
+      this.$prompt(
+        "<div>学生:" +
+          row.realName +
+          "</div><div>课程:" +
+          row.courseName +
+          "</div>",
+        "修改分数",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          dangerouslyUseHTMLString: true,
+        }
+      )
+        .then(({ value }) => {
+          let score = {};
+          score.id = row.id;
+          score.num = value;
+          changeScore(score).then((res) => {
+            if (res.data == "success") {
+              getScoreReport("", this.user.roleNum).then((res) => {
+                this.tableData = res.data;
+              });
+              this.$message.success({
+                message: "修改学生" + row.realName + "的成绩成功",
+              });
+            } else {
+              this.$message.error({ message: "系统异常,修改失败!" });
+            }
+          });
+        })
+        .catch(() => {
+          this.$message.info({ message: "取消成绩修改" });
+        });
+    },
+    groupBy(array, f) {
+      debugger;
+      var groups = {};
+      array.forEach(function (o) {
+        var group = JSON.stringify(f(o));
+        groups[group] = groups[group] || [];
+        groups[group].push(o);
+      });
+      return Object.keys(groups).map(function (group) {
+        return groups[group];
+      });
+    },
+  },
   computed: mapState(["user"]),
   created: function () {
     getScoreReport("", this.user.roleNum).then((res) => {
       this.tableData = res.data;
-      this.tableData.forEach(element => {
-          this.option.series[0].data.push({value:element.score,name:element.courseName});
-          this.option.legend.data.push(element.courseName)
-      });
     });
   },
 };
 </script>
 
 <style scoped>
-.teacherQuery{
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    width: 100%;
+.teacherQuery {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  width: 100%;
 }
-.top{
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
+.top {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
 }
 .chart {
   height: 300px;
-  width: 500px;
+  width: 50%;
 }
 </style>

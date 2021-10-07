@@ -15,6 +15,8 @@ public interface ScoreService extends IService<Score> {
     Score selectByCNumAndSName(String courseNum, Integer studentNum);
 
     //获取学生成绩信息
-    List<ScoreReport> selectScoreReport(String studentNum, String teacherNum);
+    List<ScoreReport> selectScoreReport(Integer studentNum, Integer teacherNum);
 
+    //根据id更新成绩
+    Boolean updateById(Integer id,Double score);
 }

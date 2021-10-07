@@ -26,8 +26,13 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, Score>
     }
 
     @Override
-    public List<ScoreReport> selectScoreReport(String studentNum, String teacherNum) {
+    public List<ScoreReport> selectScoreReport(Integer studentNum, Integer teacherNum) {
         return scoreMapper.selectScoreReport(studentNum,teacherNum);
+    }
+
+    @Override
+    public Boolean updateById(Integer id, Double score) {
+        return scoreMapper.updateById(id,score);
     }
 }
 

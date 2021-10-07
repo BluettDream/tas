@@ -53,8 +53,16 @@ public class AchievementController {
     }
 
     @GetMapping("/score")
-    public List<ScoreReport> getScoreReport(@RequestParam("studentNum") String studentNum,
-                                            @RequestParam("teacherNum") String teacherNum){
+    public List<ScoreReport> getScoreReport(@RequestParam(value = "studentNum",required = false) Integer studentNum,
+                                            @RequestParam(value = "teacherNum",required = false) Integer teacherNum){
         return scoreService.selectScoreReport(studentNum,teacherNum);
+    }
+
+    @PatchMapping("/score")
+    public String updateAchievement(@RequestBody Score score){
+        if (scoreService.updateById(score.getId(),score.getNum())) {
+            return "success";
+        }
+        return "error";
     }
 }
