@@ -3,6 +3,7 @@ import {
   createWebHashHistory,
   createWebHistory
 } from 'vue-router'
+import store from '../store/index'
 import Index from '../views/Index'
 import Login from '../views/Login'
 import LeavingMessage from '../views/leavingMessage/LeavingMessage'
@@ -67,6 +68,7 @@ const whiteList = ['/login', '/error'];
 router.beforeEach((to, from, next) => {
   let token = localStorage.getItem("token");
   if (token != null) { //校验通过
+    store.commit("userMutation");
     next()
   } else {
     //校验不通过

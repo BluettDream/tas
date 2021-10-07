@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.tian.tas.entity.Course;
 import org.tian.tas.entity.Score;
+import org.tian.tas.entity.vo.ScoreReport;
 import org.tian.tas.service.CourseService;
 import org.tian.tas.service.ScoreService;
 
@@ -16,7 +17,7 @@ import java.util.List;
  * @date 2021/10/3
  */
 @RestController
-@RequestMapping("/achievement")
+@RequestMapping("/tas/achievement")
 @Log4j2
 public class AchievementController {
 
@@ -49,5 +50,11 @@ public class AchievementController {
             return "success";
         }
         return "error";
+    }
+
+    @GetMapping("/score")
+    public List<ScoreReport> getScoreReport(@RequestParam("studentNum") String studentNum,
+                                            @RequestParam("teacherNum") String teacherNum){
+        return scoreService.selectScoreReport(studentNum,teacherNum);
     }
 }

@@ -4,8 +4,8 @@ server:
   tomcat:
     remoteip:
       port-header: PUT,DELETE,OPTIONS,TRACE,PROPFIND,COPY,SEARCH
-  servlet:
-    context-path: /tas
+#  servlet:
+#    context-path: /tas                        # 设置项目启动根路径
 
 spring:
   datasource:

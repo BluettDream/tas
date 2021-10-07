@@ -1,15 +1,24 @@
 <template>
   <div class="query">
-      显示成绩的页面
+    <admin-query v-if="role == 'admin' ? true : false" />
+    <student-query v-if="role == 'student' ? true : false" />
+    <teacher-query v-if="role == 'teacher' ? true : false" />
   </div>
 </template>
 
 <script>
+import AdminQuery from "../../components/achieveComp/AdminQuery";
+import StudentQuery from "../../components/achieveComp/StudentQuery";
+import TeacherQuery from "../../components/achieveComp/TeacherQuery";
+import { mapState } from "vuex";
 export default {
-    name: 'Query'
-}
+  name: "Query",
+  components: { AdminQuery, StudentQuery, TeacherQuery },
+  computed: mapState({
+    role: state => state.user.role
+  }),
+};
 </script>
 
 <style>
-
 </style>

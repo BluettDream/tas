@@ -1,5 +1,5 @@
 module.exports = {
-    publicPath: '/tas',
+    publicPath: '/',
     outputDir: 'package',
     assetsDir: './',
     devServer: {

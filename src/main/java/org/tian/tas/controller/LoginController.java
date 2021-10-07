@@ -1,6 +1,5 @@
 package org.tian.tas.controller;
 
-import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,18 +18,17 @@ import java.util.UUID;
  * @date 2021/9/27 12:46
  */
 @Controller
-@Log4j2
 public class LoginController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/tas")
+    @GetMapping("/")
     public void enter(HttpServletResponse response) throws IOException {
         response.sendRedirect("index.html");
     }
 
-    @PostMapping("/login")
+    @PostMapping("/tas/login")
     @ResponseBody
     public String login(@RequestBody User user,HttpServletResponse response){
         User user1 = userService.getByName(user.getName());
@@ -45,7 +43,7 @@ public class LoginController {
         return "error";
     }
 
-    @PostMapping("/register")
+    @PostMapping("/tas/register")
     @ResponseBody
     public String register(@RequestBody User user,HttpServletResponse response){
         String id = UUID.randomUUID().toString().replace("-", "").toLowerCase();

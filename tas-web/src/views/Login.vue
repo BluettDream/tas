@@ -56,7 +56,7 @@
   </div>
 </template>
 <script>
-import TRegister from "../components/TRegister";
+import TRegister from "../components/commonComp/TRegister";
 import axios from "axios";
 export default {
   name: "Login",

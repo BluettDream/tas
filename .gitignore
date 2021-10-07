@@ -5,7 +5,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 /logs/
-/tas-web/tas/
+/tas-web/package/
 
 ### STS ###
 .apt_generated

@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import TAside from "../components/TAside.vue";
-import THeader from "../components/THeader.vue";
+import TAside from "../components/commonComp/TAside";
+import THeader from "../components/commonComp/THeader";
 export default {
   name: "Index",
   components: { TAside, THeader },

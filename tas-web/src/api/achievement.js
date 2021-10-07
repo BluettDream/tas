@@ -19,3 +19,11 @@ export function postAchievement(datas){
         }
     })
 }
+
+//获取成绩单
+export function getScoreReport(studentNumber,teacherNum){
+    return axios({
+        url: "/tas/achievement/score?studentNum="+studentNumber+"&teacherNum="+teacherNum,
+        method: "GET"
+    })
+}

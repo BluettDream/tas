@@ -2,7 +2,6 @@ package org.tian.tas.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.tian.tas.entity.LeavingMessage;
@@ -19,8 +18,7 @@ import java.util.List;
  * @date 2021/9/29 11:05
  */
 @RestController
-@Log4j2
-@RequestMapping("/leavingMessage")
+@RequestMapping("/tas/leavingMessage")
 public class LeavingMessageController {
 
     @Autowired
