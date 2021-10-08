@@ -6,6 +6,7 @@ target/
 !**/src/test/**/target/
 /logs/
 /tas-web/package/
+/src/main/resources/static/
 
 ### STS ###
 .apt_generated
