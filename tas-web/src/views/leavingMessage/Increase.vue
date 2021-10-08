@@ -18,7 +18,7 @@
         <el-input
           v-model="ruleForm.receiver"
           style="width: 15%"
-          placeholder="请输入接收人用户名"
+          placeholder="请输入用户名"
         />
       </el-form-item>
       <el-form-item prop="date" label="留言发送时间" required>
@@ -43,13 +43,14 @@
         <el-button type="primary" @click="submitForm('ruleForm')"
           >创建留言</el-button
         >
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
+        <el-button @click="resetForm()">重置</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
+import dayjs from "dayjs";
 import { addData } from "../../api/leavingmessage";
 export default {
   name: "Increase",
@@ -81,6 +82,7 @@ export default {
         if (valid) {
           let sender = JSON.parse(localStorage.getItem("user")).name;
           this.ruleForm.sender = sender;
+          this.ruleForm.date = dayjs(this.ruleForm.date).format("YYYY-MM-DD HH:mm:ss");
           addData(JSON.stringify(this.ruleForm)).then((res) => {
             if (res.data == "fail") {
               this.$message.warning({
@@ -88,19 +90,21 @@ export default {
               });
             } else if (res.data == "success") {
               this.$message.success({ message: "留言发送成功", center: true });
-              this.resetForm("ruleForm");
+              this.resetForm();
             } else {
               this.$message.error({ message: "发送留言失败" });
             }
           });
         } else {
-          console.log("error submit!!");
+          this.$message.warning({message: "校验失败,请检查格式"});
           return false;
         }
       });
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
+    resetForm() {
+      this.ruleForm.receiver = "";
+      this.ruleForm.title = "";
+      this.ruleForm.content = "";
     },
   },
 };

@@ -8,6 +8,7 @@
         <version>2.5.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>org.tian</groupId>
     <artifactId>tas</artifactId>
     <version>0.3.2</version>
