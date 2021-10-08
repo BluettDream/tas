@@ -66,6 +66,22 @@
                 </Delete>
             </DefaultRolloverStrategy>
         </RollingRandomAccessFile>
+
+        <!--druid的日志记录追加器-->
+        <RollingRandomAccessFile name="SqlFile"
+                                 fileName="${LOG_HOME}/sql.log"
+                                 filePattern="${LOG_HOME}/$${date:yyyy-MM}/fatal-%d{yyyy-MM-dd}-%i.log.zip">
+            <PatternLayout pattern="${PATTERN_FORMAT}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="300 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="5" >
+                <Delete basePath="${LOG_HOME}/" maxDepth="5">
+                    <IfFileName glob="*sql*.log.zip"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
     </Appenders>
 
     <Loggers>
@@ -85,6 +101,11 @@
         <Logger name="org.springframework" level="INFO"/>
         <Logger name="org.thymeleaf" level="WARN"/>
         <Logger name="com.gargoylesoftware.htmlunit" level="WARN"/>
+
+        <!--记录druid-sql的记录-->
+        <logger name="druid.sql.Statement" level="debug" additivity="false">
+            <appender-ref ref="SqlFile"/>
+        </logger>
         <Root level="DEBUG">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="InfoFile" />
