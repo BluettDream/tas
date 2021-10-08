@@ -18,7 +18,8 @@
           <template #header>
             <div class="card-header">
               <span>{{userInfo.name}}</span>
-              <el-button type="primary" icon="el-icon-edit" circle size="mini"/>
+              <!-- 待实现 -->
+              <el-button type="primary" icon="el-icon-edit" circle size="mini" v-if="false"/>
             </div>
           </template>
           <div class="info">

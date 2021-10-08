@@ -18,7 +18,7 @@
               class="demo-ruleForm"
               style="width: 380px"
             >
-              <el-form-item label="用户名" prop="name">
+              <el-form-item label="用户名" prop="name" style="width: 300px">
                 <el-input
                   v-model="userForm.name"
                   placeholder="请输入用户名"
