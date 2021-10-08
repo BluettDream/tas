@@ -26,7 +26,7 @@
           v-model="ruleForm.date"
           type="datetime"
           placeholder="请选择日期和时间"
-          style="width: 17%"
+          style="width: 24%"
           :disabledDate="disabledDate"
         />
       </el-form-item>

@@ -13,13 +13,13 @@
         <el-form-item
           label="学生姓名"
           :prop="'scoreInfomation.' + index + '.realName'"
-          style="width: 17%"
+          style="width: 18%"
           label-width="70px"
         >
           <el-input
             v-model="scoreInfo.realName"
             clearable
-            placeholder="请输入学生姓名"
+            placeholder="请输入姓名"
           />
         </el-form-item>
         <el-form-item
@@ -31,7 +31,7 @@
           <el-input
             v-model="scoreInfo.studentNum"
             clearable
-            placeholder="请输入学生学号"
+            placeholder="请输入学号"
           />
         </el-form-item>
         <el-form-item
@@ -56,11 +56,13 @@
         <el-form-item
           label="成绩"
           :prop="'scoreInfomation.' + index + '.num'"
+          style="width: 17%"
+          label-width="50px"
         >
           <el-input
             v-model="scoreInfo.num"
             clearable
-            placeholder="请输入学生成绩"
+            placeholder="请输入成绩"
           />
         </el-form-item>
         <el-tooltip

@@ -116,18 +116,6 @@ export default {
           this.$message.info({ message: "取消成绩修改" });
         });
     },
-    groupBy(array, f) {
-      debugger;
-      var groups = {};
-      array.forEach(function (o) {
-        var group = JSON.stringify(f(o));
-        groups[group] = groups[group] || [];
-        groups[group].push(o);
-      });
-      return Object.keys(groups).map(function (group) {
-        return groups[group];
-      });
-    },
   },
   computed: mapState(["user"]),
   created: function () {

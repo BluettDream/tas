@@ -12,7 +12,7 @@ spring:
     url: jdbc:mysql://localhost:3306/tas?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: Tmh010625
+    password: root
     type: com.alibaba.druid.pool.DruidDataSource #开启druid连接池
     druid:
       # 连接池基本配置

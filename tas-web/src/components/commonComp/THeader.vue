@@ -21,7 +21,7 @@
               <el-button type="primary" icon="el-icon-edit" circle size="mini"/>
             </div>
           </template>
-          <div>
+          <div class="info">
             <div>角色:{{userInfo.role}}</div>
             <div v-show="userInfo.roleNum == '' ? false:true">{{userInfo.content}}:{{userInfo.roleNum}}</div>
           </div>
@@ -94,6 +94,11 @@ export default {
 }
 .card-header{
   font-size: 20px;
+}
+.info{
+  display: flex;
+  flex-flow: column nowrap;
+  width: 150px;
 }
 .card-header>.el-button{
   position: absolute;

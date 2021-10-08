@@ -28,9 +28,6 @@
 <script>
 export default {
   name: "LeavingMessage",
-  data() {
-    return {};
-  },
 };
 </script>
 

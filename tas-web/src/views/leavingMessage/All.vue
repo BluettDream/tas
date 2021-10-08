@@ -61,13 +61,13 @@
       </div>
     </div>
     <!-- 数据内容 -->
-    <el-table
+    <div style="width: 100%;margin-top:5px;overflow: auto;">
+      <el-table
       ref="multipleTable"
       :data="records"
       tooltip-effect="dark"
-      height="350px"
+      max-height="380px"
       size="medium"
-      style="width: 100%;margin-top:5px;"
       :border="true"
       v-loading="loading"
       :stripe="true"
@@ -76,9 +76,11 @@
       <el-table-column prop="sender" label="留言发送人" min-width="100" />
       <el-table-column prop="receiver" label="留言接收人" min-width="100" />
       <el-table-column prop="date" label="留言日期" min-width="150" sortable />
-      <el-table-column prop="title" label="留言标题" min-width="150" />
-      <el-table-column prop="content" label="留言内容" min-width="250" />
+      <el-table-column prop="title" label="留言标题" min-width="100" />
+      <el-table-column prop="content" label="留言内容" width="450" :show-overflow-tooltip="true"/>
     </el-table>
+    </div>
+    
     <!-- 分页控制 -->
     <div class="pageControl">
       <div>

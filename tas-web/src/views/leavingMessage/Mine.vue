@@ -61,24 +61,24 @@
       </div>
     </div>
     <!-- 数据内容 -->
-    <el-table
+    <div style="width:100%;margin-top: 5px;overflow: auto;">
+      <el-table
       ref="multipleTable"
       :data="records"
       tooltip-effect="dark"
       size="medium"
-      style="width: 100%; margin-top: 5px"
       @selection-change="handleSelectionChange"
       :border="true"
-      height="380px"
+      max-height="380px"
       v-loading="loading"
     >
-      <el-table-column type="selection" width="45" />
+      <el-table-column type="selection" min-width="45" />
       <el-table-column prop="id" v-if="false" />
-      <el-table-column prop="receiver" label="留言接收人" min-width="100" />
-      <el-table-column prop="date" label="留言日期" min-width="150" sortable />
-      <el-table-column prop="title" label="留言标题" min-width="150" />
-      <el-table-column prop="content" label="留言内容" min-width="642"/>
-      <el-table-column label="操作" min-width="200" fixed="right">
+      <el-table-column prop="receiver" label="留言接收人" min-width="80" />
+      <el-table-column prop="date" label="留言日期" min-width="140" sortable />
+      <el-table-column prop="title" label="留言标题" min-width="100" />
+      <el-table-column prop="content" label="留言内容" :show-overflow-tooltip="true" width="400"/>
+      <el-table-column label="操作" min-width="110" fixed="right">
         <template #default="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
             >编辑</el-button
@@ -92,6 +92,7 @@
         </template>
       </el-table-column>
     </el-table>
+    </div>
     <!-- 数据修改 -->
     <el-dialog title="留言信息修改" v-model="dialogFormVisible" center>
       <el-form :model="dialogForm">

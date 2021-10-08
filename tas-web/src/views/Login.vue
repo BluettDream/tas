@@ -44,7 +44,7 @@
                   >登录</el-button
                 >
                 <el-button type="success" @click="registered = false">注册</el-button>
-                <el-button @click="resetForm('userForm')">重置</el-button>
+                <el-button @click="resetForm">重置</el-button>
               </el-form-item>
             </el-form>
             <t-register v-show="!registered" @isView="isView"/>
@@ -106,8 +106,10 @@ export default {
     isView(childValue){
       this.registered = childValue;
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
+    resetForm() {
+      this.userForm.name = "";
+      this.userForm.password = "";
+      this.userForm.role = "";
     },
   },
   created: function () {
