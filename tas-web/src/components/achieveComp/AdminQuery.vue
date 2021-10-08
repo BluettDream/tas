@@ -60,7 +60,7 @@ export default {
           score.num = value;
           changeScore(score).then((res) => {
             if (res.data == "success") {
-              getScoreReport("", this.user.roleNum).then((res) => {
+              getScoreReport("", "").then((res) => {
                 this.tableData = res.data;
               });
               this.$message.success({
