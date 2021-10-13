@@ -1,5 +1,6 @@
 package org.tian.tas.controller;
 
+import cn.hutool.crypto.SecureUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,12 +32,13 @@ public class LoginController {
     @PostMapping("/tas/login")
     @ResponseBody
     public String login(@RequestBody User user,HttpServletResponse response){
-        User user1 = userService.getByName(user.getName());
-        if(null != user1){
-            if(user1.getIsRegistered() && user.getPassword().equals(user1.getPassword())
-            && user.getRole().equals(user1.getRole())){
-                response.setHeader("token",user1.getId());
-                response.setHeader("roleNum", String.valueOf(user1.getRoleNum()));
+        User dataBaseUser = userService.getByName(user.getName());
+        if(null != dataBaseUser){
+            String hexPassword = SecureUtil.md5().digestHex(user.getPassword());
+            if(dataBaseUser.getIsRegistered() && hexPassword.equals(dataBaseUser.getPassword())
+            && user.getRole().equals(dataBaseUser.getRole())){
+                response.setHeader("token",dataBaseUser.getId());
+                response.setHeader("roleNum", String.valueOf(dataBaseUser.getRoleNum()));
                 return "success";
             }
         }
@@ -49,6 +51,7 @@ public class LoginController {
         String id = UUID.randomUUID().toString().replace("-", "").toLowerCase();
         user.setId(id);
         user.setIsRegistered(true);
+        user.setPassword(SecureUtil.md5().digestHex(user.getPassword()));
         if(userService.save(user)){
             response.setHeader("token",id);
             return "success";
