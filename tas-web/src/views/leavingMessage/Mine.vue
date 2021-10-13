@@ -215,6 +215,7 @@ export default {
       let diffData = this.compareForm(this.rawDialogData, this.dialogForm);
       if (diffData !== "") {
         diffData.id = this.dialogForm.id;
+        diffData.receiver = this.dialogForm.receiver;
         changeData(JSON.stringify(diffData)).then((res) => {
           if (res.data == "success") {
             this.pageChange(this.searchCondition.currentPage);

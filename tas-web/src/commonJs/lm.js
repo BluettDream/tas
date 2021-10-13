@@ -86,6 +86,7 @@ export const lmCommon = {
                 this.searchCondition.startTime = "";
                 this.searchCondition.endTime = "";
             }
+            this.searchCondition.currentPage = 1
             getPage(JSON.stringify(this.searchCondition)).then(res => {
                 this.updateData(res.data)
             })
