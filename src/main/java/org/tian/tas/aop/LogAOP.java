@@ -35,7 +35,12 @@ public class LogAOP {
             Object[] newArgs = Arrays.stream(oldArgs).filter(arg -> !(arg instanceof ServletRequest || arg instanceof ServletResponse)).toArray();
             log.info("进入{}()方法,入参:{}",methodName,mapper.writeValueAsString(newArgs));
             obj = pjp.proceed();
-            log.info("退出{}()方法,返回值:{}",methodName,obj.toString());
+            try{
+                log.info("退出{}()方法,返回值:{}",methodName,obj.toString());
+            }catch (NullPointerException e){
+                log.info("{}()方法入参为空",methodName);
+            }
+
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }

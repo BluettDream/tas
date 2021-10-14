@@ -26,7 +26,7 @@ public class LoginController {
 
     @GetMapping("/")
     public void enter(HttpServletResponse response) throws IOException {
-        response.sendRedirect("index.html");
+        response.sendRedirect("home");
     }
 
     @PostMapping("/tas/login")
