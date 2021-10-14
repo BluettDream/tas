@@ -1,6 +1,6 @@
 <template>
   <div class="studentQuery">
-    <div class="left">
+    <div class="left" v-if="tableData.length > 0 ? true : false">
       <v-chart class="chart" :option="option" />
     </div>
     <div class="right">
