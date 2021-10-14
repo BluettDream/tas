@@ -5,7 +5,7 @@
     </div>
     <div class="bottom">
       <div class="teacherTable">
-        <el-table :data="tableData" border style="width: 100%" :stripe="true">
+        <el-table :data="tableData" border style="width: 100%" :stripe="true" v-loading="loading">
           <el-table-column prop="id" label="ID" v-if="false" />
           <el-table-column
             prop="courseName"
@@ -29,6 +29,7 @@
       </div>
     </div>
   </div>
+  <el-backtop />
 </template>
 
 <script>
@@ -78,6 +79,7 @@ export default {
           },
         ],
       },
+      loading:true
     };
   },
   methods: {
@@ -121,6 +123,7 @@ export default {
   created: function () {
     getScoreReport("", this.user.roleNum).then((res) => {
       this.tableData = res.data;
+      this.loading = false;
     });
   },
 };

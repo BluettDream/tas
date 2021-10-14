@@ -2,7 +2,7 @@
     <div class="adminQuery">
     <div class="main">
       <div class="teacherTable" style="width: 100%;overflow:auto;">
-        <el-table :data="tableData" border :stripe="true">
+        <el-table :data="tableData" border :stripe="true" v-loading="loading">
           <el-table-column prop="id" label="ID" v-if="false" />
           <el-table-column
             prop="courseName"
@@ -27,6 +27,7 @@
       </div>
     </div>
   </div>
+  <el-backtop />
 </template>
 
 <script>
@@ -37,6 +38,7 @@ export default {
     data(){
         return{
             tableData: [],
+            loading:true
         }
     },
     methods: {
@@ -80,6 +82,7 @@ export default {
   created: function () {
     getScoreReport("", "").then((res) => {
       this.tableData = res.data;
+      this.loading = false;
     });
   },
 }
