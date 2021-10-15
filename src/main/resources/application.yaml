@@ -9,7 +9,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/tas?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=true
+    url: jdbc:mysql://localhost:3306/tas_tmh?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: tianmh
     password: root

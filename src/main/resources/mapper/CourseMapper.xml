@@ -5,7 +5,7 @@
 <mapper namespace="org.tian.tas.mapper.CourseMapper">
 
     <select id="selectCNByTeacherNum" resultType="course">
-        select * from tas.course
+        select * from tas_tmh.course
         <where>
             teacher_num = #{teacherNum}
         </where>

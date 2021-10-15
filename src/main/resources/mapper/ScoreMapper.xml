@@ -4,13 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tian.tas.mapper.ScoreMapper">
     <update id="updateById">
-        update tas.score
+        update tas_tmh.score
         set num = #{score}
         where id = #{id}
     </update>
 
     <select id="selectByCNumAndSName" resultType="score">
-        select course_num,student_num from tas.score
+        select course_num,student_num from tas_tmh.score
         <where>
             <if test="courseNum != null">
                 course_num = #{courseNum}
@@ -27,7 +27,7 @@
                c.name course_name,
                sc.num score,
                s.student_class
-        from tas.student s,tas.course c,tas.score sc
+        from tas_tmh.student s,tas_tmh.course c,tas_tmh.score sc
         <where>
             s.student_num = sc.student_num and c.num = sc.course_num
             <if test="studentNum != null">

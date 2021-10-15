@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tian.tas.mapper.LeavingMessageMapper">
     <update id="updateByIds">
-        update tas.leaving_message
+        update tas_tmh.leaving_message
             set is_deleted = '已删除'
         <where>
          id in
@@ -16,7 +16,7 @@
     <select id="selectPageVo" resultType="leavingMessage">
         select
         id,sender,receiver,date,title,content
-        from tas.leaving_message
+        from tas_tmh.leaving_message
         <where>
             is_deleted = '未删除'
             <if test="sender != ''">
@@ -40,7 +40,7 @@
 
     <select id="selectDistinctTitle" resultType="string">
         select distinct title allTitle
-        from tas.leaving_message
+        from tas_tmh.leaving_message
         <where>
             is_deleted = '未删除'
             <if test="sender != null">
@@ -59,7 +59,7 @@
         <if test="query == 'content'">
             content
         </if>
-        from tas.leaving_message
+        from tas_tmh.leaving_message
         <where>
             is_deleted = '未删除'
             <if test="sender != null">
