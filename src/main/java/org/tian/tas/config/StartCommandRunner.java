@@ -1,5 +1,6 @@
 package org.tian.tas.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -10,9 +11,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class StartCommandRunner implements CommandLineRunner {
 
+    @Value("${switchToStart}")
+    Boolean switchToStart;
+
     @Override
     public void run(String... args) throws Exception {
-        Runtime.getRuntime().exec("cmd /c start http://localhost/home");
+        if(switchToStart){
+            Runtime.getRuntime().exec("cmd /c start http://localhost/tas/home");
+        }
     }
 
 }
