@@ -17,7 +17,7 @@ import java.util.List;
  * @date 2021/10/3
  */
 @RestController
-@RequestMapping("/tas/achievement")
+@RequestMapping("/achievement")
 @Log4j2
 public class AchievementController {
 

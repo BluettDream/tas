@@ -1,5 +1,5 @@
 server:
-  port: 8018
+  port: 80
   max-http-header-size: 102400
   tomcat:
     remoteip:
@@ -33,7 +33,7 @@ spring:
       aop-patterns: org.blue.*                  # Spring监控AOP切入点
       filters: stat,wall,log4j2                 # 开启状态、防火墙、日志过滤
       stat-view-servlet:
-        enabled: true                           # 开启网页SQL视图管理
+        enabled: false                           # 开启网页SQL视图管理
         login-username: tian                    # 登录/druid的用户名
         login-password: 2019121218              # 密码
         reset-enable: true                      # 开启重置功能

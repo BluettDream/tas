@@ -25,7 +25,7 @@ class TasApplicationTests {
 
     @Test
     void test(){
-        String md5 = SecureUtil.md5().digestHex("123");
+        String md5 = SecureUtil.md5().digestHex("adminIsTmh1st625864");
         System.out.println(md5);
 
     }

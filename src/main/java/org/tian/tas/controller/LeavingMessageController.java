@@ -18,7 +18,7 @@ import java.util.List;
  * @date 2021/9/29 11:05
  */
 @RestController
-@RequestMapping("/tas/leavingMessage")
+@RequestMapping("/leavingMessage")
 public class LeavingMessageController {
 
     @Autowired

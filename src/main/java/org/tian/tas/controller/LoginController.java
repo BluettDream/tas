@@ -24,12 +24,12 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/tas")
+    @GetMapping("/")
     public void enter(HttpServletResponse response) throws IOException {
         response.sendRedirect("/tas/home");
     }
 
-    @PostMapping("/tas/login")
+    @PostMapping("/login")
     @ResponseBody
     public String login(@RequestBody User user,HttpServletResponse response){
         User dataBaseUser = userService.getByName(user.getName());
@@ -45,7 +45,7 @@ public class LoginController {
         return "error";
     }
 
-    @PostMapping("/tas/register")
+    @PostMapping("/register")
     @ResponseBody
     public String register(@RequestBody User user,HttpServletResponse response){
         String id = UUID.randomUUID().toString().replace("-", "").toLowerCase();
