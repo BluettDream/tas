@@ -8,7 +8,7 @@ import Index from '../views/Index'
 import Login from '../views/Login'
 import LeavingMessage from '../views/leavingMessage/LeavingMessage'
 import Achievement from '../views/achievement/Achievement'
-
+import Error from '../views/Error;'
 const routes = [
   {
     path: '/login',
@@ -55,6 +55,14 @@ const routes = [
       ]
     }],
   },
+  {
+    path: '/404',
+    component: Error
+  },
+  {
+    path: '*',
+    redirect: '/404'
+  }
 ]
 
 const router = createRouter({
@@ -64,7 +72,8 @@ const router = createRouter({
 })
 
 // 白名单
-const whiteList = ['/login', '/error'];
+const whiteList = ['/login', '/404'];
+
 router.beforeEach((to, from, next) => {
   let token = localStorage.getItem("token");
   if (token != null) { //校验通过
