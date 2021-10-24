@@ -12,8 +12,8 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/tas_tmh?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=true
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: Tmh625819
+    username: tianmenghao
+    password: 2019121218
     type: com.alibaba.druid.pool.DruidDataSource #开启druid连接池
     druid:
       # 连接池基本配置
