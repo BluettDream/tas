@@ -8,7 +8,7 @@ import Index from '../views/Index'
 import Login from '../views/Login'
 import LeavingMessage from '../views/leavingMessage/LeavingMessage'
 import Achievement from '../views/achievement/Achievement'
-import Error from '../views/Error;'
+import Error from '../views/Error'
 const routes = [
   {
     path: '/login',
@@ -60,7 +60,7 @@ const routes = [
     component: Error
   },
   {
-    path: '*',
+    path: '/:pathMatch(.*)',
     redirect: '/404'
   }
 ]
