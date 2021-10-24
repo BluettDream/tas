@@ -1,18 +1,18 @@
 server:
-  port: 80
+  port: 8001
   max-http-header-size: 102400
   tomcat:
     remoteip:
       port-header: PUT,DELETE,OPTIONS,TRACE,PROPFIND,COPY,SEARCH
   servlet:
     context-path: /tas                        # 设置项目启动根路径
-switchToStart: true
+switchToStart: false
 spring:
   datasource:
     url: jdbc:mysql://www.likeblue.cn:3306/tas_tmh?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=true
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: Tmh625819
+    username: tianmenghao
+    password: 2019121218
     type: com.alibaba.druid.pool.DruidDataSource #开启druid连接池
     druid:
       # 连接池基本配置
