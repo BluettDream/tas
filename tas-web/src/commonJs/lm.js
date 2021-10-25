@@ -36,6 +36,7 @@ export const lmCommon = {
                 })
             } else {
                 if(this.searchCondition.isAll && !this.choose.match(/\d/g)) this.choose += 1;
+                console.log(this.choose)
                 getQueryData(this.choose, queryString).then(res => {
                     this.restaurants = []
                     res.data.forEach(item => {
