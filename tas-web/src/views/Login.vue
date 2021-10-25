@@ -65,6 +65,7 @@ export default {
     return {
       userForm: {
         name: "",
+        realName:"",
         password: "",
         role: "",
       },
@@ -87,8 +88,14 @@ export default {
         if (valid) {
           axios.post("/tas/login", this.userForm).then((res) => {
             if (res.data == "success") {
+              console.log(res)
               localStorage.setItem("token", res.headers.token);
               this.userForm.roleNum = res.headers.rolenum;
+              if(res.headers.realName !== undefined){
+                this.userForm.realName = res.headers.realname;
+              }
+              delete this.userForm.password;
+              console.log(JSON.stringify(this.userForm))
               localStorage.setItem("user", JSON.stringify(this.userForm));
               this.$router.push("/home");
             } else {

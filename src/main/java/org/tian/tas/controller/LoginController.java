@@ -1,6 +1,7 @@
 package org.tian.tas.controller;
 
 import cn.hutool.crypto.SecureUtil;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.tian.tas.entity.User;
 import org.tian.tas.service.UserService;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.UUID;
@@ -19,6 +21,7 @@ import java.util.UUID;
  * @date 2021/9/27 12:46
  */
 @Controller
+@Log4j2
 public class LoginController {
 
     @Autowired
@@ -39,6 +42,9 @@ public class LoginController {
             && user.getRole().equals(dataBaseUser.getRole())){
                 response.setHeader("token",dataBaseUser.getId());
                 response.setHeader("roleNum", String.valueOf(dataBaseUser.getRoleNum()));
+                String realName = userService.getRealNameByRole(dataBaseUser.getRole(), dataBaseUser.getName());
+                log.info("真实姓名为:{}",realName);
+                if(!realName.equals("error")) response.addCookie(new Cookie("realName",realName));
                 return "success";
             }
         }

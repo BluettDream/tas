@@ -56,7 +56,12 @@ export default {
   created: function () {
     let user = JSON.parse(localStorage.getItem("user"));
     if (user != null) {
-      this.userInfo.name = user.name;
+      console.log(user.realName)
+      if(user.realName != ""){
+        this.userInfo.name = user.realName;
+      }else{
+        this.userInfo.name = user.name;
+      }
       switch (user.role) {
         case "student":
           this.userInfo.role = "学生";
