@@ -4,9 +4,7 @@ import cn.hutool.crypto.SecureUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.tian.tas.entity.UserStatus;
 import org.tian.tas.service.UserService;
-import org.tian.tas.util.TokenUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,8 +16,6 @@ class TasApplicationTests {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private TokenUtils tokenUtils;
 
     @Test
     void uuidTest(){
@@ -52,9 +48,6 @@ class TasApplicationTests {
 
     @Test
     void test3(){
-        String token = tokenUtils.generateToken(userService.getByName("小亮"));
-        System.out.println(token);
-        Boolean validationToken = tokenUtils.validationToken(token, userService.getByName("小亮"),new UserStatus());
-        System.out.println(validationToken);
+        
     }
 }

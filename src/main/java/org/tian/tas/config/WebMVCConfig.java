@@ -2,7 +2,6 @@ package org.tian.tas.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -19,11 +18,5 @@ public class WebMVCConfig implements WebMvcConfigurer{
                 .allowedOrigins("http://localhost:8080","http://www.likeblue.cn:80")
                 .maxAge(3600)
                 .allowCredentials(true);
-    }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        WebMvcConfigurer.super.addInterceptors(registry);
-        registry.addInterceptor(new LoginInterceptor()).excludePathPatterns("/tas/login","/404");
     }
 }
