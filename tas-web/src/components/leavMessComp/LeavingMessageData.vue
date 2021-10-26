@@ -33,6 +33,7 @@
         <el-autocomplete
           v-model="inputSearch"
           :fetch-suggestions="querySearchAsync"
+          :trigger-on-focus="false"
           placeholder="请输入内容"
           size="small"
           :debounce="100"
