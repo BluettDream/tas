@@ -43,8 +43,9 @@
               placeholder="请选择"
               style="width: 95px"
             >
-              <el-option label="标题" value="title"></el-option>
-              <el-option label="内容" value="content"></el-option>
+              <el-option label="标题" value="title"/>
+              <el-option label="内容" value="content"/>
+              <el-option label="用户" value="user"/>
             </el-select>
           </template>
           <template #append>
@@ -56,6 +57,7 @@
             >
               <el-button
                 icon="el-icon-search"
+                type="primary"
                 @click="
                   disabled = true;
                   dynamicSearch();
@@ -82,6 +84,7 @@
         <el-table-column type="selection" width="45" v-if="isChangeData"/>
         <el-table-column prop="id" v-if="false" />
         <el-table-column prop="receiver" label="留言接收人" width="100" />
+        <el-table-column prop="sender" label="留言发送人" width="100" v-if="!isChangeData"/>
         <el-table-column
           prop="date"
           label="留言日期"
@@ -197,8 +200,8 @@ import { changeData, deleteData } from "../../api/leavingmessage";
 export default {
   name: "LeavingMessageData",
   props: {
-    isStartSearch: [Boolean],
-    isChangeData: [Boolean],
+    isStartSearch: [Boolean],     //是否开启搜索
+    isChangeData: [Boolean],      //是否改变数据(默认全部留言不能改变数据)
   },
   mixins: [lmCommon],
   data() {

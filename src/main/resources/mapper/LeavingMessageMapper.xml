@@ -36,6 +36,9 @@
             <if test="startTime != ''">
                 and date BETWEEN #{startTime} and #{endTime}
             </if>
+            <if test="user != ''">
+                and receiver = #{user}
+            </if>
             order by date desc
         </where>
     </select>
@@ -62,6 +65,9 @@
         <if test="query == 'content'">
             content
         </if>
+        <if test="query == 'user'">
+            receiver
+        </if>
         from tas_tmh.leaving_message
         <where>
             is_deleted = '未删除'
@@ -73,10 +79,13 @@
             </if>
             )
             <if test="query == 'title'">
-                and title like CONCAT(#{queryString},"%")
+                and title like CONCAT("%",#{queryString},"%")
             </if>
             <if test="query == 'content'">
-                and content like CONCAT(#{queryString},"%")
+                and content like CONCAT("%",#{queryString},"%")
+            </if>
+            <if test="query == 'user'">
+                and receiver like CONCAT("%",#{queryString},"%")
             </if>
         </where>
     </select>

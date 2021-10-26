@@ -25,10 +25,16 @@ public class LeavingMessageServiceImpl extends ServiceImpl<LeavingMessageMapper,
     @Override
     public IPage<LeavingMessage> selectPage(Page<?> page, SearchCondition condition) {
         if(condition.getIsAll()){  //查询全部留言
-            return leavingMessageMapper.selectPageVo(page, condition.getSender(), condition.getReceiver(), condition.getTitle(), condition.getContent(), condition.getStartTime(), condition.getEndTime());
+            if(condition.getSender().equals("admin")){  //管理员用户查询所有
+                return leavingMessageMapper.selectPageVo(page,"","","","","","","");
+            }
+            if(!condition.getSender().equals(condition.getReceiver())){     //如果搜索条件中发送人不等于接收人,则是搜索用户
+                return leavingMessageMapper.selectPageVo(page, condition.getSender(), condition.getSender(), condition.getTitle(), condition.getContent(), condition.getStartTime(), condition.getEndTime(), condition.getReceiver());
+            }
+            return leavingMessageMapper.selectPageVo(page, condition.getSender(), condition.getReceiver(), condition.getTitle(), condition.getContent(), condition.getStartTime(), condition.getEndTime(),"");
         }
         //查询个人留言
-        return leavingMessageMapper.selectPageVo(page, condition.getSender(), "", condition.getTitle(), condition.getContent(), condition.getStartTime(), condition.getEndTime());
+        return leavingMessageMapper.selectPageVo(page, condition.getSender(), "", condition.getTitle(), condition.getContent(), condition.getStartTime(), condition.getEndTime(), condition.getReceiver());
     }
 
     @Override
