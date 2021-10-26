@@ -64,10 +64,11 @@ export default {
   data() {
     return {
       userForm: {
-        name: "",
-        realName:"",
-        password: "",
-        role: "",
+        name: "",       //用户名
+        realName:"",    //真实姓名
+        password: "",   //密码
+        role: "",       //角色
+        roleNum:""      //身份号
       },
       registered: true,
       rules: {
@@ -88,14 +89,14 @@ export default {
         if (valid) {
           axios.post("/tas/login", this.userForm).then((res) => {
             if (res.data == "success") {
-              console.log(res)
               localStorage.setItem("token", res.headers.token);
-              this.userForm.roleNum = res.headers.rolenum;
-              if(res.headers.realName !== undefined){
-                this.userForm.realName = res.headers.realname;
+              this.userForm.roleNum = res.headers.rolenum;                  //根据返回头获取工号
+              if(this.userForm.name === "admin"){
+                this.realName = "";
+              }else{
+                this.userForm.realName = document.cookie.split(";")[0].split("=")[1];   //根据cookie获取真实姓名
               }
               delete this.userForm.password;
-              console.log(JSON.stringify(this.userForm))
               localStorage.setItem("user", JSON.stringify(this.userForm));
               this.$router.push("/home");
             } else {

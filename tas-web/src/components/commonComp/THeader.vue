@@ -56,7 +56,6 @@ export default {
   created: function () {
     let user = JSON.parse(localStorage.getItem("user"));
     if (user != null) {
-      console.log(user.realName)
       if(user.realName != ""){
         this.userInfo.name = user.realName;
       }else{
