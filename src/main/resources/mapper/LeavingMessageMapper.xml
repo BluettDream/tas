@@ -13,6 +13,7 @@
             </foreach>
         </where>
     </update>
+
     <select id="selectPageVo" resultType="leavingMessage">
         select
         id,sender,receiver,date,title,content
@@ -35,6 +36,7 @@
             <if test="startTime != ''">
                 and date BETWEEN #{startTime} and #{endTime}
             </if>
+            order by date desc
         </where>
     </select>
 
