@@ -7,25 +7,25 @@ import {
 export const lmCommon = {
     data() {
         return {
-            searchCondition: {
-                sender:"",
-                receiver:"",
-                currentPage: 1,
-                pageSize: 5,
-                title: "",
-                content:"",
-                startTime: "",
-                endTime: "",
-                isAll: false,
+            searchCondition: {      //搜索条件
+                sender:"",          //留言发送人
+                receiver:"",        //留言接收人
+                currentPage: 1,     //当前页面
+                pageSize: 8,        //页面大小
+                title: "",          //标题
+                content:"",         //内容
+                startTime: "",      //开始时间
+                endTime: "",        //结束时间
+                isAll: false,       //是否为全部留言
             },
-            choose: "",
-            totalMessages: 0,
-            totalPages: 0,
-            records: [],
-            currentURLPath: "",
-            restaurants: [],
-            timeout:"",
-            disabled: false
+            choose: "",             //动态搜索前置条件(例:content/title)
+            totalMessages: 0,       //总留言数
+            totalPages: 0,          //总页面
+            records: [],            //留言数据
+            currentURLPath: "",     //当前地址栏路径
+            restaurants: [],        //动态搜索内容显示
+            timeout:"",             //动态搜索加载时间
+            disabled: false         //是否显示tooltip
         }
     },
     methods: {
@@ -149,7 +149,7 @@ export const lmCommon = {
         this.searchCondition.isAll = this.currentURLPath == 'mine' ? false : true; //判断当前是在我的留言还是全部留言
         if(this.searchCondition.isAll){
             this.searchCondition.receiver = user.name;
-            this.searchCondition.pageSize = 7;
+            this.searchCondition.pageSize = 10;
         }
         this.loading = true; //开始加载
         getPage(JSON.stringify(this.searchCondition)).then(res => {

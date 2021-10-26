@@ -8,13 +8,6 @@
 import LeavingMessageData from "../../components/leavMessComp/LeavingMessageData"
 export default {
   name: "Mine",
-  components:{ LeavingMessageData },
-  data() {
-    return {
-    };
-  },
+  components:{ LeavingMessageData }
 };
 </script>
-
-<style scoped>
-</style>

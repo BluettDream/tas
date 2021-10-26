@@ -53,6 +53,7 @@
             </if>
         </where>
     </select>
+
     <select id="selectByQueryString" resultType="string">
         select distinct
         <if test="query == 'title'">

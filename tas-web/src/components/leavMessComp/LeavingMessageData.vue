@@ -77,14 +77,15 @@
         :border="true"
         v-loading="loading"
         :stripe="searchCondition.isAll"
+        style="width: 100%"
       >
-        <el-table-column type="selection" min-width="45" />
+        <el-table-column type="selection" width="45" v-if="isChangeData"/>
         <el-table-column prop="id" v-if="false" />
-        <el-table-column prop="receiver" label="留言接收人" min-width="100" />
+        <el-table-column prop="receiver" label="留言接收人" width="100" />
         <el-table-column
           prop="date"
           label="留言日期"
-          min-width="160"
+          width="160"
           sortable
         />
         <el-table-column
@@ -97,12 +98,10 @@
           prop="content"
           label="留言内容"
           :show-overflow-tooltip="true"
-          width="400"
         />
         <el-table-column
           label="操作"
-          min-width="150"
-          fixed="right"
+          width="150"
           v-if="isChangeData"
         >
           <template #default="scope">
@@ -204,17 +203,17 @@ export default {
   mixins: [lmCommon],
   data() {
     return {
-      date: "",
-      inputSearch: "",
-      choose: "",
-      loading: false,
-      distinctTitle: [],
-      currentTitle: "",
-      multipleSelection: [],
-      dialogFormVisible: false,
-      dialogForm: {},
-      rawDialogData: {},
-      formLabelWidth: "120px",
+      date: "",                   //日期数据
+      inputSearch: "",            //选择搜索输入框内容
+      choose: "",                 //选择搜索前置搜索条件
+      loading: false,             //加载动画
+      distinctTitle: [],          //加载的标题数据
+      currentTitle: "",           //当前标题
+      multipleSelection: [],      //复选框所选中全部行的内容
+      dialogFormVisible: false,   //留言信息修改是否弹出对话框
+      dialogForm: {},             //留言信息修改弹出对话框表单数据
+      rawDialogData: {},          //复制修改表单的数据，与原表单进行比较，提交修改数据
+      formLabelWidth: "120px",    //留言信息修改弹出对话框标签宽度
     };
   },
   watch: {
