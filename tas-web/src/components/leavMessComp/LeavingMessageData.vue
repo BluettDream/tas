@@ -167,10 +167,10 @@
         v-if="isChangeData"
         >删除所选</el-button
       >
-      <div>
+      <div style="min-width:101px">
         共<el-tag type=""> {{ totalMessages }} </el-tag>条留言
       </div>
-      <div>
+      <div style="min-width:182px">
         当前第<el-input-number
           v-model="searchCondition.currentPage"
           :controls="false"
@@ -182,7 +182,7 @@
         />页&nbsp;&nbsp;&nbsp;共{{ totalPages }}页
       </div>
       <!-- 翻页 -->
-      <div>
+      <div style="min-width:340px">
         <el-button @click="toFirst">首页</el-button>
         <el-button @click="toBefore">上一页</el-button>
         <el-button @click="toAfter">下一页</el-button>
@@ -327,13 +327,13 @@ export default {
 }
 .searchControl {
   display: flex;
-  flex-flow: row;
+  flex-flow: row wrap;
   align-items: center;
   justify-content: space-between;
 }
 .pageControl {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   align-items: center;
   justify-content: space-between;
 }
