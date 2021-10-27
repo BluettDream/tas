@@ -79,6 +79,11 @@ public class LeavingMessageServiceImpl extends ServiceImpl<LeavingMessageMapper,
         return leavingMessageMapper.selectByQueryString(sender,null,query,queryString);
     }
 
+    @Override
+    public Boolean updateUserName(String userRole,String userName,String oldName) {
+        return leavingMessageMapper.updateUserName(userRole,userName,oldName);
+    }
+
 }
 
 

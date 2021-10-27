@@ -45,4 +45,12 @@ public interface LeavingMessageService extends IService<LeavingMessage> {
      * @return string
      */
     List<String> selectByQueryString(String sender,String receiver,String query,String queryString);
+
+    /**
+     *
+     * @param userRole
+     * @param userName
+     * @return
+     */
+    Boolean updateUserName(String userRole,String userName,String oldName);
 }

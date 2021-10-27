@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ScoreReport {
+public class ScoreReportVO {
     private Integer id;
     private String realName;
     private String courseName;

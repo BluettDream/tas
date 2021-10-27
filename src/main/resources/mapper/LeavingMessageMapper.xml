@@ -14,6 +14,26 @@
         </where>
     </update>
 
+    <update id="updateUserName">
+        update tas_tmh.leaving_message
+        <set>
+            <if test="userRole == 'sender'">
+                sender = #{userName},
+            </if>
+            <if test="userRole == 'receiver'">
+                receiver = #{userName},
+            </if>
+        </set>
+        <where>
+            <if test="userRole == 'sender'">
+                sender = #{oldName}
+            </if>
+            <if test="userRole == 'receiver'">
+                receiver = #{oldName}
+            </if>
+        </where>
+    </update>
+
     <select id="selectPageVo" resultType="leavingMessage">
         select
         id,sender,receiver,date,title,content

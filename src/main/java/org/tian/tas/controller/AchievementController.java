@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.tian.tas.entity.Course;
 import org.tian.tas.entity.Score;
-import org.tian.tas.entity.vo.ScoreReport;
+import org.tian.tas.entity.vo.ScoreReportVO;
 import org.tian.tas.service.CourseService;
 import org.tian.tas.service.ScoreService;
 
@@ -53,8 +53,8 @@ public class AchievementController {
     }
 
     @GetMapping("/score")
-    public List<ScoreReport> getScoreReport(@RequestParam(value = "studentNum",required = false) Integer studentNum,
-                                            @RequestParam(value = "teacherNum",required = false) Integer teacherNum){
+    public List<ScoreReportVO> getScoreReport(@RequestParam(value = "studentNum",required = false) Integer studentNum,
+                                              @RequestParam(value = "teacherNum",required = false) Integer teacherNum){
         return scoreService.selectScoreReport(studentNum,teacherNum);
     }
 

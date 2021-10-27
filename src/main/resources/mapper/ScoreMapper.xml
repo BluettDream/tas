@@ -20,7 +20,7 @@
             </if>
         </where>
     </select>
-    <select id="selectScoreReport" resultType="scoreReport">
+    <select id="selectScoreReport" resultType="scoreReportVO">
         select sc.id,
                s.name real_name,
                sc.student_num,

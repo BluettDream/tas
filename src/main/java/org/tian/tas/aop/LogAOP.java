@@ -40,7 +40,6 @@ public class LogAOP {
             }catch (NullPointerException e){
                 log.info("{}()方法入参为空",methodName);
             }
-
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }

@@ -3,12 +3,12 @@ package org.tian.tas.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.tian.tas.entity.User;
+import org.tian.tas.mapper.UserMapper;
 import org.tian.tas.service.StudentService;
 import org.tian.tas.service.TeacherService;
 import org.tian.tas.service.UserService;
-import org.tian.tas.mapper.UserMapper;
-import org.springframework.stereotype.Service;
 
 /**
  *
@@ -33,7 +33,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public String getRealNameByRole(String role, String userName) {
         String realName;
-        log.info("角色为:{},用户名为:{}",role,userName);
         switch (role){
             case "student":
                 realName = studentService.getById(userName).getName();
@@ -47,7 +46,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         return realName;
     }
-
 
 }
 

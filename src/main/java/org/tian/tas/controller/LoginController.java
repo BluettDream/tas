@@ -37,6 +37,7 @@ public class LoginController {
     public String login(@RequestBody User user,HttpServletResponse response){
         User dataBaseUser = userService.getByName(user.getName());
         if(null != dataBaseUser){
+            log.info("{}用户登录密码:{}",user.getName(),user.getPassword());
             String hexPassword = SecureUtil.md5().digestHex(user.getPassword());
             if(dataBaseUser.getIsRegistered() && hexPassword.equals(dataBaseUser.getPassword())
             && user.getRole().equals(dataBaseUser.getRole())){

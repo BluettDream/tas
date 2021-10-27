@@ -25,6 +25,9 @@ public interface LeavingMessageMapper extends BaseMapper<LeavingMessage> {
 
     //根据搜索条件查询
     List<String> selectByQueryString(String sender,String receiver,String query,String queryString);
+
+    //更新留言信息的发送人和接收人
+    Boolean updateUserName(String userRole,String userName,String oldName);
 }
 
 
