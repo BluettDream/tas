@@ -80,7 +80,7 @@ export default {
         roleNum: "", //身份号
       },
       registered: true,
-      isRemeber: false,
+      isRemeber: true,
       rules: {
         name: [{ required: true, message: "请输入用户名", trigger: "blur" }],
         password: [
