@@ -38,4 +38,17 @@
             </if>
         </where>
     </select>
+    <select id="selectAverageScore" resultType="double">
+        select avg(sc.num) score
+        from tas_tmh.student s,tas_tmh.course c,tas_tmh.score sc
+        <where>
+            s.student_num = sc.student_num and c.num = sc.course_num
+            <if test="studentNum != null">
+                and sc.student_num = #{studentNum}
+            </if>
+            <if test="teacherNum != null">
+                and c.teacher_num = #{teacherNum}
+            </if>
+        </where>
+    </select>
 </mapper>

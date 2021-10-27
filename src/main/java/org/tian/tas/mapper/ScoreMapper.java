@@ -21,6 +21,9 @@ public interface ScoreMapper extends BaseMapper<Score> {
 
     //根据id更新成绩
     Boolean updateById(Integer id,Double score);
+
+    //查询学生平均分
+    Double selectAverageScore(Integer studentNum,Integer teacherNum);
 }
 
 

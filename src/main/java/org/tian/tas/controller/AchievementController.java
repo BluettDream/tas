@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.tian.tas.entity.Course;
 import org.tian.tas.entity.Score;
+import org.tian.tas.entity.vo.CommonResVO;
 import org.tian.tas.entity.vo.ScoreReportVO;
 import org.tian.tas.service.CourseService;
 import org.tian.tas.service.ScoreService;
@@ -64,5 +65,17 @@ public class AchievementController {
             return "success";
         }
         return "error";
+    }
+
+    @GetMapping("/averageScore")
+    public CommonResVO getAverageScore(@RequestParam(value = "studentNum",required = false) Integer studentNum,
+                                       @RequestParam(value = "teacherNum",required = false) Integer teacherNum){
+        try{
+            Double averageScore = scoreService.selectAverageScore(studentNum, teacherNum);
+            return new CommonResVO(200,"success",averageScore);
+        }catch (Exception e){
+            return new CommonResVO(403,"error");
+        }
+
     }
 }

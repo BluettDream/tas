@@ -19,4 +19,6 @@ public interface ScoreService extends IService<Score> {
 
     //根据id更新成绩
     Boolean updateById(Integer id,Double score);
+
+    Double selectAverageScore(Integer studentNum,Integer teacherNum);
 }

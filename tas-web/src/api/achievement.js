@@ -36,3 +36,10 @@ export function changeScore(datas){
         data: datas,
     })
 }
+
+export function getAverageScore(studentNumber,teacherNum){
+    return axios({
+        url: "/tas/achievement/averageScore?studentNum="+studentNumber+"&teacherNum="+teacherNum,
+        method: "GET"
+    })
+}

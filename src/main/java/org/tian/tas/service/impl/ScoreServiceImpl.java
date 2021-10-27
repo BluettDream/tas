@@ -34,6 +34,11 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, Score>
     public Boolean updateById(Integer id, Double score) {
         return scoreMapper.updateById(id,score);
     }
+
+    @Override
+    public Double selectAverageScore(Integer studentNum, Integer teacherNum) {
+        return scoreMapper.selectAverageScore(studentNum,teacherNum);
+    }
 }
 
 

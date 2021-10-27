@@ -1,8 +1,5 @@
 <template>
   <div class="tacherQuery">
-    <div class="top" v-if="false">
-      <v-chart class="chart" :option="option" />
-    </div>
     <div class="bottom">
       <div class="teacherTable">
         <el-table :data="tableData" border style="width: 100%" :stripe="true" v-loading="loading">
@@ -33,52 +30,14 @@
 </template>
 
 <script>
-import { use } from "echarts/core";
-import { TooltipComponent } from "echarts/components";
-import { GaugeChart } from "echarts/charts";
-import { CanvasRenderer } from "echarts/renderers";
-import VChart, { THEME_KEY } from "vue-echarts";
-
 import { mapState } from "vuex";
 import { getScoreReport, changeScore } from "../../api/achievement";
 
-use([TooltipComponent, GaugeChart, CanvasRenderer]);
 export default {
   name: "TeacherQuery",
-  components: { VChart },
-  provide: {
-    [THEME_KEY]: "light",
-  },
   data() {
     return {
       tableData: [],
-      option: {
-        title: {
-          text: "班级平均分仪表盘",
-        },
-        tooltip: {
-          formatter: "{a} <br/>{b} : {c}%",
-        },
-        series: [
-          {
-            name: "Pressure",
-            type: "gauge",
-            progress: {
-              show: true,
-            },
-            detail: {
-              valueAnimation: true,
-              formatter: "{value}",
-            },
-            data: [
-              {
-                value: 50,
-                name: "SCORE",
-              },
-            ],
-          },
-        ],
-      },
       loading:true
     };
   },
