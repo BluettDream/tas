@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="login" v-loading="loading">
     <img src="..\assets\img\login-bg.jpg" alt="背景" />
     <div class="main">
       <el-row align="middle">
@@ -81,6 +81,7 @@ export default {
       },
       registered: true,
       isRemeber: true,
+      loading:false,
       rules: {
         name: [{ required: true, message: "请输入用户名", trigger: "blur" }],
         password: [
@@ -95,6 +96,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          this.loading = true;
           axios.post("/tas/login", this.userForm).then((res) => {
             if (res.data == "success") {
               localStorage.setItem("token", res.headers.token);
@@ -108,8 +110,10 @@ export default {
               }
               if (!this.isRemeber) delete this.userForm.password; //是否记住密码
               localStorage.setItem("user", JSON.stringify(this.userForm));
+              this.loading = false;
               this.$router.push("/home");
             } else {
+              this.loading = false;
               this.$notify.error({
                 title: "登录失败",
                 message: "请检查ID,密码,角色是否正确!",
@@ -117,6 +121,7 @@ export default {
             }
           });
         } else {
+          this.loading = false;
           return false;
         }
       });

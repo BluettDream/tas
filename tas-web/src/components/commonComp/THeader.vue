@@ -50,6 +50,9 @@ export default {
   methods: {
     logOut() {
       localStorage.removeItem("token");
+      if(document.cookie !== undefined || document.cookie !== ""){
+        document.cookie="realName=;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/tas";
+      }
       this.$router.push("/login");
     },
   },
