@@ -1,5 +1,5 @@
 <template>
-  <div class="theader" v-loading="loading">
+  <div class="theader">
     <div class="logo">
       <div class="logoText">教学辅助系统</div>
     </div>
@@ -36,8 +36,10 @@
       </div>
     </div>
     <el-dialog title="用户修改" v-model="dialogFormVisible">
-      <el-form :model="userDialogForm">
-        <el-form-item v-show="false"><el-input v-model="userDialogForm.id"/></el-form-item>
+      <el-form :model="userDialogForm" v-loading="loading">
+        <el-form-item v-show="false"
+          ><el-input v-model="userDialogForm.id"
+        /></el-form-item>
         <div class="nameAndNum" v-if="userInfo.realName != ''">
           <el-form-item
             label="真实姓名:"
@@ -81,9 +83,7 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false;submitDialog()"
-            >确 定</el-button
-          >
+          <el-button type="primary" @click="submitDialog">确 定</el-button>
         </span>
       </template>
     </el-dialog>
@@ -99,51 +99,60 @@ export default {
         visiableName: "",
         name: "",
         realName: "",
-        password:"",
+        password: "",
         role: "",
         roleNum: "",
         content: "",
       },
-      token:"",
-      loading:false,
+      token: "",
+      loading: false,
       dialogFormVisible: false,
       formLabelWidth: 125,
       userDialogForm: {},
     };
   },
-  watch:{
-    dialogFormVisible(newValue){
-      if(newValue){
-        this.userDialogForm.id=this.token,
-        this.userDialogForm.realName=this.userInfo.realName,
-        this.userDialogForm.name=this.userInfo.name,
-        this.userDialogForm.password=this.userInfo.password,
-        this.userDialogForm.roleNum=this.userInfo.roleNum
+  watch: {
+    dialogFormVisible(newValue) {
+      if (newValue) {
+        (this.userDialogForm.id = this.token),
+          (this.userDialogForm.realName = this.userInfo.realName),
+          (this.userDialogForm.name = this.userInfo.name),
+          (this.userDialogForm.password = this.userInfo.password),
+          (this.userDialogForm.roleNum = this.userInfo.roleNum);
       }
-    }
+    },
   },
   methods: {
-    submitDialog(){
+    submitDialog() {
       this.loading = true;
-      delete this.userDialogForm.realName
-      delete this.userDialogForm.roleNum
-      modifyUser(JSON.stringify(this.userDialogForm)).then(res => {
-        this.loading = false;
-        if(res.data.code === 200 && res.data.status === "success"){
-          localStorage.removeItem("user");
-          this.$alert('请返回登录页面重新登录', '用户修改成功', {
-          confirmButtonText: '确定',
-          callback: (action) => {
-            this.$router.push("/login");
-            this.$message.info({message:"请重新输入用户名和密码"})
-          },
+      modifyUser(JSON.stringify(this.userDialogForm))
+        .then((res) => {
+          this.loading = false;
+          switch (res.data.code) {
+            case 200:
+              localStorage.removeItem("user");
+              this.$alert("请返回登录页面重新登录", "用户修改成功", {
+                confirmButtonText: "确定",
+                callback: () => {
+                  this.dialogFormVisible = false;
+                  this.$router.push("/login");
+                  this.$message.info({ message: "请重新输入用户名和密码" });
+                },
+              });
+              break;
+            case 444:
+              this.$message.warning({ message: "修改失败,用户名已存在" });
+              break;
+            default:
+              this.$message.error({ message: "系统错误,请联系管理员" });
+              break;
+          }
         })
-        }
-      }).catch(err => {
-        this.loading = false;
-        console.log(err)
-        this.$message.error({message:"系统出错,请联系管理员"})
-      })
+        .catch((err) => {
+          this.loading = false;
+          console.log(err);
+          this.$message.error({ message: "系统出错,请联系管理员" });
+        });
     },
     logOut() {
       localStorage.removeItem("token");
@@ -219,7 +228,7 @@ export default {
   display: flex;
   flex-flow: row nowrap;
 }
-.dialog-footer{
+.dialog-footer {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;

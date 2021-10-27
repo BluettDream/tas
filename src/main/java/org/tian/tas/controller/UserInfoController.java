@@ -23,10 +23,19 @@ public class UserInfoController {
 
     @PutMapping("/")
     public CommonResVO modifyUser(@RequestBody User user){
-        String oldName = userService.getById(user.getId()).getName();
-        user.setPassword(SecureUtil.md5().digestHex(user.getPassword()));
-        if (userService.updateById(user)) {
-            return new CommonResVO(200,"success",oldName);
+        User oldUser = userService.getById(user.getId());
+        user.setPassword(SecureUtil.md5().digestHex(user.getPassword()));       //密码加密
+        if(oldUser != null){
+            User repeatNameUser = userService.getByName(user.getName());
+            if(repeatNameUser != null){                                         //查到相同名称用户
+                if(repeatNameUser.getPassword().equals(user.getPassword())){    //用户密码相同,表明用户想修改昵称
+                    return new CommonResVO(444,"error");
+                }
+            }
+            String oldName = oldUser.getName();                                 //用户可以修改用户名或密码
+            if (userService.updateById(user)) {
+                return new CommonResVO(200,"success",oldName);
+            }
         }
         return new CommonResVO(403,"error");
     }
