@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <img src="..\assets\img\login-bg.jpg" alt="背景"/>
+    <img src="..\assets\img\login-bg.jpg" alt="背景" />
     <div class="main">
       <el-row align="middle">
         <div class="info">
@@ -32,22 +32,31 @@
                   show-password
                 ></el-input>
               </el-form-item>
-              <el-form-item label="角色" prop="role" style="width: 200px">
-                <el-select v-model="userForm.role" placeholder="身份">
-                  <el-option label="学生" value="student"></el-option>
-                  <el-option label="教师" value="teacher"></el-option>
-                  <el-option label="管理员" value="admin"></el-option>
-                </el-select>
-              </el-form-item>
+              <div class="remeberPass">
+                <el-form-item label="角色" prop="role" style="width: 200px">
+                  <el-select
+                    v-model="userForm.role"
+                    placeholder="身份"
+                    style="width: 100px"
+                  >
+                    <el-option label="学生" value="student"></el-option>
+                    <el-option label="教师" value="teacher"></el-option>
+                    <el-option label="管理员" value="admin"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-checkbox v-model="isRemeber" label="记住密码" border />
+              </div>
               <el-form-item>
                 <el-button type="primary" @click="submitForm('userForm')"
                   >登录</el-button
                 >
-                <el-button type="success" @click="registered = false">注册</el-button>
+                <el-button type="success" @click="registered = false"
+                  >注册</el-button
+                >
                 <el-button @click="resetForm">重置</el-button>
               </el-form-item>
             </el-form>
-            <t-register v-show="!registered" @isView="isView"/>
+            <t-register v-show="!registered" @isView="isView" />
           </div>
         </div>
       </el-row>
@@ -64,22 +73,21 @@ export default {
   data() {
     return {
       userForm: {
-        name: "",       //用户名
-        realName:"",    //真实姓名
-        password: "",   //密码
-        role: "",       //角色
-        roleNum:""      //身份号
+        name: "", //用户名
+        realName: "", //真实姓名
+        password: "", //密码
+        role: "", //角色
+        roleNum: "", //身份号
       },
       registered: true,
+      isRemeber: false,
       rules: {
         name: [{ required: true, message: "请输入用户名", trigger: "blur" }],
         password: [
           { required: true, message: "请输入密码", trigger: "blur" },
           { min: 3, message: "长度最少3个字符", trigger: "blur" },
         ],
-        role: [
-          { required: true, message: "请选择个人身份", trigger: "blur" },
-        ],
+        role: [{ required: true, message: "请选择个人身份", trigger: "blur" }],
       },
     };
   },
@@ -90,13 +98,15 @@ export default {
           axios.post("/tas/login", this.userForm).then((res) => {
             if (res.data == "success") {
               localStorage.setItem("token", res.headers.token);
-              this.userForm.roleNum = res.headers.rolenum;                  //根据返回头获取工号
-              if(this.userForm.name === "admin"){
+              this.userForm.roleNum = res.headers.rolenum; //根据返回头获取工号
+              if (this.userForm.name === "admin") {
                 this.realName = "";
-              }else{
-                this.userForm.realName = document.cookie.split(";")[0].split("=")[1];   //根据cookie获取真实姓名
+              } else {
+                this.userForm.realName = document.cookie
+                  .split(";")[0]
+                  .split("=")[1]; //根据cookie获取真实姓名
               }
-              delete this.userForm.password;
+              if (!this.isRemeber) delete this.userForm.password; //是否记住密码
               localStorage.setItem("user", JSON.stringify(this.userForm));
               this.$router.push("/home");
             } else {
@@ -111,7 +121,7 @@ export default {
         }
       });
     },
-    isView(childValue){
+    isView(childValue) {
       this.registered = childValue;
     },
     resetForm() {
@@ -197,5 +207,11 @@ h1 {
   justify-content: center;
   border-radius: 0 15px 15px 0;
   padding: 0;
+}
+.remeberPass {
+  width: 340px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
 }
 </style>

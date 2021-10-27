@@ -43,7 +43,6 @@ public class LoginController {
                 response.setHeader("token",dataBaseUser.getId());
                 response.setHeader("roleNum", String.valueOf(dataBaseUser.getRoleNum()));
                 String realName = userService.getRealNameByRole(dataBaseUser.getRole(), dataBaseUser.getName());
-                log.info("真实姓名为:{}",realName);
                 if(!realName.equals("error")) response.addCookie(new Cookie("realName",realName));
                 return "success";
             }
