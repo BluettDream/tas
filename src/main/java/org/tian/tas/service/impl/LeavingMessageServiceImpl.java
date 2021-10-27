@@ -26,20 +26,41 @@ public class LeavingMessageServiceImpl extends ServiceImpl<LeavingMessageMapper,
     public IPage<LeavingMessage> selectPage(Page<?> page, SearchCondition condition) {
         if(condition.getIsAll()){  //查询全部留言
             if(condition.getSender().equals("admin")){  //管理员用户查询所有
-                return leavingMessageMapper.selectPageVo(page,"","","","","","","");
+                return leavingMessageMapper.selectPageVo(
+                        page,"","",
+                        condition.getTitle(),
+                        condition.getContent(),
+                        condition.getStartTime(),
+                        condition.getEndTime(),
+                        condition.getQueryUser());
             }
-            if(!condition.getSender().equals(condition.getReceiver())){     //如果搜索条件中发送人不等于接收人,则是搜索用户
-                return leavingMessageMapper.selectPageVo(page, condition.getSender(), condition.getSender(), condition.getTitle(), condition.getContent(), condition.getStartTime(), condition.getEndTime(), condition.getReceiver());
-            }
-            return leavingMessageMapper.selectPageVo(page, condition.getSender(), condition.getReceiver(), condition.getTitle(), condition.getContent(), condition.getStartTime(), condition.getEndTime(),"");
+            return leavingMessageMapper.selectPageVo(
+                    page,
+                    condition.getSender(),
+                    condition.getReceiver(),
+                    condition.getTitle(),
+                    condition.getContent(),
+                    condition.getStartTime(),
+                    condition.getEndTime(),
+                    condition.getQueryUser());
         }
         //查询个人留言
-        return leavingMessageMapper.selectPageVo(page, condition.getSender(), "", condition.getTitle(), condition.getContent(), condition.getStartTime(), condition.getEndTime(), condition.getReceiver());
+        return leavingMessageMapper.selectPageVo(
+                page,
+                condition.getSender(), "",
+                condition.getTitle(),
+                condition.getContent(),
+                condition.getStartTime(),
+                condition.getEndTime(),
+                condition.getQueryUser());
     }
 
     @Override
     public List<String> selectDistinctTitle(String sender, String receiver) {
         if(!receiver.equals("")){   //查询全部留言
+            if(sender.equals("admin")){
+                return leavingMessageMapper.selectDistinctTitle(null,null);
+            }
             return leavingMessageMapper.selectDistinctTitle(sender,receiver);
         }
         //查询个人留言
@@ -53,6 +74,7 @@ public class LeavingMessageServiceImpl extends ServiceImpl<LeavingMessageMapper,
 
     @Override
     public List<String> selectByQueryString(String sender, String receiver,String query, String queryString) {
+        if(sender.equals("admin")) return leavingMessageMapper.selectByQueryString(null,null,query,queryString);
         if(receiver != null) return leavingMessageMapper.selectByQueryString(sender,receiver,query,queryString);
         return leavingMessageMapper.selectByQueryString(sender,null,query,queryString);
     }

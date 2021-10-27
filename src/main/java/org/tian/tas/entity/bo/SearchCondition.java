@@ -10,8 +10,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class SearchCondition {
-    private String sender;          //留言发送人
-    private String receiver;        //留言接收人
+    private String sender;          //留言发送人用户名
+    private String receiver;        //留言接收人用户名
+    private String queryUser;       //查询接收人的用户名
     private Integer currentPage;    //当前页面
     private Integer pageSize;       //页面大小
     private String title;           //留言标题

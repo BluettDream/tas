@@ -10,6 +10,7 @@ export const lmCommon = {
             searchCondition: { //搜索条件
                 sender: "", //留言发送人
                 receiver: "", //留言接收人
+                queryUser:"",//查询留言接收人
                 currentPage: 1, //当前页面
                 pageSize: 8, //页面大小
                 title: "", //标题
@@ -71,7 +72,7 @@ export const lmCommon = {
                     this.searchCondition.content = this.inputSearch
                     break;
                 case 'user':
-                    this.searchCondition.receiver = this.inputSearch
+                    this.searchCondition.queryUser = this.inputSearch
                     break;
                 default:
                     this.$message.error({
@@ -167,7 +168,7 @@ export const lmCommon = {
         if (user != null) this.searchCondition.sender = user.name;
         this.currentURLPath = this.$route.path.split("/")[2];
         this.searchCondition.isAll = this.currentURLPath == 'mine' ? false : true; //判断当前是在我的留言还是全部留言
-        if (this.searchCondition.isAll) {
+        if (this.searchCondition.isAll) { //判断是否为全部留言，并对管理员进行特殊处理
             this.searchCondition.receiver = user.name;
             this.searchCondition.pageSize = 10;
         }

@@ -14,7 +14,7 @@ import java.util.List;
 public interface LeavingMessageService extends IService<LeavingMessage> {
 
     /**
-     * 分页查询
+     * 分页查询,根据条件获取对应页面数据
      * @param page 对象(当前页，页面需要显示几条数据)
      * @param condition 搜索条件对象
      * @return 根据搜索条件返回数据,并且返回分页信息
