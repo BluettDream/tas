@@ -21,79 +21,88 @@ export default {
         series: [
           {
             type: "gauge",
-            startAngle: 180,
-            endAngle: 0,
+            startAngle: 450,
+            endAngle: 90,
             min: 0,
-            max: 1,
-            splitNumber: 8,
-            axisLine: {
-              lineStyle: {
-                width: 6,
-                color: [
-                  [0.25, "#FF6E76"],
-                  [0.5, "#FDDD60"],
-                  [0.75, "#58D9F9"],
-                  [1, "#7CFFB2"],
-                ],
-              },
+            max: 100,
+            splitNumber: 10,
+            itemStyle: {
+              color: "#58D9F9",
+              shadowColor: "rgba(0,138,255,0.45)",
+              shadowBlur: 10,
+              shadowOffsetX: 2,
+              shadowOffsetY: 2,
+            },
+            progress: {
+              show: true,
+              roundCap: true,
+              width: 18,
             },
             pointer: {
-              icon: "path://M12.8,0.7l12,40.1H0.7L12.8,0.7z",
-              length: "12%",
-              width: 20,
-              offsetCenter: [0, "-60%"],
-              itemStyle: {
-                color: "auto",
+              icon: "path://M2090.36389,615.30999 L2090.36389,615.30999 C2091.48372,615.30999 2092.40383,616.194028 2092.44859,617.312956 L2096.90698,728.755929 C2097.05155,732.369577 2094.2393,735.416212 2090.62566,735.56078 C2090.53845,735.564269 2090.45117,735.566014 2090.36389,735.566014 L2090.36389,735.566014 C2086.74736,735.566014 2083.81557,732.63423 2083.81557,729.017692 C2083.81557,728.930412 2083.81732,728.84314 2083.82081,728.755929 L2088.2792,617.312956 C2088.32396,616.194028 2089.24407,615.30999 2090.36389,615.30999 Z",
+              length: "75%",
+              width: 16,
+              offsetCenter: [0, "5%"],
+            },
+            axisLine: {
+              roundCap: true,
+              lineStyle: {
+                width: 18,
               },
             },
             axisTick: {
-              length: 12,
+              splitNumber: 2,
               lineStyle: {
-                color: "auto",
                 width: 2,
+                color: "#999",
               },
             },
             splitLine: {
-              length: 20,
+              length: 12,
               lineStyle: {
-                color: "auto",
-                width: 5,
+                width: 3,
+                color: "#999",
               },
             },
             axisLabel: {
-              color: "#464646",
+              distance: 30,
+              color: "#999",
               fontSize: 20,
-              distance: -60,
-              formatter: function (value) {
-                if (value === 0.875) {
-                  return "A";
-                } else if (value === 0.625) {
-                  return "B";
-                } else if (value === 0.375) {
-                  return "C";
-                } else if (value === 0.125) {
-                  return "D";
-                }
-                return "";
-              },
             },
             title: {
-              offsetCenter: [0, "-40%"],
-              fontSize: 20,
+              fontSize: 30,
+              offsetCenter: [0, "-20%"],
             },
             detail: {
-              fontSize: 45,
-              offsetCenter: [0, "-5%"],
+              backgroundColor: "#58D9F9",
+              borderColor: "#999",
+              borderWidth: 2,
+              width: "60%",
+              lineHeight: 40,
+              height: 40,
+              borderRadius: 8,
+              offsetCenter: [0, "25%"],
               valueAnimation: true,
               formatter: function (value) {
-                return value.toFixed(1) + "分";
+                return "{value|" + value.toFixed(1) + "}";
               },
-              color: "inherit",
+              rich: {
+                value: {
+                  fontSize: 45,
+                  fontWeight: "bolder",
+                  color: "#fff",
+                },
+                unit: {
+                  fontSize: 20,
+                  color: "#999",
+                  padding: [0, 0, -20, 10],
+                },
+              },
             },
             data: [
               {
                 value: this.averageScore,
-                name: "平均分数",
+                name: "平均分",
               },
             ],
           },
