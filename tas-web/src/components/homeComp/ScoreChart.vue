@@ -3,9 +3,6 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { getAverageScore } from "../../api/achievement";
-
 import VChart from "vue-echarts";
 import { use } from "echarts/core";
 import { GaugeChart } from "echarts/charts";
@@ -15,7 +12,7 @@ use([GaugeChart, SVGRenderer]);
 export default {
   name: "ScoreChart",
   props: {
-    averageScore:[Number],
+    averageScore: [Number],
   },
   components: { VChart },
   data() {
@@ -95,7 +92,7 @@ export default {
             },
             data: [
               {
-                value: 0,
+                value: this.averageScore,
                 name: "平均分数",
               },
             ],
@@ -104,16 +101,6 @@ export default {
       },
     };
   },
-  computed: mapState(["user"]),
-  created: function () {
-    getAverageScore(this.user.roleNum, "").then((res) => {
-      if(res.data.status === "success"){
-        this.option.series[0].data[0].value = res.data.data;
-      }else{
-        this.$message.warning({message:"暂无分数"})
-      }
-    });
-  },
 };
 </script>
 
@@ -121,5 +108,8 @@ export default {
 .chart {
   height: 400px;
   width: 400px;
+}
+[v-cloak] {
+  display: none;
 }
 </style>
