@@ -116,5 +116,18 @@
             </if>
         </where>
     </select>
+    <select id="selectEveryMonthMessage" resultType="map">
+        select count(*) as value,date_format(date,'%m') as month from tas_tmh.leaving_message
+        <where>
+            is_deleted = '未删除'
+            <if test="receiver != null">
+                and receiver = #{receiver}
+            </if>
+            <if test="year != null">
+                and DATE_FORMAT(date,'%Y') = #{year}
+            </if>
+        </where>
+        group by month order by month asc;
+    </select>
 
 </mapper>

@@ -11,6 +11,7 @@ import org.tian.tas.mapper.LeavingMessageMapper;
 import org.tian.tas.service.LeavingMessageService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -82,6 +83,11 @@ public class LeavingMessageServiceImpl extends ServiceImpl<LeavingMessageMapper,
     @Override
     public Boolean updateUserName(String userRole,String userName,String oldName) {
         return leavingMessageMapper.updateUserName(userRole,userName,oldName);
+    }
+
+    @Override
+    public List<Map<String, Integer>> selectEveryMonthMessage(String receiver, int year) {
+        return leavingMessageMapper.selectEveryMonthMessage(receiver,year);
     }
 
 }

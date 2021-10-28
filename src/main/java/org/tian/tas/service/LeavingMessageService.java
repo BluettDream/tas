@@ -7,6 +7,7 @@ import org.tian.tas.entity.LeavingMessage;
 import org.tian.tas.entity.bo.SearchCondition;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -47,10 +48,18 @@ public interface LeavingMessageService extends IService<LeavingMessage> {
     List<String> selectByQueryString(String sender,String receiver,String query,String queryString);
 
     /**
-     *
+     * 更新留言表中的用户名
      * @param userRole
      * @param userName
      * @return
      */
     Boolean updateUserName(String userRole,String userName,String oldName);
+
+    /**
+     * 获取每个月留言总数
+     * @param receiver
+     * @param year
+     * @return
+     */
+    List<Map<String,Integer>> selectEveryMonthMessage(String receiver, int year);
 }

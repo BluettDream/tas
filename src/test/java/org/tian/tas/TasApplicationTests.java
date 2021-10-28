@@ -48,6 +48,9 @@ class TasApplicationTests {
 
     @Test
     void test3(){
-        
+        Integer num = Integer.parseInt("09");
+        System.out.println(num);
+        int num1 = 9;
+        System.out.println(num == num1);
     }
 }

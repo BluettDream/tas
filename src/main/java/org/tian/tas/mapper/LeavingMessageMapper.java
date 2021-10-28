@@ -3,10 +3,12 @@ package org.tian.tas.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.tian.tas.entity.LeavingMessage;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Entity org.tian.tas.entity.LeavingMessage
@@ -28,6 +30,10 @@ public interface LeavingMessageMapper extends BaseMapper<LeavingMessage> {
 
     //更新留言信息的发送人和接收人
     Boolean updateUserName(String userRole,String userName,String oldName);
+
+    //获取每个月留言总数
+    @MapKey(value = "month")
+    List<Map<String,Integer>> selectEveryMonthMessage(String receiver, int year);
 }
 
 
