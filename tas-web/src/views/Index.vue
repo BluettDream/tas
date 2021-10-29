@@ -1,16 +1,17 @@
 <template>
   <div class="index">
+    <div class="bgc"></div>
     <el-container>
-      <el-aside style="width: 210px">
+      <el-aside >
         <!-- 侧边栏 -->
-        <t-aside />
+        <t-aside @collapse="getCollapse"/>
       </el-aside>
       <el-container class="right">
         <el-header>
           <!-- 头部 -->
           <t-header />
         </el-header>
-        <el-main>
+        <el-main :class="[{zishiying:isMove},'start']">
           <!-- 主要内容 -->
           <router-view />
         </el-main>
@@ -25,28 +26,61 @@ import THeader from "../components/commonComp/THeader";
 export default {
   name: "Index",
   components: { TAside, THeader },
-  data() {
+  data(){
     return {
-    };
+      isMove:false
+    }
   },
+  methods:{
+    getCollapse(isCollapse){
+      if(isCollapse){
+        this.isMove = false;
+      }else{
+        this.isMove = true;
+      }
+    }
+  },
+  created:function(){
+
+  }
 };
 </script>
 
 <style scoped>
+.index{
+  height: 100%;
+}
+.bgc{
+  background-image: url("../assets/img/wangzhan-bg.jpg");
+  background-position: center;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  position: fixed;
+  z-index: -1;
+}
 .el-aside {
   position: fixed;
 }
-.right {
-  margin-left: 210px;
+.el-container{
+  height: 100%;
 }
 .el-header{
+  margin-left: 210px;
   position: fixed;
   padding-top: 5px;
   width: 84%;
-  background-color: #fff;
+  background-color: transparent;
   z-index: 999;
 }
 .el-main{
   margin-top: 45px;
+  height: 100%;
+}
+.start{
+  margin-left: 210px;
+}
+.zishiying{
+  margin-left: 80px !important;
 }
 </style>

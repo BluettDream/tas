@@ -114,8 +114,9 @@ export default {
 <style scoped>
 .studentQuery {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   justify-content: space-around;
+  margin-top: 4%;
 }
 .chart {
   height: 300px;

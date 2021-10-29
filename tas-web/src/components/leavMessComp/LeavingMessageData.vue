@@ -11,7 +11,7 @@
           @change="getDataByTitle"
           size="small"
           clearable
-          style="width: 150px"
+          style="width: 150px;background-color: transparent;"
         >
           <el-option v-for="title in distinctTitle" :key="title" :value="title">
           </el-option>
@@ -24,7 +24,7 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期"
           size="small"
-          style="width: 250px"
+          style="width: 250px;background-color: transparent;"
           @change="getPageByDate"
         />
       </div>
@@ -37,6 +37,7 @@
           placeholder="请输入内容"
           size="small"
           :debounce="100"
+          style="background-color: transparent;"
         >
           <template #prepend>
             <el-select
@@ -80,7 +81,7 @@
         :border="true"
         v-loading="loading"
         :stripe="searchCondition.isAll"
-        style="width: 100%"
+        style="width: 100%,background-color: transparent;"
       >
         <el-table-column type="selection" width="45" v-if="isChangeData"/>
         <el-table-column prop="id" v-if="false" />
@@ -340,4 +341,7 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
+ .el-table th, .el-table tr {
+ background-color: transparent;
+ }
 </style>

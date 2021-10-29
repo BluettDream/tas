@@ -56,6 +56,11 @@ export default {
       role: ""
     };
   },
+  watch:{
+    isCollapse(newValue){
+      this.$emit("collapse",newValue);
+    }
+  },
   created:function(){
     let user = JSON.parse(localStorage.getItem("user"));
     if(user != null){
@@ -65,6 +70,9 @@ export default {
 };
 </script>
 <style scoped>
+.el-menu{
+  background-color: transparent;
+}
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;

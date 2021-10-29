@@ -12,7 +12,7 @@ export const lmCommon = {
                 receiver: "", //留言接收人
                 queryUser:"",//查询留言接收人
                 currentPage: 1, //当前页面
-                pageSize: 8, //页面大小
+                pageSize: 7, //页面大小
                 title: "", //标题
                 content: "", //内容
                 startTime: "", //开始时间

@@ -2,10 +2,10 @@
   <div>
     <el-form
       label-position="left"
+      label-width="110px"
       :model="ruleForm"
       :rules="rules"
       ref="ruleForm"
-      class="demo-ruleForm"
     >
       <el-form-item label="留言标题" prop="title">
         <el-input
@@ -109,6 +109,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

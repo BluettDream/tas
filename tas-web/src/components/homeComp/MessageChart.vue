@@ -53,10 +53,12 @@ export default {
           trigger: "axis",
           formatter: function (params) {
             let value = params[0].value != undefined ? params[0].value : 0;
-            if(value == 0){
-              return params[0].name+":<br>接收"+value+"条留言";
+            if (value == 0) {
+              return params[0].name + ":<br>接收" + value + "条留言";
             }
-            return params[0].marker+params[0].name+":<br>接收"+value+"条留言";
+            return (
+              params[0].marker + params[0].name + ":<br>接收" + value + "条留言"
+            );
           },
         },
         xAxis: [
@@ -90,7 +92,11 @@ export default {
         series: [
           {
             type: "line",
+            lineStyle: {
+              width: 8, //设置线条粗细
+            },
             showSymbol: true,
+            symbolSize: 7,
             connectNulls: true,
             data: this.valueList,
           },

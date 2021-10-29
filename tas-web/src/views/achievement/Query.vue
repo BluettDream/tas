@@ -20,5 +20,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.query{
+  min-width: 460px;
+}
 </style>

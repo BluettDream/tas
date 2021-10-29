@@ -1,6 +1,6 @@
 <template>
   <div class="achievement">
-      <!-- 成绩操作页面 -->
+      <!-- 成绩显示页面 -->
       <router-view v-slot="{ Component }">
         <keep-alive exclude="Query">
           <component :is="Component" />
@@ -16,5 +16,8 @@ export default {
 </script>
 
 <style scoped>
-
+.achievement{
+  width: 100%;
+  height: 100%;
+}
 </style>

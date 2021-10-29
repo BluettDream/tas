@@ -84,6 +84,7 @@ export default {
   display: flex;
   flex-flow: row;
   justify-content: center;
+  background-color: transparent;
 }
 .title {
   margin: 0 auto;

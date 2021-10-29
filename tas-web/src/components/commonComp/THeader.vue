@@ -201,7 +201,6 @@ export default {
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  /* background-color:#c7c8cb; */
   border-bottom: 1px solid grey;
 }
 .logoText {
