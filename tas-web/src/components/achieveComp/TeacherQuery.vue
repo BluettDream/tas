@@ -87,22 +87,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.teacherQuery {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  width: 100%;
-}
-.top {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
-}
-.chart {
-  height: 300px;
-  width: 50%;
-}
-</style>

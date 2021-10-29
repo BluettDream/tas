@@ -115,6 +115,9 @@
       <el-form-item>
         <div class="btn">
           <div>
+            <el-button type="primary" @click="dialogUploadVisible = true"
+              >上传文件</el-button
+            >
             <el-button type="primary" @click="onSubmit">录入成绩</el-button>
             <el-tooltip
               effect="light"
@@ -145,12 +148,17 @@
         </div>
       </el-form-item>
     </el-form>
+    <el-dialog title="Excel上传成绩单" v-model="dialogUploadVisible">
+      <upload-achievements/>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { getCourse,postAchievement } from "../../api/achievement";
+import { getCourse, postAchievement } from "../../api/achievement";
+import UploadAchievements from '../../components/achieveComp/UploadAchievements';
 export default {
+  components: { UploadAchievements },
   name: "Add",
   data() {
     return {
@@ -171,22 +179,27 @@ export default {
       disabledDelete: false,
       disabledRemove: false,
       disabledRemoveAll: false,
+      dialogUploadVisible: false,
     };
   },
   methods: {
     onSubmit() {
-      postAchievement(JSON.stringify(this.scoreForm.scoreInfomation)).then(res => {
-        if(res.data == "success"){
-          this.$message.success({message:"成绩录入成功"});
-          this.resetForm();
-        }else if(res.data == "fail"){
-          this.$message.warning({message:"已有成绩录入,请检查录入数据是否重复"});
-        }else{
-          this.$message.warning({message:"非法操作,成绩录入异常"});
-        }
-      }).catch(error => {
-        this.$message.error({message:"系统异常,成绩录入失败"});
-      })
+      postAchievement(JSON.stringify(this.scoreForm.scoreInfomation))
+        .then((res) => {
+          if (res.data == "success") {
+            this.$message.success({ message: "成绩录入成功" });
+            this.resetForm();
+          } else if (res.data == "fail") {
+            this.$message.warning({
+              message: "已有成绩录入,请检查录入数据是否重复",
+            });
+          } else {
+            this.$message.warning({ message: "非法操作,成绩录入异常" });
+          }
+        })
+        .catch((error) => {
+          this.$message.error({ message: "系统异常,成绩录入失败" });
+        });
     },
     removeScoreInfo(scoreInfo) {
       var index = this.scoreForm.scoreInfomation.indexOf(scoreInfo);
