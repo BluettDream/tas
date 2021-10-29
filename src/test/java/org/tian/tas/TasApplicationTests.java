@@ -3,7 +3,7 @@ package org.tian.tas;
 import cn.hutool.crypto.SecureUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.tian.tas.entity.bo.EveryMonthMessageBO;
 import org.tian.tas.service.UserService;
 
 import java.text.ParseException;
@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-@SpringBootTest
+//@SpringBootTest
 class TasApplicationTests {
 
     @Autowired
@@ -48,9 +48,8 @@ class TasApplicationTests {
 
     @Test
     void test3(){
-        Integer num = Integer.parseInt("09");
-        System.out.println(num);
-        int num1 = 9;
-        System.out.println(num == num1);
+        EveryMonthMessageBO messageBO = new EveryMonthMessageBO(1,200);
+        int num =1;
+        System.out.println(messageBO.getMonth() == num);
     }
 }

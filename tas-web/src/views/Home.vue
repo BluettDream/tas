@@ -3,7 +3,8 @@
     <div class="head">
       <div class="title">欢迎来到教学辅助系统</div>
     </div>
-    <div class="foot">
+    <div class="foot" v-loading="loading">
+      <message-chart :valueList="messageValueList" :maxValue="messageMaxValue" v-if="hasMessage" />
       <score-chart :averageScore="aveScore" v-if="hasScore" />
     </div>
   </div>
@@ -11,32 +12,57 @@
 
 <script>
 import ScoreChart from "../components/homeComp/ScoreChart";
+import MessageChart from "../components/homeComp/MessageChart";
 import { mapState } from "vuex";
 import { getAverageScore } from "../api/achievement";
+import { getMessageEveryMonth } from "../api/leavingmessage";
+import axios from "axios";
 
 export default {
   name: "Home",
-  components: { ScoreChart },
+  components: { ScoreChart, MessageChart },
   data() {
     return {
       aveScore: 0,
       hasScore: false,
+      messageValueList: [],
+      hasMessage: false,
+      loading: true,
+      messageMaxValue:100
     };
   },
   computed: mapState(["user"]),
   created: function () {
-    getAverageScore(this.user.roleNum, "").then((res) => {
-      if (res.data.status === "success") {
-        if (res.data.data !== null) {
-          this.aveScore = res.data.data;
-          this.hasScore = true;
-        } else {
-          this.hasScore = false;
-        }
-      } else {
-        this.$message.warning({ message: "系统异常,请联系管理员" });
-      }
-    });
+    axios
+      .all([
+        getAverageScore(this.user.roleNum, ""),
+        getMessageEveryMonth(this.user.name),
+      ])
+      .then(
+        axios.spread((scoreRes, messageRes) => {
+          if (scoreRes.data.status === "success") {
+            if (scoreRes.data.data !== null) {
+              //分数可以查到则显示分数信息
+              this.aveScore = scoreRes.data.data;
+              this.hasScore = true;
+            }
+          } else {
+            this.$message.warning({ message: "系统异常,请联系管理员" });
+          }
+          if (messageRes.data.status === "success") {
+            this.messageValueList = messageRes.data.data;
+            let mmax = Math.max.apply(null,this.messageValueList);
+            this.messageMaxValue = mmax + Math.round(mmax/2);
+            this.hasMessage = true;
+          } else {
+            this.$message.warning({ message: "系统异常,请联系管理员" });
+          }
+          if (this.hasMessage) {
+            //如果留言信息获取成功，则显示留言信息
+            this.loading = false;
+          }
+        })
+      );
   },
 };
 </script>
@@ -54,6 +80,7 @@ export default {
   justify-content: space-around;
 }
 .foot {
+  margin-top: 5%;
   display: flex;
   flex-flow: row;
   justify-content: center;

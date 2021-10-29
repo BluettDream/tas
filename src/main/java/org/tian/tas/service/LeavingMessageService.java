@@ -7,7 +7,6 @@ import org.tian.tas.entity.LeavingMessage;
 import org.tian.tas.entity.bo.SearchCondition;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -61,5 +60,5 @@ public interface LeavingMessageService extends IService<LeavingMessage> {
      * @param year
      * @return
      */
-    List<Map<String,Integer>> selectEveryMonthMessage(String receiver, int year);
+    List<Integer> selectEveryMonthMessage(String receiver, int year);
 }

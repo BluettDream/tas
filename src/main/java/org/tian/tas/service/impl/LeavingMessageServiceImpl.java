@@ -6,12 +6,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tian.tas.entity.LeavingMessage;
+import org.tian.tas.entity.bo.EveryMonthMessageBO;
 import org.tian.tas.entity.bo.SearchCondition;
 import org.tian.tas.mapper.LeavingMessageMapper;
 import org.tian.tas.service.LeavingMessageService;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -86,8 +87,22 @@ public class LeavingMessageServiceImpl extends ServiceImpl<LeavingMessageMapper,
     }
 
     @Override
-    public List<Map<String, Integer>> selectEveryMonthMessage(String receiver, int year) {
-        return leavingMessageMapper.selectEveryMonthMessage(receiver,year);
+    public List<Integer> selectEveryMonthMessage(String receiver, int year) {
+        List<EveryMonthMessageBO> monthMessage = leavingMessageMapper.selectEveryMonthMessage(receiver, year);
+        List<Integer> result = new ArrayList<>();
+        int j = 0,n = monthMessage.size();
+        for (int i = 1; i <= 12; ++i) {
+            if(j < n){
+                EveryMonthMessageBO messageBO = monthMessage.get(j);
+                if(messageBO.getMonth() == i){
+                    result.add(messageBO.getValue());
+                    ++j;
+                    continue;
+                }
+            }
+            result.add(null);
+        }
+        return result;
     }
 
 }

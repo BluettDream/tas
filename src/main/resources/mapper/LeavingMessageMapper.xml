@@ -116,7 +116,7 @@
             </if>
         </where>
     </select>
-    <select id="selectEveryMonthMessage" resultType="map">
+    <select id="selectEveryMonthMessage" resultType="everyMonthMessageBO">
         select count(*) as value,date_format(date,'%m') as month from tas_tmh.leaving_message
         <where>
             is_deleted = '未删除'

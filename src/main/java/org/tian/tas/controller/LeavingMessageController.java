@@ -13,9 +13,7 @@ import org.tian.tas.service.LeavingMessageService;
 import org.tian.tas.service.UserService;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author blue
@@ -96,18 +94,8 @@ public class LeavingMessageController {
     @GetMapping("/{userName}")
     public CommonResVO getMessageEveryMonth(@PathVariable String userName){
         int year = DateUtil.date().year();
-        List<Map<String, Integer>> monthMessage = messageService.selectEveryMonthMessage(userName, year);
-        for(int i = 1;i <= 12;++i){
-            for (Map<String, Integer> map : monthMessage) {
-                if(!map.containsKey(i)){
-                    HashMap<String,Integer> hashMap = new HashMap<>();
-                    hashMap.put(String.valueOf(i),null);
-                    monthMessage.add(hashMap);
-                }
-                break;
-            }
-        }
-        return new CommonResVO(200,"success",monthMessage);
+        List<Integer> messageValueList = messageService.selectEveryMonthMessage(userName, year);
+        return new CommonResVO(200,"success",messageValueList);
     }
 
 }

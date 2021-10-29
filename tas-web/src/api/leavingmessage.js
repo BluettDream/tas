@@ -66,3 +66,11 @@ export function getQueryData(query,queryString){
         method: "GET"
     })
 }
+
+//获取对应年份每个月的接收留言数据
+export function getMessageEveryMonth(userName){
+    return axios({
+        url: "/tas/leavingMessage/"+userName,
+        method: "GET"
+    })
+}

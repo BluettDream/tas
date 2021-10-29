@@ -16,6 +16,7 @@ export default createStore({
       let person = JSON.parse(localStorage.getItem("user"));
       if(person != null){
         state.user.name = person.name;
+        state.user.realName = person.realName;
         state.user.role = person.role;
         state.user.roleNum = person.roleNum;
       }
