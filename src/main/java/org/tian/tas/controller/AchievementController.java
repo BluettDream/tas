@@ -76,6 +76,10 @@ public class AchievementController {
         }catch (Exception e){
             return new CommonResVO(403,"error");
         }
+    }
 
+    @GetMapping("/downloadExcelTemplate")
+    public CommonResVO getExcelTemplate(){
+        return new CommonResVO();
     }
 }
